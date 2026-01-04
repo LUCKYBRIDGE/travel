@@ -1115,5 +1115,444 @@ window.TRIP_DATA = {
     "성인 5인은 택시 2대 필요",
     "3km 이내 단거리는 택시가 시간 효율적",
     "교통카드 충전과 사찰 입장료는 현금 필수"
-  ]
+  ],
+  placeDetails: {
+    "kansai international airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["공항 내 식당/교통/ATM 집중", "T2↔T1 셔틀 연계"],
+      pros: ["이동 최소화", "시설이 한 곳에 모여 있음"],
+      cons: ["피크 시간 혼잡", "가격대가 높을 수 있음"],
+      nearby: [
+        {
+          name: "KIX Observation Hall Sky View",
+          mapQuery: "KIX Observation Hall Sky View",
+          type: "전망",
+          features: ["활주로 뷰", "무료 입장"],
+          pros: ["비행기 관찰", "짧은 체류에 적합"],
+          cons: ["날씨 영향"]
+        },
+        {
+          name: "Aeroplaza",
+          mapQuery: "Aeroplaza Kansai Airport",
+          type: "편의시설",
+          features: ["푸드코트/편의점", "대기용 시설"],
+          pros: ["비행 전 대기 최적"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "Hotel Nikko Kansai Airport",
+          mapQuery: "Hotel Nikko Kansai Airport",
+          type: "숙소",
+          features: ["공항 연결", "휴식 공간"],
+          pros: ["이동 최소화"],
+          cons: ["가격대 높음"]
+        }
+      ]
+    },
+    "kansai international airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["국제선 허브", "T1/T2 분리"],
+      pros: ["교통 접근성 좋음"],
+      cons: ["보안/이동 대기 시간"],
+      nearby: []
+    },
+    "rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["대형 아울렛", "야외 쇼핑 동선"],
+      pros: ["브랜드 다양", "할인율 높음"],
+      cons: ["바람/추위 영향", "식사 대기 발생"],
+      nearby: [
+        {
+          name: "Rinku Marble Beach",
+          mapQuery: "Rinku Marble Beach",
+          type: "산책",
+          features: ["바다 산책로", "노을 명소"],
+          pros: ["사진 포인트"],
+          cons: ["날씨 영향"]
+        },
+        {
+          name: "Rinku Pleasure Town Seacle",
+          mapQuery: "Rinku Pleasure Town Seacle",
+          type: "쇼핑",
+          features: ["쇼핑/카페 복합몰"],
+          pros: ["비교적 실내 동선"],
+          cons: ["혼잡 가능"]
+        }
+      ]
+    },
+    "kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["교통 허브", "백화점/식당 밀집"],
+      pros: ["이동이 편리", "식사 선택지 다양"],
+      cons: ["동선 복잡", "피크 시간 혼잡"],
+      nearby: [
+        {
+          name: "Kyoto Tower",
+          mapQuery: "Kyoto Tower",
+          type: "전망",
+          features: ["전망대", "야경"],
+          pros: ["도보 접근 용이"],
+          cons: ["대기 발생"]
+        },
+        {
+          name: "Kyoto Ramen Street",
+          mapQuery: "Kyoto Ramen Street",
+          type: "식사",
+          features: ["라멘 전문 존"],
+          pros: ["취향 선택 폭 넓음"],
+          cons: ["식사 시간 대기"]
+        },
+        {
+          name: "Aeon Mall Kyoto",
+          mapQuery: "Aeon Mall Kyoto",
+          type: "쇼핑",
+          features: ["대형 몰", "실내 동선"],
+          pros: ["우천 시 대안"],
+          cons: ["이동 필요"]
+        },
+        {
+          name: "Kyoto Tower Sando",
+          mapQuery: "Kyoto Tower Sando",
+          type: "쇼핑",
+          features: ["로컬 맥주/기념품"],
+          pros: ["짧은 일정에 적합"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "Kyoto Station Skyway",
+          mapQuery: "Kyoto Station Skyway",
+          type: "야경",
+          features: ["무료 전망", "실내 이동"],
+          pros: ["밤 산책"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "Kyoto Station Grand Stairway",
+          mapQuery: "Kyoto Station Grand Stairway",
+          type: "이벤트",
+          features: ["LED 쇼", "사진 포인트"],
+          pros: ["무료 관람"],
+          cons: ["피크 타임 혼잡"]
+        }
+      ]
+    },
+    "kyoto station skyway": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["무료 전망", "실내 동선"],
+      pros: ["야경 감상"],
+      cons: ["혼잡 가능"]
+    },
+    "kyoto station grand stairway": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["LED 쇼", "사진 포인트"],
+      pros: ["무료 관람"],
+      cons: ["혼잡 가능"]
+    },
+    "kyoto tower sando": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["기념품/로컬 맥주", "실내 공간"],
+      pros: ["간단 쇼핑"],
+      cons: ["혼잡 가능"]
+    },
+    "jr kyoto isetan": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["백화점 식품관", "마감 세일"],
+      pros: ["야식/선물 구매"],
+      cons: ["저녁 혼잡"]
+    },
+    "hotel vischio kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["교토역 도보 2분"],
+      pros: ["짐 이동 편리"],
+      cons: ["체크인 시간 혼잡 가능"]
+    },
+    "lawson kansai airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["간단 요기", "빠른 회전"],
+      pros: ["시간 절약"],
+      cons: ["좌석 제한"]
+    },
+    "asics factory outlet rinku": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["아울렛 이월 모델"],
+      pros: ["할인 폭 큼"],
+      cons: ["사이즈 품절 가능"]
+    },
+    "kawaramachi kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["쇼핑/카페 밀집", "도보 이동 중심"],
+      pros: ["하루 종일 동선 가능"],
+      cons: ["혼잡", "대기 발생"],
+      nearby: [
+        {
+          name: "Nishiki Market",
+          mapQuery: "Nishiki Market",
+          type: "시장",
+          features: ["먹거리/기념품"],
+          pros: ["현지 분위기"],
+          cons: ["혼잡", "현금 필요"]
+        },
+        {
+          name: "Pontocho Alley",
+          mapQuery: "Pontocho Alley",
+          type: "골목",
+          features: ["저녁 산책", "식당가"],
+          pros: ["분위기 좋음"],
+          cons: ["저녁 혼잡"]
+        },
+        {
+          name: "Shinkyogoku Shopping Street",
+          mapQuery: "Shinkyogoku Shopping Street",
+          type: "쇼핑",
+          features: ["실내 상점가"],
+          pros: ["날씨 영향 적음"],
+          cons: ["인파 많음"]
+        },
+        {
+          name: "Kamo River",
+          mapQuery: "Kamo River Kyoto",
+          type: "산책",
+          features: ["강변 산책로"],
+          pros: ["휴식에 좋음"],
+          cons: ["날씨 영향"]
+        }
+      ]
+    },
+    "551 horai kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["오사카 명물 만두", "테이크아웃 가능"],
+      pros: ["빠른 회전", "가성비"],
+      cons: ["줄이 긴 편"]
+    },
+    "kineya mugimaru kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["자가제면 우동", "세트 구성 다양"],
+      pros: ["메뉴 선택 폭 넓음"],
+      cons: ["혼잡 시 대기"]
+    },
+    "ganko sushi kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["정갈한 초밥 정식"],
+      pros: ["좌석 식사 가능"],
+      cons: ["가격대 높음"]
+    },
+    "nakasu kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["규동 중심", "빠른 식사"],
+      pros: ["가성비"],
+      cons: ["좌석 한정"]
+    },
+    "ootoya kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["가정식 정식", "속 편한 메뉴"],
+      pros: ["다양한 정식"],
+      cons: ["대기 가능"]
+    },
+    "mametora rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["장어덮밥 전문"],
+      pros: ["시그니처 메뉴"],
+      cons: ["가격대 높음", "대기 가능"]
+    },
+    "komeraku rinku": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["해산물 덮밥"],
+      pros: ["가성비"],
+      cons: ["점심 혼잡"]
+    },
+    "kura sushi rinku": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["회전초밥"],
+      pros: ["가벼운 식사"],
+      cons: ["대기 가능"]
+    },
+    "moritaya jr kyoto isetan": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["스키야키", "이세탄 11층"],
+      pros: ["야경 뷰"],
+      cons: ["예약 권장"]
+    },
+    "yakiniku hiro kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["와규 구이"],
+      pros: ["가족 식사 최적"],
+      cons: ["예약 필요 가능"]
+    },
+    "katsukura kyoto porta": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["프리미엄 돈카츠"],
+      pros: ["정식 구성"],
+      cons: ["대기 가능"]
+    },
+    "nakau kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["24시간", "가성비"],
+      pros: ["대기 적음"],
+      cons: ["분위기 단순"]
+    },
+    "nakamura tokichi kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["말차 디저트"],
+      pros: ["디저트 만족도 높음"],
+      cons: ["대기 가능"]
+    },
+    "sizuya kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["교토 팥빵"],
+      pros: ["가성비 간식"],
+      cons: ["빵 품절 가능"]
+    },
+    "to-ji temple": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["오층탑", "21일 코보산"],
+      pros: ["시장 분위기"],
+      cons: ["현금 필요"]
+    },
+    "higashi honganji temple": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["대형 목조 건축", "무료 관람"],
+      pros: ["휴식에 좋음"],
+      cons: ["추위 대비"]
+    },
+    "nijo castle": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["니노마루 궁전", "정원"],
+      pros: ["역사적 가치"],
+      cons: ["실내 이동 많음"]
+    },
+    "kinkaku-ji": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["황금 누각", "일몰 뷰"],
+      pros: ["상징적 포인트"],
+      cons: ["혼잡", "현금 입장"]
+    },
+    "kyoto botanical garden": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["실내 온실", "야간 전시"],
+      pros: ["겨울 저녁 관람"],
+      cons: ["티켓 비용"]
+    },
+    "sanjusangendo": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["1,001 관음상", "평지 동선"],
+      pros: ["부모님 동선 편함"],
+      cons: ["현금 입장"]
+    },
+    "grill capital touyoutei": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["함박스테이크", "노포"],
+      pros: ["가족 식사 만족도"],
+      cons: ["저녁 대기 가능"]
+    },
+    "ippodo tea store kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["말차/다구 전문"],
+      pros: ["선물용 최적"],
+      cons: ["가격대 있음"]
+    },
+    "marukyu koyamaen kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["고급 말차"],
+      pros: ["브랜드 신뢰도"],
+      cons: ["품절 가능"]
+    },
+    "asics store kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["신상/사이즈 다양"],
+      pros: ["피팅 편리"],
+      cons: ["할인 적음"]
+    },
+    "smart coffee kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["노포 카페", "프렌치 토스트"],
+      pros: ["분위기 좋음"],
+      cons: ["대기 가능"]
+    },
+    "honke owariya": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["전통 소바"],
+      pros: ["노포 경험"],
+      cons: ["가격대 있음"]
+    },
+    "omen shijo": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["채소 우동"],
+      pros: ["담백한 맛"],
+      cons: ["대기 가능"]
+    },
+    "kyogoku kaneyo": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["킨시동"],
+      pros: ["대표 메뉴"],
+      cons: ["가격대 있음"]
+    },
+    "wako kyoto isetan": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["돈카츠 정식"],
+      pros: ["리필 제공"],
+      cons: ["식사 시간 대기"]
+    },
+    "kyoto wakuden isetan": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["정통 일식"],
+      pros: ["조용한 분위기"],
+      cons: ["가격대 높음"]
+    },
+    "kyoto porta": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["지하 상가", "다양한 식당"],
+      pros: ["날씨 영향 적음"],
+      cons: ["사람 많음"]
+    },
+    "inoda coffee kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      features: ["클래식 카페"],
+      pros: ["분위기 좋음"],
+      cons: ["대기 가능"]
+    }
+  }
 };
