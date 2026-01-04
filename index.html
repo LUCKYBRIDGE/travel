@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="간사이 공항에서 교토로 이어지는 옵션 분기형 가족 여행 일정 웹앱">
+  <meta name="theme-color" content="#f6f2e8">
+  <title>교토 가족 여행 플래너</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/maskable.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="hero-content">
+      <p class="eyebrow">KIX → Kyoto · Family of 5 · Option Branching</p>
+      <h1>교토 가족 여행 플래너</h1>
+      <p class="hero-lead">옵션 분기형 일정표와 오프라인 저장을 결합한 실전형 여행 웹앱.</p>
+      <div class="hero-actions">
+        <a class="button" href="#day1">1일차 보기</a>
+        <a class="button ghost" href="#map">지도 검색어</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-card">
+        <h3>핵심 키워드</h3>
+        <ul>
+          <li>옵션 분기 · 식사 선택 · 일정 자동 재구성</li>
+          <li>현금/카드 구분 · 대기시간 표기</li>
+          <li>모바일 최적화 · 오프라인 대응(PWA)</li>
+        </ul>
+      </div>
+      <div class="hero-card">
+        <h3>여행 요약</h3>
+        <p>성인 5인 가족 / 3일 코스 / 간사이 공항 → 교토</p>
+        <p class="muted">Day 1은 3가지 버전 중 선택</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Section navigation">
+    <a href="#overview">개요</a>
+    <a href="#day1">1일차</a>
+    <a href="#day2">2일차</a>
+    <a href="#day3">3일차</a>
+    <a href="#map">지도</a>
+    <a href="#budget">예산</a>
+    <a href="#checklist">체크리스트</a>
+  </nav>
+
+  <main id="app">
+    <section id="overview" class="section"></section>
+    <section id="day1" class="section day-section"></section>
+    <section id="day2" class="section day-section"></section>
+    <section id="day3" class="section day-section"></section>
+    <section id="map" class="section"></section>
+    <section id="budget" class="section"></section>
+    <section id="checklist" class="section"></section>
+  </main>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+
+  <footer class="footer">
+    <p>옵션을 바꾸면 일정과 예산 요약이 자동 갱신됩니다.</p>
+    <a href="#top">맨 위로</a>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
