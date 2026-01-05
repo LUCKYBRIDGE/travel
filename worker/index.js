@@ -149,6 +149,53 @@ async function saveRatings(store, payload) {
   await store.put(RATINGS_KEY, JSON.stringify(payload));
 }
 
+async function updateRatingsSnapshot(store, apiKey, queries) {
+  const language = "ko";
+  const snapshot = await loadRatings(store);
+  const items = snapshot.items || {};
+  const now = new Date().toISOString();
+
+  for (const query of queries) {
+    const key = normalizeKey(query);
+    const existing = items[key] || {};
+    let placeId = existing.placeId;
+    let placeName = existing.name || "";
+
+    if (!placeId) {
+      const resolved = await resolvePlaceId(query, apiKey, language);
+      if (!resolved || resolved.error || !resolved.placeId) {
+        continue;
+      }
+      placeId = resolved.placeId;
+      placeName = resolved.name || placeName;
+    }
+
+    const details = await fetchPlaceDetails(placeId, apiKey, language);
+    if (!details || details.error) {
+      continue;
+    }
+    const result = details.result || {};
+    const rating = typeof result.rating === "number" ? result.rating : null;
+    const ratingCount =
+      typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
+
+    items[key] = {
+      query,
+      placeId,
+      name: result.name || placeName || "",
+      rating,
+      ratingCount,
+      popularity: inferPopularity(ratingCount),
+      source: "Google",
+      updatedAt: now
+    };
+  }
+
+  const payload = { updatedAt: now, items };
+  await saveRatings(store, payload);
+  return { updatedAt: now, count: Object.keys(items).length };
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -246,6 +293,33 @@ export default {
       return jsonResponse(snapshot, 200, origin, 300);
     }
 
+    if (url.pathname === "/api/ratings/refresh") {
+      if (request.method !== "POST") {
+        return jsonResponse({ error: "method not allowed" }, 405, origin);
+      }
+      const apiKey = env.GOOGLE_PLACES_API_KEY;
+      const store = env.TRAVEL_SYNC;
+      if (!store) {
+        return jsonResponse({ error: "sync store not configured" }, 500, origin);
+      }
+      if (!apiKey) {
+        return jsonResponse({ error: "missing api key" }, 500, origin);
+      }
+      const adminToken = env.RATINGS_ADMIN_TOKEN || "";
+      if (!adminToken) {
+        return jsonResponse({ error: "admin token not configured" }, 500, origin);
+      }
+      const token = url.searchParams.get("token") || "";
+      const auth = request.headers.get("Authorization") || "";
+      const bearer = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
+      if (token !== adminToken && bearer !== adminToken) {
+        return jsonResponse({ error: "unauthorized" }, 403, origin);
+      }
+
+      const result = await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
+      return jsonResponse(result, 200, origin);
+    }
+
     if (url.pathname === "/api/sync") {
       const store = env.TRAVEL_SYNC;
       if (!store) {
@@ -315,47 +389,6 @@ export default {
     if (!store || !apiKey) {
       return;
     }
-    const language = "ko";
-    const snapshot = await loadRatings(store);
-    const items = snapshot.items || {};
-    const now = new Date().toISOString();
-
-    for (const query of PLACE_QUERIES) {
-      const key = normalizeKey(query);
-      const existing = items[key] || {};
-      let placeId = existing.placeId;
-      let placeName = existing.name || "";
-
-      if (!placeId) {
-        const resolved = await resolvePlaceId(query, apiKey, language);
-        if (!resolved || resolved.error || !resolved.placeId) {
-          continue;
-        }
-        placeId = resolved.placeId;
-        placeName = resolved.name || placeName;
-      }
-
-      const details = await fetchPlaceDetails(placeId, apiKey, language);
-      if (!details || details.error) {
-        continue;
-      }
-      const result = details.result || {};
-      const rating = typeof result.rating === "number" ? result.rating : null;
-      const ratingCount =
-        typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
-
-      items[key] = {
-        query,
-        placeId,
-        name: result.name || placeName || "",
-        rating,
-        ratingCount,
-        popularity: inferPopularity(ratingCount),
-        source: "Google",
-        updatedAt: now
-      };
-    }
-
-    await saveRatings(store, { updatedAt: now, items });
+    await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
   }
 };
