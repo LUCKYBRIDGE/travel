@@ -4,3 +4,7 @@ compatibility_date = "2026-01-05"
 
 [vars]
 ALLOWED_ORIGINS = "https://luckybridge.github.io,https://travel-942.pages.dev"
+
+[[kv_namespaces]]
+binding = "TRAVEL_SYNC"
+id = "REPLACE_WITH_KV_ID"

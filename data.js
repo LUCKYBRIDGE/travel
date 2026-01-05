@@ -43,6 +43,9 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
+  syncApi: {
+    baseUrl: "https://travel.lucky20220528.workers.dev"
+  },
   routeHints: [
     {
       from: "Kansai International Airport Terminal 1",

@@ -18,7 +18,9 @@
     routeMode: "travel:route-mode",
     coords: "travel:coords",
     routes: "travel:routes",
-    ratings: "travel:ratings"
+    ratings: "travel:ratings",
+    syncCode: "travel:sync-code",
+    syncMeta: "travel:sync-meta"
   };
 
   const state = {
@@ -28,7 +30,9 @@
     routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
     coords: loadStorage(STORAGE.coords, {}),
     routes: loadStorage(STORAGE.routes, {}),
-    ratings: loadStorage(STORAGE.ratings, {})
+    ratings: loadStorage(STORAGE.ratings, {}),
+    syncCode: loadStorage(STORAGE.syncCode, ""),
+    syncMeta: loadStorage(STORAGE.syncMeta, {})
   };
   const placeDetails = data.placeDetails || {};
 
@@ -348,12 +352,27 @@
     return String(data.ratingApi?.baseUrl || "").replace(/\/$/, "");
   }
 
+  function getSyncApiBase() {
+    return String(data.syncApi?.baseUrl || data.ratingApi?.baseUrl || "").replace(/\/$/, "");
+  }
+
   function buildRatingUrl(query) {
     const base = getRatingApiBase();
     if (!base || !query) {
       return "";
     }
     return `${base}/api/places?query=${encodeURIComponent(query)}`;
+  }
+
+  function buildSyncUrl(code) {
+    const base = getSyncApiBase();
+    if (!base) {
+      return "";
+    }
+    if (code) {
+      return `${base}/api/sync?code=${encodeURIComponent(code)}`;
+    }
+    return `${base}/api/sync`;
   }
 
   async function fetchRatingUpdate(query) {
@@ -364,6 +383,34 @@
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("rating api error");
+    }
+    return response.json();
+  }
+
+  async function fetchSyncSave(code, payload) {
+    const url = buildSyncUrl();
+    if (!url) {
+      throw new Error("sync api not configured");
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, payload })
+    });
+    if (!response.ok) {
+      throw new Error("sync save failed");
+    }
+    return response.json();
+  }
+
+  async function fetchSyncLoad(code) {
+    const url = buildSyncUrl(code);
+    if (!url) {
+      throw new Error("sync api not configured");
+    }
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("sync load failed");
     }
     return response.json();
   }
@@ -383,6 +430,25 @@
       ratingUpdatedAt: updatedAt
     };
     saveStorage(STORAGE.ratings, state.ratings);
+  }
+
+  function setSyncCode(code) {
+    state.syncCode = code || "";
+    saveStorage(STORAGE.syncCode, state.syncCode);
+  }
+
+  function setSyncMeta(meta) {
+    state.syncMeta = meta || {};
+    saveStorage(STORAGE.syncMeta, state.syncMeta);
+  }
+
+  function getSyncCodeInput() {
+    return document.getElementById("syncCode");
+  }
+
+  function getSyncCodeValue() {
+    const input = getSyncCodeInput();
+    return input ? input.value.trim().toUpperCase() : "";
   }
 
   function sleep(ms) {
@@ -729,6 +795,9 @@
     const day1Selection = day1Group
       ? day1Group.options.find((opt) => opt.id === getOptionSelection(day1Group))
       : null;
+    const syncEnabled = Boolean(getSyncApiBase());
+    const syncMeta = state.syncMeta || {};
+    const syncDate = syncMeta.updatedAt ? formatDate(syncMeta.updatedAt) : "";
 
     sections.overview.innerHTML = `
       <div class="section-head">
@@ -787,6 +856,25 @@
         <div class="share-actions">
           <button type="button" data-share-import>붙여넣기 가져오기</button>
           <button type="button" data-share-clear>지우기</button>
+        </div>
+        <div class="sync-card">
+          <h4>공유 코드 동기화</h4>
+          <p class="muted">
+            ${syncEnabled ? "코드를 공유하면 여러 기기에서 동일한 코스를 불러올 수 있어요." : "동기화 기능은 서버 설정이 필요합니다."}
+          </p>
+          <div class="sync-actions">
+            <input
+              id="syncCode"
+              type="text"
+              placeholder="공유 코드 입력"
+              value="${state.syncCode || ""}"
+            />
+            <button type="button" data-sync-create ${syncEnabled ? "" : "disabled"}>코드 생성+저장</button>
+            <button type="button" data-sync-save ${syncEnabled ? "" : "disabled"}>저장</button>
+            <button type="button" data-sync-load ${syncEnabled ? "" : "disabled"}>불러오기</button>
+            <button type="button" data-sync-copy>복사</button>
+          </div>
+          ${syncDate ? `<div class="muted">최근 동기화: ${syncDate}</div>` : ""}
         </div>
       </div>
     `;
@@ -1444,6 +1532,112 @@
   });
 
   document.addEventListener("click", (event) => {
+    const syncCreate = event.target.closest("[data-sync-create]");
+    if (syncCreate) {
+      if (!getSyncApiBase()) {
+        showToast("동기화 API 설정 필요");
+        return;
+      }
+      syncCreate.disabled = true;
+      syncCreate.textContent = "생성 중...";
+      const payload = buildSharePayload();
+      fetchSyncSave("", payload)
+        .then((result) => {
+          setSyncCode(result.code);
+          setSyncMeta({ updatedAt: result.updatedAt });
+          render();
+          showToast(`공유 코드 생성 완료: ${result.code}`);
+        })
+        .catch(() => {
+          showToast("코드 생성 실패");
+        })
+        .finally(() => {
+          syncCreate.disabled = false;
+          syncCreate.textContent = "코드 생성+저장";
+        });
+      return;
+    }
+
+    const syncSave = event.target.closest("[data-sync-save]");
+    if (syncSave) {
+      if (!getSyncApiBase()) {
+        showToast("동기화 API 설정 필요");
+        return;
+      }
+      const code = getSyncCodeValue();
+      if (!code) {
+        showToast("공유 코드를 입력하세요");
+        return;
+      }
+      syncSave.disabled = true;
+      syncSave.textContent = "저장 중...";
+      const payload = buildSharePayload();
+      fetchSyncSave(code, payload)
+        .then((result) => {
+          setSyncCode(result.code);
+          setSyncMeta({ updatedAt: result.updatedAt });
+          render();
+          showToast("동기화 저장 완료");
+        })
+        .catch(() => {
+          showToast("동기화 저장 실패");
+        })
+        .finally(() => {
+          syncSave.disabled = false;
+          syncSave.textContent = "저장";
+        });
+      return;
+    }
+
+    const syncLoad = event.target.closest("[data-sync-load]");
+    if (syncLoad) {
+      if (!getSyncApiBase()) {
+        showToast("동기화 API 설정 필요");
+        return;
+      }
+      const code = getSyncCodeValue();
+      if (!code) {
+        showToast("공유 코드를 입력하세요");
+        return;
+      }
+      syncLoad.disabled = true;
+      syncLoad.textContent = "불러오는 중...";
+      fetchSyncLoad(code)
+        .then((result) => {
+          if (!result.payload) {
+            throw new Error("missing payload");
+          }
+          applySharePayload(result.payload);
+          setSyncCode(result.code || code);
+          setSyncMeta({ updatedAt: result.updatedAt });
+          writeSharePayload(result.payload);
+          render();
+          showToast("동기화 불러오기 완료");
+        })
+        .catch(() => {
+          showToast("동기화 불러오기 실패");
+        })
+        .finally(() => {
+          syncLoad.disabled = false;
+          syncLoad.textContent = "불러오기";
+        });
+      return;
+    }
+
+    const syncCopy = event.target.closest("[data-sync-copy]");
+    if (syncCopy) {
+      const code = getSyncCodeValue() || state.syncCode;
+      if (!code) {
+        showToast("공유 코드가 없습니다");
+        return;
+      }
+      navigator.clipboard
+        .writeText(code)
+        .then(() => showToast("공유 코드 복사 완료"))
+        .catch(() => showToast("복사 실패"));
+      return;
+    }
+
     const bulkButton = event.target.closest("[data-rating-bulk]");
     if (bulkButton) {
       if (!getRatingApiBase()) {

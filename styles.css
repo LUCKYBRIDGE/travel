@@ -724,6 +724,38 @@ a {
   flex-wrap: wrap;
 }
 
+.sync-card {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(31, 42, 42, 0.12);
+  display: grid;
+  gap: 10px;
+}
+
+.sync-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.sync-actions input {
+  min-width: 180px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  font-size: 0.85rem;
+}
+
+.sync-actions button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
 .share-actions button,
 .share-upload {
   padding: 6px 10px;

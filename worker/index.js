@@ -25,7 +25,7 @@ function resolveCorsOrigin(requestOrigin, allowedOrigins) {
 function buildCorsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400"
   };
@@ -43,7 +43,7 @@ function jsonResponse(body, status, origin, cacheSeconds) {
 function withCors(response, origin) {
   const headers = new Headers(response.headers);
   headers.set("Access-Control-Allow-Origin", origin);
-  headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   headers.set("Access-Control-Allow-Headers", "Content-Type");
   return new Response(response.body, {
     status: response.status,
@@ -112,7 +112,7 @@ export default {
       return new Response(null, { status: 204, headers: buildCorsHeaders(origin) });
     }
 
-    if (request.method !== "GET") {
+    if (!["GET", "POST"].includes(request.method)) {
       return jsonResponse({ error: "method not allowed" }, 405, origin);
     }
 
@@ -120,61 +120,121 @@ export default {
       return jsonResponse({ error: "origin not allowed" }, 403, origin);
     }
 
-    if (url.pathname !== "/api/places") {
-      return jsonResponse({ error: "not found" }, 404, origin);
-    }
-
-    const apiKey = env.GOOGLE_PLACES_API_KEY;
-    if (!apiKey) {
-      return jsonResponse({ error: "missing api key" }, 500, origin);
-    }
-
-    const query = url.searchParams.get("query");
-    const placeIdParam = url.searchParams.get("placeId");
-    const language = url.searchParams.get("lang") || "ko";
-    if (!query && !placeIdParam) {
-      return jsonResponse({ error: "missing query" }, 400, origin);
-    }
-
-    const cacheKey = new Request(url.toString(), request);
-    const cache = caches.default;
-    const cached = await cache.match(cacheKey);
-    if (cached) {
-      return withCors(cached, origin);
-    }
-
-    let placeId = placeIdParam;
-    let placeName = "";
-
-    if (!placeId) {
-      const resolved = await resolvePlaceId(query, apiKey, language);
-      if (!resolved) {
-        return jsonResponse({ error: "place not found" }, 404, origin);
+    if (url.pathname === "/api/places") {
+      const apiKey = env.GOOGLE_PLACES_API_KEY;
+      if (!apiKey) {
+        return jsonResponse({ error: "missing api key" }, 500, origin);
       }
-      placeId = resolved.placeId;
-      placeName = resolved.name || "";
+
+      const query = url.searchParams.get("query");
+      const placeIdParam = url.searchParams.get("placeId");
+      const language = url.searchParams.get("lang") || "ko";
+      if (!query && !placeIdParam) {
+        return jsonResponse({ error: "missing query" }, 400, origin);
+      }
+
+      const cacheKey = new Request(url.toString(), request);
+      const cache = caches.default;
+      const cached = await cache.match(cacheKey);
+      if (cached) {
+        return withCors(cached, origin);
+      }
+
+      let placeId = placeIdParam;
+      let placeName = "";
+
+      if (!placeId) {
+        const resolved = await resolvePlaceId(query, apiKey, language);
+        if (!resolved) {
+          return jsonResponse({ error: "place not found" }, 404, origin);
+        }
+        placeId = resolved.placeId;
+        placeName = resolved.name || "";
+      }
+
+      const details = await fetchPlaceDetails(placeId, apiKey, language);
+      const result = details.result || {};
+      const rating = typeof result.rating === "number" ? result.rating : null;
+      const ratingCount =
+        typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
+
+      const payload = {
+        query: query || "",
+        placeId,
+        name: result.name || placeName || "",
+        rating,
+        ratingCount,
+        popularity: inferPopularity(ratingCount),
+        source: "Google",
+        updatedAt: new Date().toISOString()
+      };
+
+      const cacheSeconds = Number(env.CACHE_SECONDS || DEFAULT_CACHE_SECONDS);
+      const response = jsonResponse(payload, 200, origin, cacheSeconds);
+      ctx.waitUntil(cache.put(cacheKey, response.clone()));
+      return response;
     }
 
-    const details = await fetchPlaceDetails(placeId, apiKey, language);
-    const result = details.result || {};
-    const rating = typeof result.rating === "number" ? result.rating : null;
-    const ratingCount =
-      typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
+    if (url.pathname === "/api/sync") {
+      const store = env.TRAVEL_SYNC;
+      if (!store) {
+        return jsonResponse({ error: "sync store not configured" }, 500, origin);
+      }
 
-    const payload = {
-      query: query || "",
-      placeId,
-      name: result.name || placeName || "",
-      rating,
-      ratingCount,
-      popularity: inferPopularity(ratingCount),
-      source: "Google",
-      updatedAt: new Date().toISOString()
-    };
+      if (request.method === "GET") {
+        const code = url.searchParams.get("code");
+        if (!code) {
+          return jsonResponse({ error: "missing code" }, 400, origin);
+        }
+        const value = await store.get(code);
+        if (!value) {
+          return jsonResponse({ error: "code not found" }, 404, origin);
+        }
+        let parsed;
+        try {
+          parsed = JSON.parse(value);
+        } catch (error) {
+          return jsonResponse({ error: "invalid stored payload" }, 500, origin);
+        }
+        return jsonResponse({ code, ...parsed }, 200, origin);
+      }
 
-    const cacheSeconds = Number(env.CACHE_SECONDS || DEFAULT_CACHE_SECONDS);
-    const response = jsonResponse(payload, 200, origin, cacheSeconds);
-    ctx.waitUntil(cache.put(cacheKey, response.clone()));
-    return response;
+      let body = null;
+      try {
+        body = await request.json();
+      } catch (error) {
+        return jsonResponse({ error: "invalid json" }, 400, origin);
+      }
+      if (!body || typeof body !== "object") {
+        return jsonResponse({ error: "invalid body" }, 400, origin);
+      }
+
+      let code = typeof body.code === "string" ? body.code.trim() : "";
+      const payload = body.payload;
+      if (!payload) {
+        return jsonResponse({ error: "missing payload" }, 400, origin);
+      }
+
+      if (!code) {
+        for (let attempt = 0; attempt < 5; attempt += 1) {
+          const candidate = Math.random().toString(36).slice(2, 8).toUpperCase();
+          const exists = await store.get(candidate);
+          if (!exists) {
+            code = candidate;
+            break;
+          }
+        }
+        if (!code) {
+          return jsonResponse({ error: "unable to generate code" }, 500, origin);
+        }
+      }
+
+      const updatedAt = new Date().toISOString();
+      const record = JSON.stringify({ payload, updatedAt });
+      await store.put(code, record);
+      return jsonResponse({ code, updatedAt }, 200, origin);
+    }
+
+    return jsonResponse({ error: "not found" }, 404, origin);
   }
 };
