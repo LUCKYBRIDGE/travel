@@ -236,8 +236,8 @@ window.TRIP_DATA = {
                     {
                       id: "airport-food",
                       title: "공항 식당 선택",
-                      mode: "single",
-                      note: "원하는 곳 1곳 선택",
+                      mode: "multi",
+                      note: "1~2곳 선택 가능",
                       options: [
                         {
                           id: "551",
@@ -351,8 +351,8 @@ window.TRIP_DATA = {
                     {
                       id: "d1-dinner",
                       title: "저녁 식사 선택",
-                      mode: "single",
-                      note: "카드 가능 / 5인 예약 권장",
+                      mode: "multi",
+                      note: "복수 선택 가능 · 카드 가능 / 5인 예약 권장",
                       options: [
                         {
                           id: "moritaya",
@@ -488,7 +488,8 @@ window.TRIP_DATA = {
                     {
                       id: "rinku-meals",
                       title: "린쿠 식당 선택",
-                      mode: "single",
+                      mode: "multi",
+                      note: "1~2곳 선택 가능",
                       options: [
                         {
                           id: "mametora",
@@ -563,7 +564,8 @@ window.TRIP_DATA = {
                     {
                       id: "d1-dinner-b",
                       title: "저녁 식사 선택",
-                      mode: "single",
+                      mode: "multi",
+                      note: "복수 선택 가능",
                       options: [
                         {
                           id: "moritaya-b",
@@ -665,7 +667,8 @@ window.TRIP_DATA = {
                     {
                       id: "airport-food-c",
                       title: "공항 식당 선택",
-                      mode: "single",
+                      mode: "multi",
+                      note: "1~2곳 선택 가능",
                       options: [
                         {
                           id: "551-c",
@@ -787,7 +790,8 @@ window.TRIP_DATA = {
                     {
                       id: "d1-dinner-c-group",
                       title: "저녁 식사 선택",
-                      mode: "single",
+                      mode: "multi",
+                      note: "복수 선택 가능",
                       options: [
                         {
                           id: "moritaya-c",
@@ -1035,7 +1039,8 @@ window.TRIP_DATA = {
             {
               id: "d2-lunch-choice",
               title: "점심 식당 선택",
-              mode: "single",
+              mode: "multi",
+              note: "1~2곳 선택 가능",
               options: [
                 {
                   id: "kaneyo",
@@ -1307,7 +1312,8 @@ window.TRIP_DATA = {
             {
               id: "d3-lunch-choice",
               title: "점심 식당 선택",
-              mode: "single",
+              mode: "multi",
+              note: "1~2곳 선택 가능",
               options: [
                 {
                   id: "wako",

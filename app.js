@@ -65,7 +65,11 @@
       return "평점 입력 필요";
     }
     const source = detail.ratingSource || "Google";
-    return `${detail.rating} (${source})`;
+    const count =
+      typeof detail.ratingCount === "number"
+        ? `, 리뷰 ${detail.ratingCount.toLocaleString("ko-KR")}개`
+        : "";
+    return `${detail.rating} (${source}${count})`;
   }
 
   function isPlainObject(value) {
@@ -157,6 +161,7 @@
                 ${renderDetailLine("특징", detail.features, "정보 준비중")}
                 ${renderDetailLine("장점", detail.pros, "정보 준비중")}
                 ${renderDetailLine("단점", detail.cons, "정보 준비중")}
+                ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
                 <div class="map-actions">
                   <a href="${buildMapLink(item.mapQuery)}" target="_blank" rel="noreferrer">지도 열기</a>
                   <button type="button" data-copy="${item.mapQuery}">검색어 복사</button>
@@ -197,6 +202,7 @@
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}
+      ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
       ${renderLinks(detail, mapQuery)}
       ${options.showNearby ? renderNearbyList(detail.nearby) : ""}
     `;
@@ -704,7 +710,7 @@
             .map((option) => {
               const checked = selectedIds.includes(option.id);
               return `
-                <label class="option-item">
+                <label class="option-item ${checked ? "selected" : ""}">
                   <input
                     type="${group.mode === "multi" ? "checkbox" : "radio"}"
                     name="option-${group.id}"
@@ -716,6 +722,7 @@
                   <div class="option-meta">
                     <strong>${option.label}</strong>
                     ${option.summary ? `<span>${option.summary}</span>` : ""}
+                    ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
                 </label>
               `;
@@ -729,10 +736,14 @@
   function renderChoiceGroup(blockId, group) {
     const selection = getChoiceSelection(blockId, group);
     const selectedIds = group.mode === "multi" ? selection : [selection];
+    const selectedLabels = group.options
+      .filter((option) => selectedIds.includes(option.id))
+      .map((option) => option.label);
     return `
       <div class="choice-group">
         <div class="choice-title">${group.title}</div>
         ${group.note ? `<div class="choice-note">${group.note}</div>` : ""}
+        ${selectedLabels.length ? `<div class="choice-selected">선택됨: ${selectedLabels.join(", ")}</div>` : ""}
         ${group.options
           .map((option) => {
             const checked = selectedIds.includes(option.id);
@@ -740,7 +751,7 @@
               ? renderPlaceCard(option.mapQuery, option.label, { collapsible: true, showNearby: false })
               : "";
             return `
-              <div class="choice-item">
+              <div class="choice-item ${checked ? "selected" : ""}">
                 <label class="choice-label">
                   <input
                     type="${group.mode === "multi" ? "checkbox" : "radio"}"
@@ -757,6 +768,7 @@
                     ${option.menu ? `<span class="option-menu">메뉴: ${option.menu}</span>` : ""}
                     ${option.where ? `<span class="option-where">위치: ${option.where}</span>` : ""}
                     ${option.desc ? `<span class="option-desc">${option.desc}</span>` : ""}
+                    ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
                 </label>
                 ${placeInfo}
@@ -909,6 +921,7 @@
             optional: false,
             rating: formatRating(detail),
             summary,
+            popularity: detail?.popularity || "",
             building: detail?.building || "",
             floor: detail?.floor || "",
             area: detail?.area || ""
@@ -934,6 +947,7 @@
                   optional: true,
                   rating: formatRating(nearbyDetail),
                   summary: nearbySummary,
+                  popularity: nearbyDetail?.popularity || "",
                   building: nearbyDetail?.building || nearby.building || "",
                   floor: nearbyDetail?.floor || nearby.floor || "",
                   area: nearbyDetail?.area || nearby.area || ""
@@ -967,6 +981,7 @@
                 optional: !isSelected,
                 rating: formatRating(detail),
                 summary,
+                popularity: detail?.popularity || "",
                 building: detail?.building || "",
                 floor: detail?.floor || "",
                 area: detail?.area || ""
@@ -1055,6 +1070,7 @@
                           <div class="muted">${item.note}</div>
                           <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
                           ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
+                          ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
                           ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
                         </div>
                         <div class="map-actions">

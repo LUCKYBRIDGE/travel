@@ -384,6 +384,13 @@ a {
   background: var(--paper-2);
 }
 
+.option-item.selected,
+.choice-item.selected {
+  border-color: rgba(217, 108, 77, 0.5);
+  box-shadow: 0 8px 18px rgba(217, 108, 77, 0.12);
+  background: #fff;
+}
+
 .option-item input,
 .choice-item input {
   accent-color: var(--accent);
@@ -432,6 +439,11 @@ a {
   color: var(--ink);
 }
 
+.option-selected {
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .choice-group {
   margin-top: 12px;
   display: grid;
@@ -446,6 +458,12 @@ a {
 .choice-note {
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+.choice-selected {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-2);
 }
 
 .place-info {
