@@ -78,6 +78,32 @@
     `;
   }
 
+  function renderLinks(detail, mapQuery) {
+    if (!mapQuery) {
+      return "";
+    }
+    const links = Array.isArray(detail.links) ? detail.links : [];
+    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+      `${mapQuery} 공식 사이트`
+    )}`;
+    const merged = [
+      ...links,
+      { label: "공식 사이트 검색", url: searchUrl },
+      { label: "구글 지도", url: buildMapLink(mapQuery) }
+    ];
+    return `
+      <div class="place-links">
+        ${merged
+          .map(
+            (link) => `
+              <a href="${link.url}" target="_blank" rel="noreferrer">${link.label}</a>
+            `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
   function renderNearbyList(nearby) {
     if (!nearby || nearby.length === 0) {
       return "";
@@ -114,15 +140,22 @@
       return "";
     }
     const detail = getPlaceDetails(mapQuery) || {};
+    const summary = detail.summary
+      ? detail.summary
+      : detail.features && detail.features.length
+      ? `한눈에 보기: ${detail.features.join(", ")}`
+      : "";
     const content = `
       <div class="place-top">
         <span class="label">Google 지도</span>
         <a href="${buildMapLink(mapQuery)}" target="_blank" rel="noreferrer">열기</a>
         <span class="rating">평점: ${formatRating(detail)}</span>
       </div>
+      ${summary ? `<div class="place-summary">${summary}</div>` : ""}
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}
+      ${renderLinks(detail, mapQuery)}
       ${options.showNearby ? renderNearbyList(detail.nearby) : ""}
     `;
 
@@ -238,6 +271,7 @@
     if (!options || options.length === 0) {
       return `<div class="muted">오프라인 이동 정보 없음</div>`;
     }
+    const hasDistance = options.some((option) => option.distanceKm);
     return `
       <div class="route-options">
         ${options
@@ -249,12 +283,14 @@
                   <span class="muted">${formatDuration(option.timeMin, option.timeMax)}</span>
                 </div>
                 <div class="muted">${formatRouteCost(option)}</div>
+                ${option.distanceKm ? `<div class="muted">거리 ${option.distanceKm}km</div>` : ""}
                 ${option.note ? `<div class="muted">${option.note}</div>` : ""}
               </div>
             `
           )
           .join("")}
       </div>
+      ${hasDistance ? "" : `<div class="muted">거리 정보는 온라인 업데이트로 확인 가능</div>`}
     `;
   }
 
@@ -577,6 +613,8 @@
                   <div class="option-meta">
                     <strong>${option.label}</strong>
                     ${option.note ? `<span>${option.note}</span>` : ""}
+                    ${option.menu ? `<span class="option-menu">메뉴: ${option.menu}</span>` : ""}
+                    ${option.desc ? `<span class="option-desc">${option.desc}</span>` : ""}
                   </div>
                 </label>
                 ${placeInfo}
@@ -644,11 +682,13 @@
           ${block.start ? `${block.start}~${block.end || ""}` : "시간 유동"}
         </div>
         <div class="block-body">
+          <div class="block-step">순서 ${index + 1}</div>
           <div class="block-title">
             <h4>${block.title}</h4>
             ${block.variant ? `<span>${block.variant}</span>` : ""}
           </div>
           ${tags.length ? `<div class="chips">${tags.join("")}</div>` : ""}
+          ${block.summary ? `<div class="block-summary">${block.summary}</div>` : ""}
           ${block.details ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
           ${block.location ? `<div class="block-row"><span class="label">장소</span><span>${block.location.name}</span></div>` : ""}
           ${placeInfo}
@@ -671,6 +711,20 @@
         timeline.push(renderRouteCard(block, next, index));
       }
     });
+    const selectionSummary = (day.optionGroups || [])
+      .map((group) => {
+        const selection = getOptionSelection(group);
+        const selectedIds = group.mode === "multi" ? selection : [selection];
+        const selectedLabels = group.options
+          .filter((option) => selectedIds.includes(option.id))
+          .map((option) => option.label);
+        if (!selectedLabels.length) {
+          return null;
+        }
+        return `<div class="summary-row"><span class="label">${group.title}</span><span>${selectedLabels.join(", ")}</span></div>`;
+      })
+      .filter(Boolean)
+      .join("");
 
     section.innerHTML = `
       <div class="section-head">
@@ -679,6 +733,7 @@
           <p class="section-sub">${day.description || ""}</p>
         </div>
       </div>
+      ${selectionSummary ? `<div class="card day-summary"><h3>현재 선택 요약</h3>${selectionSummary}</div>` : ""}
       ${optionGroups}
       <div class="timeline">
         ${timeline.join("")}
@@ -698,13 +753,19 @@
         if (block.location && block.location.mapQuery) {
           const key = block.location.mapQuery.toLowerCase();
           const detail = getPlaceDetails(block.location.mapQuery);
+          const summary = detail?.summary
+            ? detail.summary
+            : detail?.features?.length
+            ? `한눈에 보기: ${detail.features.join(", ")}`
+            : "";
           items.set(key, {
             day: day.label,
             title: block.location.name || block.title,
             query: block.location.mapQuery,
             note: block.title,
             optional: false,
-            rating: formatRating(detail)
+            rating: formatRating(detail),
+            summary
           });
           if (detail && Array.isArray(detail.nearby)) {
             detail.nearby.forEach((nearby) => {
@@ -714,13 +775,19 @@
               const nearbyKey = nearby.mapQuery.toLowerCase();
               if (!items.has(nearbyKey)) {
                 const nearbyDetail = getPlaceDetails(nearby.mapQuery) || nearby;
+                const nearbySummary =
+                  nearbyDetail?.summary ||
+                  (nearbyDetail?.features?.length
+                    ? `한눈에 보기: ${nearbyDetail.features.join(", ")}`
+                    : "");
                 items.set(nearbyKey, {
                   day: day.label,
                   title: nearby.name,
                   query: nearby.mapQuery,
                   note: `근처 추천 · ${block.title}`,
                   optional: true,
-                  rating: formatRating(nearbyDetail)
+                  rating: formatRating(nearbyDetail),
+                  summary: nearbySummary
                 });
               }
             });
@@ -737,6 +804,11 @@
             const isSelected = selectedIds.includes(option.id);
             const existing = items.get(key);
             const detail = getPlaceDetails(option.mapQuery);
+            const summary = detail?.summary
+              ? detail.summary
+              : detail?.features?.length
+              ? `한눈에 보기: ${detail.features.join(", ")}`
+              : "";
             if (!existing || (existing.optional && isSelected)) {
               items.set(key, {
                 day: day.label,
@@ -744,7 +816,8 @@
                 query: option.mapQuery,
                 note: block.title,
                 optional: !isSelected,
-                rating: formatRating(detail)
+                rating: formatRating(detail),
+                summary
               });
             }
           });
@@ -785,7 +858,7 @@
     sections.map.innerHTML = `
       <div class="section-head">
         <div>
-          <h2>지도 검색어</h2>
+          <h2>지도 · 공식 링크</h2>
           <p class="section-sub">현재 선택된 옵션 기준. 선택지를 바꾸면 리스트가 갱신됩니다. 평점은 수동 입력 값입니다.</p>
         </div>
       </div>
@@ -829,9 +902,11 @@
                           ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
                           <div class="muted">${item.note}</div>
                           <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
+                          ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
                         </div>
                         <div class="map-actions">
                           <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
+                          <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
                           <button type="button" data-copy="${item.query}">검색어 복사</button>
                         </div>
                       </div>
