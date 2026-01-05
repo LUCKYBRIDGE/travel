@@ -40,7 +40,7 @@ window.TRIP_DATA = {
   },
   ratingApi: {
     mode: "manual",
-    baseUrl: "",
+    baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
   routeHints: [
