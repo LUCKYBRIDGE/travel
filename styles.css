@@ -459,6 +459,93 @@ a {
   align-items: center;
 }
 
+.route-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  border: 1px dashed rgba(31, 42, 42, 0.2);
+  box-shadow: 0 10px 22px rgba(31, 42, 42, 0.08);
+  display: grid;
+  gap: 10px;
+  animation: rise 0.6s ease var(--delay, 0s) both;
+}
+
+.route-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.route-head strong {
+  font-size: 0.95rem;
+}
+
+.route-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.route-actions a,
+.route-actions button {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.route-online {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+
+.route-options {
+  display: grid;
+  gap: 8px;
+}
+
+.route-option {
+  display: grid;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--paper-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(31, 42, 42, 0.08);
+  font-size: 0.82rem;
+}
+
+.route-settings {
+  display: grid;
+  gap: 12px;
+}
+
+.route-mode-options {
+  display: grid;
+  gap: 10px;
+}
+
+.route-mode {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(31, 42, 42, 0.08);
+  background: var(--paper-2);
+}
+
+.route-mode input {
+  margin-top: 4px;
+  accent-color: var(--accent);
+}
+
 .map-list {
   display: grid;
   gap: 12px;

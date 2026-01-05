@@ -33,6 +33,131 @@ window.TRIP_DATA = {
       tags: ["교통", "2일차"]
     }
   ],
+  routeSettings: {
+    mode: "hybrid",
+    onlineProvider: "osrm",
+    onlineProfile: "driving"
+  },
+  routeHints: [
+    {
+      from: "Kansai International Airport Terminal 1",
+      to: "JR Haruka Kansai Airport Station",
+      options: [
+        { mode: "도보", timeMin: 10, timeMax: 15, costMin: 0, costMax: 0, unit: "group", note: "공항 내 이동" }
+      ]
+    },
+    {
+      from: "Kansai International Airport Terminal 1",
+      to: "Rinku Premium Outlets",
+      options: [
+        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" },
+        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 2000, costMax: 2500, unit: "per_car", cars: 2 }
+      ]
+    },
+    {
+      from: "Rinku Premium Outlets",
+      to: "JR Haruka Kansai Airport Station",
+      options: [
+        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" },
+        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 2000, costMax: 2500, unit: "per_car", cars: 2 }
+      ]
+    },
+    {
+      from: "JR Haruka Kansai Airport Station",
+      to: "Kyoto Station",
+      options: [
+        { mode: "하루카 특급", timeMin: 75, timeMax: 85, costMin: 0, costMax: 0, unit: "per_person", note: "티켓 보유 기준" }
+      ]
+    },
+    {
+      from: "Kyoto Station",
+      to: "Hotel Vischio Kyoto by GRANVIA",
+      options: [
+        { mode: "도보", timeMin: 2, timeMax: 5, costMin: 0, costMax: 0, unit: "group", note: "하치조 출구" }
+      ]
+    },
+    {
+      from: "Kyoto Station",
+      to: "To-ji Temple",
+      options: [
+        { mode: "버스", timeMin: 10, timeMax: 15, costMin: 230, costMax: 230, unit: "per_person" },
+        { mode: "도보", timeMin: 15, timeMax: 20, costMin: 0, costMax: 0, unit: "group" }
+      ]
+    },
+    {
+      from: "To-ji Temple",
+      to: "Nijo Castle",
+      options: [
+        { mode: "지하철", timeMin: 20, timeMax: 25, costMin: 260, costMax: 260, unit: "per_person" }
+      ]
+    },
+    {
+      from: "Nijo Castle",
+      to: "Kawaramachi Kyoto",
+      options: [
+        { mode: "지하철", timeMin: 10, timeMax: 15, costMin: 220, costMax: 260, unit: "per_person" }
+      ]
+    },
+    {
+      from: "Kawaramachi Kyoto",
+      to: "Kinkaku-ji",
+      options: [
+        { mode: "버스", timeMin: 30, timeMax: 40, costMin: 230, costMax: 230, unit: "per_person" },
+        { mode: "택시", timeMin: 20, timeMax: 25, costMin: 2500, costMax: 3000, unit: "per_car", cars: 2 }
+      ]
+    },
+    {
+      from: "Kinkaku-ji",
+      to: "Grill Capital Touyoutei",
+      options: [
+        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 1500, costMax: 1800, unit: "per_car", cars: 2 },
+        { mode: "버스", timeMin: 20, timeMax: 30, costMin: 230, costMax: 230, unit: "per_person" }
+      ]
+    },
+    {
+      from: "Grill Capital Touyoutei",
+      to: "Kyoto Botanical Garden",
+      options: [
+        { mode: "도보", timeMin: 5, timeMax: 10, costMin: 0, costMax: 0, unit: "group" }
+      ]
+    },
+    {
+      from: "Hotel Vischio Kyoto by GRANVIA",
+      to: "Sanjusangendo",
+      options: [
+        { mode: "버스", timeMin: 10, timeMax: 15, costMin: 230, costMax: 230, unit: "per_person" }
+      ]
+    },
+    {
+      from: "Sanjusangendo",
+      to: "Higashi Honganji Temple",
+      options: [
+        { mode: "버스", timeMin: 10, timeMax: 15, costMin: 230, costMax: 230, unit: "per_person" },
+        { mode: "도보", timeMin: 20, timeMax: 25, costMin: 0, costMax: 0, unit: "group" }
+      ]
+    },
+    {
+      from: "Higashi Honganji Temple",
+      to: "Kyoto Station",
+      options: [
+        { mode: "도보", timeMin: 10, timeMax: 15, costMin: 0, costMax: 0, unit: "group" }
+      ]
+    },
+    {
+      from: "Kyoto Station",
+      to: "JR Haruka Kyoto Station",
+      options: [
+        { mode: "도보", timeMin: 5, timeMax: 10, costMin: 0, costMax: 0, unit: "group", note: "승강장 이동" }
+      ]
+    },
+    {
+      from: "JR Haruka Kyoto Station",
+      to: "Kansai International Airport",
+      options: [
+        { mode: "하루카 특급", timeMin: 75, timeMax: 85, costMin: 0, costMax: 0, unit: "per_person", note: "티켓 보유 기준" }
+      ]
+    }
+  ],
   days: [
     {
       id: "day1",
@@ -198,8 +323,8 @@ window.TRIP_DATA = {
                   title: "교토역 도착 + 저녁/야경",
                   details: ["호텔 비시오 교토 체크인", "남측 출구 도보 2분"],
                   location: {
-                    name: "Hotel Vischio Kyoto",
-                    mapQuery: "Hotel Vischio Kyoto"
+                    name: "Hotel Vischio Kyoto by GRANVIA",
+                    mapQuery: "Hotel Vischio Kyoto by GRANVIA"
                   },
                   tags: ["저녁", "야경"],
                   choices: [
@@ -382,8 +507,8 @@ window.TRIP_DATA = {
                   title: "교토역 도착 + 저녁/야경",
                   details: ["호텔 비시오 교토 체크인", "남측 출구 도보 2분"],
                   location: {
-                    name: "Hotel Vischio Kyoto",
-                    mapQuery: "Hotel Vischio Kyoto"
+                    name: "Hotel Vischio Kyoto by GRANVIA",
+                    mapQuery: "Hotel Vischio Kyoto by GRANVIA"
                   },
                   tags: ["저녁", "야경"],
                   choices: [
@@ -523,8 +648,8 @@ window.TRIP_DATA = {
                   title: "호텔 체크인",
                   details: ["교토역 하치조 출구 도보 2분"],
                   location: {
-                    name: "Hotel Vischio Kyoto",
-                    mapQuery: "Hotel Vischio Kyoto"
+                    name: "Hotel Vischio Kyoto by GRANVIA",
+                    mapQuery: "Hotel Vischio Kyoto by GRANVIA"
                   },
                   tags: ["체크인"]
                 },
@@ -703,6 +828,18 @@ window.TRIP_DATA = {
       title: "전통 마켓 · 유적 · 쇼핑",
       description: "코보산 장날 + 핵심 스팟 집중",
       baseBlocks: [
+        {
+          id: "d2-breakfast",
+          start: "07:30",
+          end: "08:20",
+          title: "호텔 조식",
+          details: ["조식 확정", "출발 전 여유롭게 식사"],
+          location: {
+            name: "Hotel Vischio Kyoto by GRANVIA",
+            mapQuery: "Hotel Vischio Kyoto by GRANVIA"
+          },
+          tags: ["조식", "숙소"]
+        },
         {
           id: "d2-pass",
           start: "08:30",
@@ -943,14 +1080,26 @@ window.TRIP_DATA = {
       description: "교토역 거점 이동으로 체력 절약",
       baseBlocks: [
         {
+          id: "d3-breakfast",
+          start: "07:30",
+          end: "08:20",
+          title: "호텔 조식",
+          details: ["조식 확정", "체크아웃 전 여유 식사"],
+          location: {
+            name: "Hotel Vischio Kyoto by GRANVIA",
+            mapQuery: "Hotel Vischio Kyoto by GRANVIA"
+          },
+          tags: ["조식", "숙소"]
+        },
+        {
           id: "d3-luggage",
           start: "09:30",
           end: "10:00",
           title: "체크아웃 & 짐 보관",
           details: ["호텔 로비에 짐 보관", "하치조 출구 도보 2분"],
           location: {
-            name: "Hotel Vischio Kyoto",
-            mapQuery: "Hotel Vischio Kyoto"
+            name: "Hotel Vischio Kyoto by GRANVIA",
+            mapQuery: "Hotel Vischio Kyoto by GRANVIA"
           },
           tags: ["체크아웃"]
         },
@@ -1268,12 +1417,12 @@ window.TRIP_DATA = {
       pros: ["야식/선물 구매"],
       cons: ["저녁 혼잡"]
     },
-    "hotel vischio kyoto": {
+    "hotel vischio kyoto by granvia": {
       rating: null,
       ratingSource: "Google",
-      features: ["교토역 도보 2분"],
-      pros: ["짐 이동 편리"],
-      cons: ["체크인 시간 혼잡 가능"]
+      features: ["교토역 도보 2분", "조식 제공"],
+      pros: ["짐 이동 편리", "아침 동선 안정적"],
+      cons: ["체크인/조식 시간 혼잡 가능"]
     },
     "lawson kansai airport terminal 1": {
       rating: null,

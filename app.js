@@ -14,13 +14,19 @@
   const STORAGE = {
     options: "travel:options",
     choices: "travel:choices",
-    checklist: "travel:checklist"
+    checklist: "travel:checklist",
+    routeMode: "travel:route-mode",
+    coords: "travel:coords",
+    routes: "travel:routes"
   };
 
   const state = {
     options: loadStorage(STORAGE.options, {}),
     choices: loadStorage(STORAGE.choices, {}),
-    checklist: loadStorage(STORAGE.checklist, {})
+    checklist: loadStorage(STORAGE.checklist, {}),
+    routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
+    coords: loadStorage(STORAGE.coords, {}),
+    routes: loadStorage(STORAGE.routes, {})
   };
   const placeDetails = data.placeDetails || {};
 
@@ -135,6 +141,241 @@
         ${content}
       </div>
     `;
+  }
+
+  function normalizeKey(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function buildRouteKey(fromQuery, toQuery) {
+    return `${normalizeKey(fromQuery)}__${normalizeKey(toQuery)}`;
+  }
+
+  function getRouteHint(fromQuery, toQuery) {
+    const hints = data.routeHints || [];
+    const fromKey = normalizeKey(fromQuery);
+    const toKey = normalizeKey(toQuery);
+    let hint = hints.find(
+      (item) => normalizeKey(item.from) === fromKey && normalizeKey(item.to) === toKey
+    );
+    if (!hint) {
+      hint = hints.find(
+        (item) =>
+          normalizeKey(item.from) === toKey &&
+          normalizeKey(item.to) === fromKey &&
+          item.bidirectional !== false
+      );
+    }
+    return hint || null;
+  }
+
+  function formatDuration(min, max) {
+    if (!min && !max) {
+      return "정보 없음";
+    }
+    if (!max || min === max) {
+      return `${min}분`;
+    }
+    return `${min}~${max}분`;
+  }
+
+  function formatRouteCost(option) {
+    const min = option.costMin ?? 0;
+    const max = option.costMax ?? min;
+    if (min === 0 && max === 0) {
+      return option.note ? option.note : "무료";
+    }
+    const formattedMin = min.toLocaleString("ja-JP");
+    const formattedMax = max.toLocaleString("ja-JP");
+    const base = min === max ? `${formattedMin}엔` : `${formattedMin}~${formattedMax}엔`;
+    if (option.unit === "per_person") {
+      const groupMin = min * data.travelers.count;
+      const groupMax = max * data.travelers.count;
+      const groupText =
+        groupMin === groupMax
+          ? `${groupMin.toLocaleString("ja-JP")}엔`
+          : `${groupMin.toLocaleString("ja-JP")}~${groupMax.toLocaleString("ja-JP")}엔`;
+      return `${base}/인 (5인 ${groupText})`;
+    }
+    if (option.unit === "per_car") {
+      const cars = option.cars || 1;
+      const groupMin = min * cars;
+      const groupMax = max * cars;
+      const groupText =
+        groupMin === groupMax
+          ? `${groupMin.toLocaleString("ja-JP")}엔`
+          : `${groupMin.toLocaleString("ja-JP")}~${groupMax.toLocaleString("ja-JP")}엔`;
+      return `${base}/대 (x${cars} = ${groupText})`;
+    }
+    return base;
+  }
+
+  function shouldShowOnline() {
+    return state.routeMode === "hybrid" || state.routeMode === "online";
+  }
+
+  function buildDirectionsLink(fromQuery, toQuery, mode = "transit") {
+    const origin = encodeURIComponent(fromQuery);
+    const destination = encodeURIComponent(toQuery);
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=${mode}`;
+  }
+
+  function formatDistance(distanceKm) {
+    if (!distanceKm && distanceKm !== 0) {
+      return "정보 없음";
+    }
+    return `${distanceKm.toFixed(1)}km`;
+  }
+
+  function formatDurationValue(durationMin) {
+    if (!durationMin && durationMin !== 0) {
+      return "정보 없음";
+    }
+    return `${Math.round(durationMin)}분`;
+  }
+
+  function renderRouteOptions(options) {
+    if (!options || options.length === 0) {
+      return `<div class="muted">오프라인 이동 정보 없음</div>`;
+    }
+    return `
+      <div class="route-options">
+        ${options
+          .map(
+            (option) => `
+              <div class="route-option">
+                <div>
+                  <strong>${option.mode}</strong>
+                  <span class="muted">${formatDuration(option.timeMin, option.timeMax)}</span>
+                </div>
+                <div class="muted">${formatRouteCost(option)}</div>
+                ${option.note ? `<div class="muted">${option.note}</div>` : ""}
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  function renderRouteCard(fromBlock, toBlock, index) {
+    const fromQuery = fromBlock.location?.mapQuery;
+    const toQuery = toBlock.location?.mapQuery;
+    if (!fromQuery || !toQuery) {
+      return "";
+    }
+    if (normalizeKey(fromQuery) === normalizeKey(toQuery)) {
+      return "";
+    }
+    const hint = getRouteHint(fromQuery, toQuery);
+    const offlineOptions = hint?.options || [];
+    const onlineRoute = getOnlineRoute(fromQuery, toQuery);
+    const onlineActive = shouldShowOnline();
+    const showOffline = state.routeMode !== "online";
+    const onlineLabel = onlineRoute
+      ? `온라인(자동차) · ${formatDistance(onlineRoute.distanceKm)} · ${formatDurationValue(
+          onlineRoute.durationMin
+        )}`
+      : "온라인 정보 없음";
+    const updatedAt = onlineRoute?.updatedAt
+      ? new Date(onlineRoute.updatedAt).toLocaleTimeString("ko-KR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      : null;
+
+    return `
+      <div class="route-card" style="--delay: ${index * 0.04 + 0.02}s">
+        <div class="route-head">
+          <div>
+            <strong>이동</strong>
+            <span class="muted">${fromBlock.location.name} → ${toBlock.location.name}</span>
+          </div>
+          <div class="route-actions">
+            <a href="${buildDirectionsLink(fromQuery, toQuery)}" target="_blank" rel="noreferrer">동선 지도</a>
+            ${
+              onlineActive
+                ? `<button type="button" data-route-update data-route-from="${fromQuery}" data-route-to="${toQuery}">실시간 업데이트</button>`
+                : ""
+            }
+          </div>
+        </div>
+        ${
+          onlineActive
+            ? `<div class="route-online">
+                <span>${onlineLabel}</span>
+                ${updatedAt ? `<span class="muted">업데이트 ${updatedAt}</span>` : ""}
+              </div>`
+            : ""
+        }
+        ${showOffline ? renderRouteOptions(offlineOptions) : ""}
+      </div>
+    `;
+  }
+
+  function getOnlineRoute(fromQuery, toQuery) {
+    const key = buildRouteKey(fromQuery, toQuery);
+    return state.routes[key] || null;
+  }
+
+  async function geocodePlace(query) {
+    const key = normalizeKey(query);
+    if (state.coords[key]) {
+      return state.coords[key];
+    }
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(
+      query
+    )}`;
+    const response = await fetch(url, { headers: { "Accept-Language": "ja,en" } });
+    const payload = await response.json();
+    if (!payload || !payload.length) {
+      return null;
+    }
+    const result = {
+      lat: parseFloat(payload[0].lat),
+      lon: parseFloat(payload[0].lon)
+    };
+    state.coords[key] = result;
+    saveStorage(STORAGE.coords, state.coords);
+    return result;
+  }
+
+  async function fetchOsrmRoute(fromCoords, toCoords, profile) {
+    const url = `https://router.project-osrm.org/route/v1/${profile}/${fromCoords.lon},${fromCoords.lat};${toCoords.lon},${toCoords.lat}?overview=full&geometries=geojson`;
+    const response = await fetch(url);
+    const payload = await response.json();
+    if (!payload.routes || !payload.routes.length) {
+      return null;
+    }
+    const route = payload.routes[0];
+    return {
+      distanceKm: route.distance / 1000,
+      durationMin: route.duration / 60,
+      geometry: route.geometry.coordinates.map((coord) => [coord[1], coord[0]])
+    };
+  }
+
+  async function updateOnlineRoute(fromQuery, toQuery) {
+    const profile = data.routeSettings?.onlineProfile || "driving";
+    const fromCoords = await geocodePlace(fromQuery);
+    const toCoords = await geocodePlace(toQuery);
+    if (!fromCoords || !toCoords) {
+      return null;
+    }
+    const result = await fetchOsrmRoute(fromCoords, toCoords, profile);
+    if (!result) {
+      return null;
+    }
+    const key = buildRouteKey(fromQuery, toQuery);
+    state.routes[key] = {
+      ...result,
+      fromQuery,
+      toQuery,
+      updatedAt: Date.now(),
+      profile
+    };
+    saveStorage(STORAGE.routes, state.routes);
+    return state.routes[key];
   }
 
   function getOptionSelection(group) {
@@ -422,6 +663,14 @@
     const optionGroups = (day.optionGroups || []).map(renderOptionGroup).join("");
     const blocks = buildDayBlocks(day);
     const context = { nearbySet: new Set() };
+    const timeline = [];
+    blocks.forEach((block, index) => {
+      timeline.push(renderBlock(block, index, context));
+      const next = blocks[index + 1];
+      if (next && block.location?.mapQuery && next.location?.mapQuery) {
+        timeline.push(renderRouteCard(block, next, index));
+      }
+    });
 
     section.innerHTML = `
       <div class="section-head">
@@ -432,7 +681,7 @@
       </div>
       ${optionGroups}
       <div class="timeline">
-        ${blocks.map((block, index) => renderBlock(block, index, context)).join("")}
+        ${timeline.join("")}
       </div>
       ${day.tips && day.tips.length
         ? `<div class="card" style="margin-top: 18px"><h3>운영 팁</h3><ul>${day.tips.map((tip) => `<li>${tip}</li>`).join("")}</ul></div>`
@@ -515,12 +764,54 @@
       acc[item.day].push(item);
       return acc;
     }, {});
+    const routeModes = [
+      {
+        id: "offline",
+        label: "오프라인",
+        note: "사전 입력된 이동 정보만 사용"
+      },
+      {
+        id: "hybrid",
+        label: "하이브리드",
+        note: "오프라인 기본 + 실시간 업데이트"
+      },
+      {
+        id: "online",
+        label: "온라인",
+        note: "실시간 거리/시간만 표시"
+      }
+    ];
 
     sections.map.innerHTML = `
       <div class="section-head">
         <div>
           <h2>지도 검색어</h2>
           <p class="section-sub">현재 선택된 옵션 기준. 선택지를 바꾸면 리스트가 갱신됩니다. 평점은 수동 입력 값입니다.</p>
+        </div>
+      </div>
+      <div class="card route-settings">
+        <h3>경로 계산 모드</h3>
+        <p class="muted">온라인 모드는 네트워크가 있을 때만 동작합니다.</p>
+        <div class="route-mode-options">
+          ${routeModes
+            .map(
+              (mode) => `
+                <label class="route-mode">
+                  <input
+                    type="radio"
+                    name="route-mode"
+                    value="${mode.id}"
+                    data-route-mode
+                    ${state.routeMode === mode.id ? "checked" : ""}
+                  />
+                  <div>
+                    <strong>${mode.label}</strong>
+                    <div class="muted">${mode.note}</div>
+                  </div>
+                </label>
+              `
+            )
+            .join("")}
         </div>
       </div>
       ${Object.entries(grouped)
@@ -763,9 +1054,44 @@
       saveStorage(STORAGE.checklist, state.checklist);
       renderChecklist();
     }
+
+    if (target.matches("[data-route-mode]")) {
+      state.routeMode = target.value;
+      saveStorage(STORAGE.routeMode, state.routeMode);
+      render();
+      showToast("경로 모드가 변경됐어요");
+    }
   });
 
   document.addEventListener("click", (event) => {
+    const updateButton = event.target.closest("[data-route-update]");
+    if (updateButton) {
+      const fromQuery = updateButton.dataset.routeFrom;
+      const toQuery = updateButton.dataset.routeTo;
+      if (!fromQuery || !toQuery) {
+        return;
+      }
+      if (!navigator.onLine) {
+        showToast("온라인 상태에서만 업데이트 가능");
+        return;
+      }
+      updateButton.disabled = true;
+      updateButton.textContent = "업데이트 중...";
+      updateOnlineRoute(fromQuery, toQuery)
+        .then(() => {
+          render();
+          showToast("경로 업데이트 완료");
+        })
+        .catch(() => {
+          showToast("경로 업데이트 실패");
+        })
+        .finally(() => {
+          updateButton.disabled = false;
+          updateButton.textContent = "실시간 업데이트";
+        });
+      return;
+    }
+
     const button = event.target.closest("[data-copy]");
     if (!button) {
       return;
