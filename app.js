@@ -385,6 +385,21 @@
     saveStorage(STORAGE.ratings, state.ratings);
   }
 
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function getBulkRatingQueries() {
+    const items = collectMapItems();
+    const unique = new Set();
+    items.forEach((item) => {
+      if (item.query) {
+        unique.add(item.query);
+      }
+    });
+    return Array.from(unique);
+  }
+
   function buildRouteKey(fromQuery, toQuery) {
     return `${normalizeKey(fromQuery)}__${normalizeKey(toQuery)}`;
   }
@@ -1138,6 +1153,20 @@
             .join("")}
         </div>
       </div>
+      ${
+        getRatingApiBase()
+          ? `
+            <div class="card rating-bulk">
+              <h3>평점 일괄 업데이트</h3>
+              <p class="muted">전체 장소 기준으로 한 번에 갱신합니다. 호출 횟수만큼 API가 사용됩니다.</p>
+              <div class="rating-bulk-actions">
+                <button type="button" data-rating-bulk>전체 업데이트</button>
+                <span class="muted">대상: ${getBulkRatingQueries().length}곳</span>
+              </div>
+            </div>
+          `
+          : ""
+      }
       ${Object.entries(grouped)
         .map(
           ([day, list], index) => `
@@ -1415,6 +1444,39 @@
   });
 
   document.addEventListener("click", (event) => {
+    const bulkButton = event.target.closest("[data-rating-bulk]");
+    if (bulkButton) {
+      if (!getRatingApiBase()) {
+        showToast("평점 API 설정 필요");
+        return;
+      }
+      const queries = getBulkRatingQueries();
+      if (!queries.length) {
+        showToast("업데이트할 장소가 없습니다");
+        return;
+      }
+      bulkButton.disabled = true;
+      let success = 0;
+      let failed = 0;
+      (async () => {
+        for (let index = 0; index < queries.length; index += 1) {
+          bulkButton.textContent = `업데이트 중 ${index + 1}/${queries.length}`;
+          try {
+            const payload = await fetchRatingUpdate(queries[index]);
+            applyRatingUpdate(queries[index], payload);
+            success += 1;
+          } catch (error) {
+            failed += 1;
+          }
+          await sleep(350);
+        }
+        render();
+        const failureNote = failed ? ` · 실패 ${failed}곳` : "";
+        showToast(`평점 업데이트 완료 (성공 ${success}곳${failureNote})`);
+      })();
+      return;
+    }
+
     const ratingButton = event.target.closest("[data-rating-update]");
     if (ratingButton) {
       const query = ratingButton.dataset.ratingUpdate;
