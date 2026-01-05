@@ -1,4 +1,7 @@
+import { PLACE_QUERIES } from "./places.js";
+
 const DEFAULT_CACHE_SECONDS = 60 * 60 * 24 * 7;
+const RATINGS_KEY = "ratings:v1";
 const FALLBACK_ORIGIN = "*";
 
 function parseAllowedOrigins(env) {
@@ -65,6 +68,10 @@ function inferPopularity(count) {
   return "관광객 적은 편";
 }
 
+function normalizeKey(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 async function fetchJson(url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -117,6 +124,29 @@ async function fetchPlaceDetails(placeId, apiKey, language) {
     };
   }
   return data;
+}
+
+async function loadRatings(store) {
+  const raw = await store.get(RATINGS_KEY);
+  if (!raw) {
+    return { updatedAt: "", items: {} };
+  }
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") {
+      return { updatedAt: "", items: {} };
+    }
+    return {
+      updatedAt: parsed.updatedAt || "",
+      items: parsed.items && typeof parsed.items === "object" ? parsed.items : {}
+    };
+  } catch (error) {
+    return { updatedAt: "", items: {} };
+  }
+}
+
+async function saveRatings(store, payload) {
+  await store.put(RATINGS_KEY, JSON.stringify(payload));
 }
 
 export default {
@@ -207,6 +237,15 @@ export default {
       return response;
     }
 
+    if (url.pathname === "/api/ratings") {
+      const store = env.TRAVEL_SYNC;
+      if (!store) {
+        return jsonResponse({ error: "sync store not configured" }, 500, origin);
+      }
+      const snapshot = await loadRatings(store);
+      return jsonResponse(snapshot, 200, origin, 300);
+    }
+
     if (url.pathname === "/api/sync") {
       const store = env.TRAVEL_SYNC;
       if (!store) {
@@ -268,5 +307,55 @@ export default {
     }
 
     return jsonResponse({ error: "not found" }, 404, origin);
+  },
+
+  async scheduled(event, env, ctx) {
+    const store = env.TRAVEL_SYNC;
+    const apiKey = env.GOOGLE_PLACES_API_KEY;
+    if (!store || !apiKey) {
+      return;
+    }
+    const language = "ko";
+    const snapshot = await loadRatings(store);
+    const items = snapshot.items || {};
+    const now = new Date().toISOString();
+
+    for (const query of PLACE_QUERIES) {
+      const key = normalizeKey(query);
+      const existing = items[key] || {};
+      let placeId = existing.placeId;
+      let placeName = existing.name || "";
+
+      if (!placeId) {
+        const resolved = await resolvePlaceId(query, apiKey, language);
+        if (!resolved || resolved.error || !resolved.placeId) {
+          continue;
+        }
+        placeId = resolved.placeId;
+        placeName = resolved.name || placeName;
+      }
+
+      const details = await fetchPlaceDetails(placeId, apiKey, language);
+      if (!details || details.error) {
+        continue;
+      }
+      const result = details.result || {};
+      const rating = typeof result.rating === "number" ? result.rating : null;
+      const ratingCount =
+        typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
+
+      items[key] = {
+        query,
+        placeId,
+        name: result.name || placeName || "",
+        rating,
+        ratingCount,
+        popularity: inferPopularity(ratingCount),
+        source: "Google",
+        updatedAt: now
+      };
+    }
+
+    await saveRatings(store, { updatedAt: now, items });
   }
 };

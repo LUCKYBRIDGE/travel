@@ -5,6 +5,9 @@ compatibility_date = "2026-01-05"
 [vars]
 ALLOWED_ORIGINS = "https://luckybridge.github.io,https://travel-942.pages.dev"
 
+[triggers]
+crons = ["0 3 * * *"]
+
 [[kv_namespaces]]
 binding = "TRAVEL_SYNC"
 id = "df76f4d9a38441cab51faa30855c1f94"

@@ -39,7 +39,7 @@ window.TRIP_DATA = {
     onlineProfile: "driving"
   },
   ratingApi: {
-    mode: "manual",
+    mode: "server",
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },

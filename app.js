@@ -19,6 +19,7 @@
     coords: "travel:coords",
     routes: "travel:routes",
     ratings: "travel:ratings",
+    ratingsMeta: "travel:ratings-meta",
     syncCode: "travel:sync-code",
     syncMeta: "travel:sync-meta"
   };
@@ -31,6 +32,7 @@
     coords: loadStorage(STORAGE.coords, {}),
     routes: loadStorage(STORAGE.routes, {}),
     ratings: loadStorage(STORAGE.ratings, {}),
+    ratingsMeta: loadStorage(STORAGE.ratingsMeta, {}),
     syncCode: loadStorage(STORAGE.syncCode, ""),
     syncMeta: loadStorage(STORAGE.syncMeta, {})
   };
@@ -240,7 +242,7 @@
       ${detail.ratingUpdatedAt ? renderDetailLine("업데이트", formatDate(detail.ratingUpdatedAt)) : ""}
       ${renderLinks(detail, mapQuery)}
       ${
-        getRatingApiBase()
+        canManualRatings()
           ? `<div class="place-actions"><button type="button" data-rating-update="${mapQuery}">평점 업데이트</button></div>`
           : ""
       }
@@ -352,6 +354,14 @@
     return String(data.ratingApi?.baseUrl || "").replace(/\/$/, "");
   }
 
+  function getRatingMode() {
+    return data.ratingApi?.mode || "manual";
+  }
+
+  function canManualRatings() {
+    return getRatingMode() === "manual" && Boolean(getRatingApiBase());
+  }
+
   function getSyncApiBase() {
     return String(data.syncApi?.baseUrl || data.ratingApi?.baseUrl || "").replace(/\/$/, "");
   }
@@ -362,6 +372,14 @@
       return "";
     }
     return `${base}/api/places?query=${encodeURIComponent(query)}`;
+  }
+
+  function buildRatingsUrl() {
+    const base = getRatingApiBase();
+    if (!base) {
+      return "";
+    }
+    return `${base}/api/ratings`;
   }
 
   function buildSyncUrl(code) {
@@ -383,6 +401,18 @@
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("rating api error");
+    }
+    return response.json();
+  }
+
+  async function fetchRatingsSnapshot() {
+    const url = buildRatingsUrl();
+    if (!url) {
+      throw new Error("ratings api not configured");
+    }
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("ratings api error");
     }
     return response.json();
   }
@@ -430,6 +460,39 @@
       ratingUpdatedAt: updatedAt
     };
     saveStorage(STORAGE.ratings, state.ratings);
+  }
+
+  function applyRatingsSnapshot(snapshot) {
+    const items = snapshot?.items && typeof snapshot.items === "object" ? snapshot.items : {};
+    const normalized = {};
+    Object.keys(items).forEach((key) => {
+      const entry = items[key] || {};
+      normalized[key] = {
+        rating: typeof entry.rating === "number" ? entry.rating : null,
+        ratingCount: typeof entry.ratingCount === "number" ? entry.ratingCount : null,
+        popularity: entry.popularity || "",
+        ratingSource: entry.source || "Google",
+        ratingUpdatedAt: entry.updatedAt || snapshot.updatedAt || ""
+      };
+    });
+    state.ratings = normalized;
+    state.ratingsMeta = { updatedAt: snapshot?.updatedAt || "" };
+    saveStorage(STORAGE.ratings, state.ratings);
+    saveStorage(STORAGE.ratingsMeta, state.ratingsMeta);
+  }
+
+  function loadRatingsFromServer() {
+    if (getRatingMode() !== "server") {
+      return;
+    }
+    fetchRatingsSnapshot()
+      .then((snapshot) => {
+        applyRatingsSnapshot(snapshot);
+        render();
+      })
+      .catch(() => {
+        showToast("서버 평점 불러오기 실패");
+      });
   }
 
   function setSyncCode(code) {
@@ -1191,6 +1254,15 @@
       acc[item.day].push(item);
       return acc;
     }, {});
+    const ratingsUpdatedAt = state.ratingsMeta?.updatedAt
+      ? formatDate(state.ratingsMeta.updatedAt)
+      : "";
+    const ratingNote =
+      getRatingMode() === "server"
+        ? ratingsUpdatedAt
+          ? `서버 갱신: ${ratingsUpdatedAt}`
+          : "서버 갱신 데이터"
+        : "평점은 수동 입력 값입니다.";
     const routeModes = [
       {
         id: "offline",
@@ -1213,7 +1285,7 @@
       <div class="section-head">
         <div>
           <h2>지도 · 공식 링크</h2>
-          <p class="section-sub">현재 선택된 옵션 기준. 선택지를 바꾸면 리스트가 갱신됩니다. 평점은 수동 입력 값입니다.</p>
+          <p class="section-sub">현재 선택된 옵션 기준. 선택지를 바꾸면 리스트가 갱신됩니다. ${ratingNote}</p>
         </div>
       </div>
       <div class="card route-settings">
@@ -1242,7 +1314,7 @@
         </div>
       </div>
       ${
-        getRatingApiBase()
+        canManualRatings()
           ? `
             <div class="card rating-bulk">
               <h3>평점 일괄 업데이트</h3>
@@ -1278,7 +1350,7 @@
                         <div class="map-actions">
                           <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
                           <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
-                          ${getRatingApiBase() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
+                          ${canManualRatings() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
                           <button type="button" data-copy="${item.query}">검색어 복사</button>
                         </div>
                       </div>
@@ -1801,4 +1873,5 @@
   }
 
   render();
+  loadRatingsFromServer();
 })();
