@@ -1090,6 +1090,29 @@ window.TRIP_DATA = {
                   desc: "1930년대부터 이어진 클래식 카페. 잠시 쉬어가기 좋아요.",
                   mapQuery: "Smart Coffee Kyoto",
                   cost: { "min": 700, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "nishiki",
+                  label: "니시키 시장 (Nishiki Market)",
+                  note: "시장 간식",
+                  menu: "꼬치/반찬 300~1,000엔",
+                  desc: "짧게 둘러보며 간식을 집어먹기 좋아요. 현금 소액 준비를 추천합니다.",
+                  mapQuery: "Nishiki Market",
+                  cost: { "min": 300, "max": 1000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
+                },
+                {
+                  id: "teramachi",
+                  label: "테라마치 거리 (Teramachi Street)",
+                  note: "잡화/기념품 쇼핑",
+                  desc: "잡화, 기념품, 작은 가게가 모여 있어 쇼핑 동선에 잘 맞습니다.",
+                  mapQuery: "Teramachi Street Kyoto"
+                },
+                {
+                  id: "shinkyogoku",
+                  label: "신쿄고쿠 상점가 (Shinkyogoku)",
+                  note: "실내 상점가",
+                  desc: "날씨 영향을 덜 받는 실내 상점가로 가볍게 둘러보기 좋습니다.",
+                  mapQuery: "Shinkyogoku Shopping Street"
                 }
               ]
             }
@@ -1395,28 +1418,52 @@ window.TRIP_DATA = {
       cons: ["피크 시간 혼잡", "가격대가 높을 수 있음"],
       nearby: [
         {
-          name: "KIX 전망대 (KIX Observation Hall Sky View)",
-          mapQuery: "KIX Observation Hall Sky View",
-          type: "전망",
-          features: ["활주로 뷰", "무료 입장"],
-          pros: ["비행기 관찰", "짧은 체류에 적합"],
-          cons: ["날씨 영향"]
-        },
-        {
-          name: "에어로플라자 (Aeroplaza)",
-          mapQuery: "Aeroplaza Kansai Airport",
-          type: "편의시설",
-          features: ["푸드코트/편의점", "대기용 시설"],
-          pros: ["비행 전 대기 최적"],
+          name: "세븐은행 ATM (Seven Bank)",
+          mapQuery: "Seven Bank Kansai Airport Terminal 1",
+          type: "ATM",
+          features: ["트래블로그 출금", "24시간 이용"],
+          pros: ["가족 단위 출금에 편리"],
           cons: ["혼잡 가능"]
         },
         {
-          name: "호텔 닛코 간사이 (Hotel Nikko Kansai Airport)",
-          mapQuery: "Hotel Nikko Kansai Airport",
-          type: "숙소",
-          features: ["공항 연결", "휴식 공간"],
-          pros: ["이동 최소화"],
-          cons: ["가격대 높음"]
+          name: "이온은행/우체국 ATM",
+          mapQuery: "AEON Bank Kansai Airport Terminal 1",
+          type: "ATM",
+          features: ["트래블월렛 출금", "현금 확보"],
+          pros: ["대체 출금처 확보"],
+          cons: ["위치 찾기 필요"]
+        },
+        {
+          name: "JR 발권기/매표소",
+          mapQuery: "JR Ticket Office Kansai Airport Station",
+          type: "교통",
+          features: ["ICOCA 발급", "하루카 티켓 수령"],
+          pros: ["공항에서 교통 준비 완료"],
+          cons: ["피크 시간 대기"]
+        },
+        {
+          name: "로손 편의점 (Lawson)",
+          mapQuery: "Lawson Kansai Airport Terminal 1",
+          type: "편의점",
+          features: ["간단 요기", "가라아게군/샌드위치"],
+          pros: ["빠른 식사 가능"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "551 호라이 (551 Horai)",
+          mapQuery: "551 Horai Kansai Airport",
+          type: "식사",
+          features: ["오사카 명물 만두", "테이크아웃 가능"],
+          pros: ["회전 빠름"],
+          cons: ["줄이 길 수 있음"]
+        },
+        {
+          name: "키네야 무기마루 (Kineya Mugimaru)",
+          mapQuery: "Kineya Mugimaru Kansai Airport",
+          type: "식사",
+          features: ["우동/덮밥 세트"],
+          pros: ["따뜻한 식사"],
+          cons: ["혼잡 가능"]
         }
       ]
     },
@@ -1452,6 +1499,30 @@ window.TRIP_DATA = {
           features: ["쇼핑/카페 복합몰"],
           pros: ["비교적 실내 동선"],
           cons: ["혼잡 가능"]
+        },
+        {
+          name: "브룩클린 로스팅 컴퍼니 (Brooklyn Roasting)",
+          mapQuery: "Brooklyn Roasting Company Rinku",
+          type: "카페",
+          features: ["바다 뷰 라떼", "휴식 공간"],
+          pros: ["짧은 휴식에 적합"],
+          cons: ["좌석 한정"]
+        },
+        {
+          name: "마메토라 (Mametora)",
+          mapQuery: "Mametora Rinku Premium Outlets",
+          type: "식사",
+          features: ["장어덮밥 전문"],
+          pros: ["제대로 된 한 끼"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "코메라쿠 (Komeraku)",
+          mapQuery: "Komeraku Rinku",
+          type: "식사",
+          features: ["해산물 덮밥"],
+          pros: ["가성비"],
+          cons: ["점심 혼잡"]
         }
       ]
     },
@@ -1510,6 +1581,38 @@ window.TRIP_DATA = {
           features: ["LED 쇼", "사진 포인트"],
           pros: ["무료 관람"],
           cons: ["피크 타임 혼잡"]
+        },
+        {
+          name: "교토 포르타 (Porta)",
+          mapQuery: "Kyoto Porta",
+          type: "식사/쇼핑",
+          features: ["지하 상가", "다양한 식당"],
+          pros: ["날씨 영향 적음"],
+          cons: ["사람 많음"]
+        },
+        {
+          name: "JR 교토 이세탄 식품관",
+          mapQuery: "JR Kyoto Isetan",
+          type: "식사/쇼핑",
+          features: ["도시락/디저트", "마감 세일"],
+          pros: ["야식/선물 구매"],
+          cons: ["저녁 혼잡"]
+        },
+        {
+          name: "나카무라 토키치 (Nakamura Tokichi)",
+          mapQuery: "Nakamura Tokichi Kyoto Station",
+          type: "카페",
+          features: ["말차 디저트"],
+          pros: ["디저트 만족도"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "시즈야 (Sizuya)",
+          mapQuery: "Sizuya Kyoto Station",
+          type: "베이커리",
+          features: ["교토 팥빵"],
+          pros: ["간단한 간식"],
+          cons: ["품절 가능"]
         }
       ]
     },
@@ -1586,6 +1689,14 @@ window.TRIP_DATA = {
           cons: ["혼잡", "현금 필요"]
         },
         {
+          name: "테라마치 거리 (Teramachi Street)",
+          mapQuery: "Teramachi Street Kyoto",
+          type: "쇼핑",
+          features: ["쇼핑 골목", "잡화/기념품"],
+          pros: ["도보 이동 편리"],
+          cons: ["인파 많음"]
+        },
+        {
           name: "폰토초 골목 (Pontocho Alley)",
           mapQuery: "Pontocho Alley",
           type: "골목",
@@ -1608,8 +1719,64 @@ window.TRIP_DATA = {
           features: ["강변 산책로"],
           pros: ["휴식에 좋음"],
           cons: ["날씨 영향"]
+        },
+        {
+          name: "이치호도 (Ippodo Tea)",
+          mapQuery: "Ippodo Tea Store Kyoto",
+          type: "쇼핑",
+          features: ["말차/다구 전문"],
+          pros: ["선물용 구매"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "스마트 커피 (Smart Coffee)",
+          mapQuery: "Smart Coffee Kyoto",
+          type: "카페",
+          features: ["레트로 카페", "프렌치 토스트"],
+          pros: ["분위기 좋음"],
+          cons: ["대기 가능"]
         }
       ]
+    },
+    "teramachi street kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 둘러보기 좋습니다.",
+      features: ["잡화/기념품", "도보 이동"],
+      pros: ["짧은 동선"],
+      cons: ["인파 많음"]
+    },
+    "nishiki market": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토 대표 먹거리 시장으로 간식과 반찬을 가볍게 즐길 수 있습니다.",
+      features: ["먹거리/기념품"],
+      pros: ["현지 분위기"],
+      cons: ["혼잡", "현금 필요"]
+    },
+    "shinkyogoku shopping street": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "비가 와도 둘러보기 좋은 실내형 상점가입니다.",
+      features: ["실내 상점가"],
+      pros: ["날씨 영향 적음"],
+      cons: ["인파 많음"]
+    },
+    "pontocho alley": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "저녁 시간 산책에 좋은 골목길로 분위기 좋은 식당이 많습니다.",
+      features: ["저녁 산책", "식당가"],
+      pros: ["분위기 좋음"],
+      cons: ["저녁 혼잡"]
+    },
+    "kamo river kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "강변 산책로로 잠깐 쉬어가기에 좋습니다.",
+      features: ["강변 산책로"],
+      pros: ["휴식에 좋음"],
+      cons: ["날씨 영향"]
     },
     "551 horai kansai airport": {
       rating: null,
