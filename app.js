@@ -423,7 +423,7 @@
 
   async function fetchStaticRatingsSnapshot() {
     const url = getRatingsSnapshotUrl();
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) {
       throw new Error("ratings snapshot fetch failed");
     }
@@ -513,7 +513,9 @@
           render();
         })
         .catch(() => {
-          showToast("정적 평점 불러오기 실패");
+          if (!Object.keys(state.ratings || {}).length) {
+            showToast("정적 평점 불러오기 실패");
+          }
         });
     }
   }
