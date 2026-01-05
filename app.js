@@ -1348,6 +1348,7 @@
       try {
         const payload = JSON.parse(raw);
         applySharePayload(payload);
+        writeSharePayload(payload);
         showToast("공유 데이터 적용 완료");
       } catch (error) {
         showToast("JSON 파싱 실패");
