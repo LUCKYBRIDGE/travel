@@ -216,7 +216,7 @@ window.TRIP_DATA = {
             {
               id: "airport-meal",
               label: "옵션 A · 공항 식사 + 린쿠 쇼핑",
-              summary: "체력 온존형",
+              summary: "체력 부담 적음",
               blocks: [
                 {
                   id: "d1-airport-lunch-a",
