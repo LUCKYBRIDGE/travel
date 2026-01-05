@@ -382,6 +382,10 @@
     return `${base}/api/ratings`;
   }
 
+  function getRatingsSnapshotUrl() {
+    return data.ratingsSnapshotUrl || "./ratings.json";
+  }
+
   function buildSyncUrl(code) {
     const base = getSyncApiBase();
     if (!base) {
@@ -413,6 +417,15 @@
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("ratings api error");
+    }
+    return response.json();
+  }
+
+  async function fetchStaticRatingsSnapshot() {
+    const url = getRatingsSnapshotUrl();
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("ratings snapshot fetch failed");
     }
     return response.json();
   }
@@ -481,18 +494,28 @@
     saveStorage(STORAGE.ratingsMeta, state.ratingsMeta);
   }
 
-  function loadRatingsFromServer() {
-    if (getRatingMode() !== "server") {
+  function loadRatingsData() {
+    if (getRatingMode() === "server") {
+      fetchRatingsSnapshot()
+        .then((snapshot) => {
+          applyRatingsSnapshot(snapshot);
+          render();
+        })
+        .catch(() => {
+          showToast("서버 평점 불러오기 실패");
+        });
       return;
     }
-    fetchRatingsSnapshot()
-      .then((snapshot) => {
-        applyRatingsSnapshot(snapshot);
-        render();
-      })
-      .catch(() => {
-        showToast("서버 평점 불러오기 실패");
-      });
+    if (getRatingMode() === "static") {
+      fetchStaticRatingsSnapshot()
+        .then((snapshot) => {
+          applyRatingsSnapshot(snapshot);
+          render();
+        })
+        .catch(() => {
+          showToast("정적 평점 불러오기 실패");
+        });
+    }
   }
 
   function setSyncCode(code) {
@@ -1262,6 +1285,10 @@
         ? ratingsUpdatedAt
           ? `서버 갱신: ${ratingsUpdatedAt}`
           : "서버 갱신 데이터"
+        : getRatingMode() === "static"
+        ? ratingsUpdatedAt
+          ? `정적 스냅샷: ${ratingsUpdatedAt}`
+          : "정적 스냅샷 데이터"
         : "평점은 수동 입력 값입니다.";
     const routeModes = [
       {
@@ -1873,5 +1900,5 @@
   }
 
   render();
-  loadRatingsFromServer();
+  loadRatingsData();
 })();

@@ -39,10 +39,11 @@ window.TRIP_DATA = {
     onlineProfile: "driving"
   },
   ratingApi: {
-    mode: "server",
+    mode: "static",
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
+  ratingsSnapshotUrl: "./ratings.json",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
