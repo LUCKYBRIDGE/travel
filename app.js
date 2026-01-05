@@ -68,14 +68,36 @@
     return `${detail.rating} (${source})`;
   }
 
+  function isPlainObject(value) {
+    return value && typeof value === "object" && !Array.isArray(value);
+  }
+
   function renderDetailLine(label, items, fallback) {
-    const value = Array.isArray(items) && items.length ? items.join(" · ") : fallback;
+    const value = Array.isArray(items)
+      ? items.length
+        ? items.join(" · ")
+        : fallback
+      : items || fallback;
     return `
       <div class="place-line">
         <span class="label">${label}</span>
         <span>${value}</span>
       </div>
     `;
+  }
+
+  function buildLocationText(info) {
+    const parts = [];
+    if (info.building) {
+      parts.push(info.building);
+    }
+    if (info.floor) {
+      parts.push(info.floor);
+    }
+    if (info.area) {
+      parts.push(info.area);
+    }
+    return parts.join(" · ");
   }
 
   function renderLinks(detail, mapQuery) {
@@ -113,6 +135,17 @@
         ${nearby
           .map((item) => {
             const detail = getPlaceDetails(item.mapQuery) || item;
+            const locationLines = [
+              detail.building || item.building
+                ? renderDetailLine("건물", detail.building || item.building)
+                : "",
+              detail.floor || item.floor
+                ? renderDetailLine("층", detail.floor || item.floor)
+                : "",
+              detail.area || item.area ? renderDetailLine("구역", detail.area || item.area) : ""
+            ]
+              .filter(Boolean)
+              .join("");
             return `
               <div class="nearby-card">
                 <div class="nearby-header">
@@ -120,6 +153,7 @@
                   ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
                 </div>
                 <div class="muted">평점: ${formatRating(detail)}</div>
+                ${locationLines}
                 ${renderDetailLine("특징", detail.features, "정보 준비중")}
                 ${renderDetailLine("장점", detail.pros, "정보 준비중")}
                 ${renderDetailLine("단점", detail.cons, "정보 준비중")}
@@ -145,6 +179,13 @@
       : detail.features && detail.features.length
       ? `한눈에 보기: ${detail.features.join(", ")}`
       : "";
+    const locationLines = [
+      detail.building ? renderDetailLine("건물", detail.building) : "",
+      detail.floor ? renderDetailLine("층", detail.floor) : "",
+      detail.area ? renderDetailLine("구역", detail.area) : ""
+    ]
+      .filter(Boolean)
+      .join("");
     const content = `
       <div class="place-top">
         <span class="label">Google 지도</span>
@@ -152,6 +193,7 @@
         <span class="rating">평점: ${formatRating(detail)}</span>
       </div>
       ${summary ? `<div class="place-summary">${summary}</div>` : ""}
+      ${locationLines}
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}
@@ -178,6 +220,82 @@
 
   function normalizeKey(value) {
     return String(value || "").trim().toLowerCase();
+  }
+
+  function buildSharePayload() {
+    return {
+      schemaVersion: 1,
+      generatedAt: new Date().toISOString(),
+      appVersion: data.meta?.version || null,
+      state: {
+        options: state.options,
+        choices: state.choices,
+        checklist: state.checklist,
+        routeMode: state.routeMode,
+        routes: state.routes,
+        coords: state.coords
+      }
+    };
+  }
+
+  function getShareTextarea() {
+    return document.getElementById("sharePayload");
+  }
+
+  function writeSharePayload(payload) {
+    const textarea = getShareTextarea();
+    if (!textarea) {
+      return "";
+    }
+    const text = JSON.stringify(payload, null, 2);
+    textarea.value = text;
+    return text;
+  }
+
+  function normalizeShareState(rawState) {
+    const base = isPlainObject(rawState) ? rawState : {};
+    return {
+      options: isPlainObject(base.options) ? base.options : {},
+      choices: isPlainObject(base.choices) ? base.choices : {},
+      checklist: isPlainObject(base.checklist) ? base.checklist : {},
+      routeMode: typeof base.routeMode === "string" ? base.routeMode : state.routeMode,
+      routes: isPlainObject(base.routes) ? base.routes : {},
+      coords: isPlainObject(base.coords) ? base.coords : {}
+    };
+  }
+
+  function applySharePayload(payload) {
+    if (!isPlainObject(payload)) {
+      throw new Error("invalid payload");
+    }
+    const rawState = isPlainObject(payload.state) ? payload.state : payload;
+    const next = normalizeShareState(rawState);
+    state.options = next.options;
+    state.choices = next.choices;
+    state.checklist = next.checklist;
+    state.routeMode = next.routeMode;
+    state.routes = next.routes;
+    state.coords = next.coords;
+    saveStorage(STORAGE.options, state.options);
+    saveStorage(STORAGE.choices, state.choices);
+    saveStorage(STORAGE.checklist, state.checklist);
+    saveStorage(STORAGE.routeMode, state.routeMode);
+    saveStorage(STORAGE.routes, state.routes);
+    saveStorage(STORAGE.coords, state.coords);
+    render();
+  }
+
+  function downloadSharePayload(payload) {
+    const text = JSON.stringify(payload, null, 2);
+    const blob = new Blob([text], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `kyoto-trip-share-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   }
 
   function buildRouteKey(fromQuery, toQuery) {
@@ -546,6 +664,29 @@
           )
           .join("")}
       </div>
+      <div class="card share-card" style="margin-top: 20px; --delay: 0.32s">
+        <h3>내 코스 공유</h3>
+        <p class="muted">
+          기기마다 저장된 선택 내용이 다를 수 있어요. 아래 JSON을 공유하면 같은 코스로 동기화됩니다.
+        </p>
+        <div class="share-actions">
+          <button type="button" data-share-export>내보내기</button>
+          <button type="button" data-share-copy>복사</button>
+          <label class="share-upload">
+            파일 가져오기
+            <input type="file" data-share-file accept="application/json" />
+          </label>
+        </div>
+        <textarea
+          id="sharePayload"
+          rows="6"
+          placeholder="내보내기 또는 공유받은 JSON을 붙여넣어 주세요."
+        ></textarea>
+        <div class="share-actions">
+          <button type="button" data-share-import>붙여넣기 가져오기</button>
+          <button type="button" data-share-clear>지우기</button>
+        </div>
+      </div>
     `;
   }
 
@@ -614,6 +755,7 @@
                     <strong>${option.label}</strong>
                     ${option.note ? `<span>${option.note}</span>` : ""}
                     ${option.menu ? `<span class="option-menu">메뉴: ${option.menu}</span>` : ""}
+                    ${option.where ? `<span class="option-where">위치: ${option.where}</span>` : ""}
                     ${option.desc ? `<span class="option-desc">${option.desc}</span>` : ""}
                   </div>
                 </label>
@@ -691,6 +833,7 @@
           ${block.summary ? `<div class="block-summary">${block.summary}</div>` : ""}
           ${block.details ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
           ${block.location ? `<div class="block-row"><span class="label">장소</span><span>${block.location.name}</span></div>` : ""}
+          ${block.where ? `<div class="block-row"><span class="label">건물/층</span><span>${block.where}</span></div>` : ""}
           ${placeInfo}
           ${renderCosts(block.costs)}
           ${(block.choices || []).map((group) => renderChoiceGroup(block.id, group)).join("")}
@@ -765,7 +908,10 @@
             note: block.title,
             optional: false,
             rating: formatRating(detail),
-            summary
+            summary,
+            building: detail?.building || "",
+            floor: detail?.floor || "",
+            area: detail?.area || ""
           });
           if (detail && Array.isArray(detail.nearby)) {
             detail.nearby.forEach((nearby) => {
@@ -787,7 +933,10 @@
                   note: `근처 추천 · ${block.title}`,
                   optional: true,
                   rating: formatRating(nearbyDetail),
-                  summary: nearbySummary
+                  summary: nearbySummary,
+                  building: nearbyDetail?.building || nearby.building || "",
+                  floor: nearbyDetail?.floor || nearby.floor || "",
+                  area: nearbyDetail?.area || nearby.area || ""
                 });
               }
             });
@@ -817,7 +966,10 @@
                 note: block.title,
                 optional: !isSelected,
                 rating: formatRating(detail),
-                summary
+                summary,
+                building: detail?.building || "",
+                floor: detail?.floor || "",
+                area: detail?.area || ""
               });
             }
           });
@@ -902,6 +1054,7 @@
                           ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
                           <div class="muted">${item.note}</div>
                           <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
+                          ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
                           ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
                         </div>
                         <div class="map-actions">
@@ -1136,9 +1289,82 @@
       render();
       showToast("경로 모드가 변경됐어요");
     }
+
+    if (target.matches("[data-share-file]")) {
+      const file = target.files && target.files[0];
+      if (!file) {
+        return;
+      }
+      file
+        .text()
+        .then((text) => {
+          const payload = JSON.parse(text);
+          applySharePayload(payload);
+          writeSharePayload(payload);
+          showToast("공유 데이터 적용 완료");
+        })
+        .catch(() => {
+          showToast("파일 가져오기 실패");
+        })
+        .finally(() => {
+          target.value = "";
+        });
+    }
   });
 
   document.addEventListener("click", (event) => {
+    const shareExport = event.target.closest("[data-share-export]");
+    if (shareExport) {
+      const payload = buildSharePayload();
+      writeSharePayload(payload);
+      downloadSharePayload(payload);
+      showToast("공유 파일 저장 완료");
+      return;
+    }
+
+    const shareCopy = event.target.closest("[data-share-copy]");
+    if (shareCopy) {
+      const payload = buildSharePayload();
+      const text = writeSharePayload(payload);
+      if (!text) {
+        showToast("복사할 데이터 없음");
+        return;
+      }
+      navigator.clipboard
+        .writeText(text)
+        .then(() => showToast("공유 데이터 복사 완료"))
+        .catch(() => showToast("복사 실패"));
+      return;
+    }
+
+    const shareImport = event.target.closest("[data-share-import]");
+    if (shareImport) {
+      const textarea = getShareTextarea();
+      const raw = textarea ? textarea.value.trim() : "";
+      if (!raw) {
+        showToast("붙여넣기 내용이 비어 있음");
+        return;
+      }
+      try {
+        const payload = JSON.parse(raw);
+        applySharePayload(payload);
+        showToast("공유 데이터 적용 완료");
+      } catch (error) {
+        showToast("JSON 파싱 실패");
+      }
+      return;
+    }
+
+    const shareClear = event.target.closest("[data-share-clear]");
+    if (shareClear) {
+      const textarea = getShareTextarea();
+      if (textarea) {
+        textarea.value = "";
+        showToast("내용이 지워졌어요");
+      }
+      return;
+    }
+
     const updateButton = event.target.closest("[data-route-update]");
     if (updateButton) {
       const fromQuery = updateButton.dataset.routeFrom;

@@ -422,6 +422,11 @@ a {
   color: var(--accent-2);
 }
 
+.option-where {
+  font-size: 0.82rem;
+  color: var(--accent-2);
+}
+
 .option-desc {
   font-size: 0.82rem;
   color: var(--ink);
@@ -651,6 +656,52 @@ a {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.share-card {
+  display: grid;
+  gap: 12px;
+}
+
+.share-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.share-actions button,
+.share-upload {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.share-upload {
+  position: relative;
+  overflow: hidden;
+}
+
+.share-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#sharePayload {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: #fff;
 }
 
 .map-actions a,

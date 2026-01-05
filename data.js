@@ -244,6 +244,7 @@ window.TRIP_DATA = {
                           label: "551 호라이 (551 Horai)",
                           note: "오사카 명물 만두, 회전 빠름",
                           menu: "부타만 2개 580엔 · 새우슈마이 960엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "따끈한 만두를 빠르게 먹기 좋고 포장도 가능해 공항 이동 전에 특히 편합니다.",
                           mapQuery: "551 Horai Kansai Airport",
                           cost: { "min": 580, "max": 960, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -253,6 +254,7 @@ window.TRIP_DATA = {
                           label: "키네야 무기마루 (Kineya Mugimaru)",
                           note: "따뜻한 우동 중심, 좌석 식사",
                           menu: "자가제면 우동 600~900엔 · 미니 장어덮밥 세트 1,200~1,500엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "뜨끈한 면요리로 속을 편하게 채우기 좋아요. 세트 구성이라 선택이 쉽습니다.",
                           mapQuery: "Kineya Mugimaru Kansai Airport",
                           cost: { "min": 600, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -262,6 +264,7 @@ window.TRIP_DATA = {
                           label: "간코 스시 (Ganko Sushi)",
                           note: "정갈한 좌석 초밥 정식",
                           menu: "초밥 정식 2,500~3,500엔",
+                          where: "간사이 공항 T1 3층",
                           desc: "공항에서 차분하게 앉아 먹는 정식 코스. 5인 가족 식사에 안정적입니다.",
                           mapQuery: "Ganko Sushi Kansai Airport",
                           cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -271,6 +274,7 @@ window.TRIP_DATA = {
                           label: "나카스 규동 (Nakasu)",
                           note: "간단·빠른 식사",
                           menu: "규동 약 600엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "시간이 빠듯할 때 든든하게 먹기 좋아요. 대기 시간이 짧은 편입니다.",
                           mapQuery: "Nakasu Kansai Airport",
                           cost: { "min": 600, "max": 600, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -280,6 +284,7 @@ window.TRIP_DATA = {
                           label: "오토야 (Ootoya)",
                           note: "속 편한 가정식",
                           menu: "가정식 정식 1,200~1,500엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "생선/닭요리 등 부담 없는 메뉴가 많아 부모님 동반에 안정적인 선택입니다.",
                           mapQuery: "Ootoya Kansai Airport",
                           cost: { "min": 1200, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -354,6 +359,7 @@ window.TRIP_DATA = {
                           label: "모리타야 (Moritaya)",
                           note: "전통 스키야키",
                           menu: "스키야키 정식 8,800~13,000엔",
+                          where: "JR 교토 이세탄 11층",
                           desc: "150년 전통 스키야키 전문점. 고급스러운 분위기와 야경이 장점입니다.",
                           mapQuery: "Moritaya JR Kyoto Isetan",
                           cost: { "min": 8800, "max": 13000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -372,6 +378,7 @@ window.TRIP_DATA = {
                           label: "카츠쿠라 포르타 (Katsukura Porta)",
                           note: "프리미엄 돈카츠",
                           menu: "돈카츠 세트 2,500엔",
+                          where: "교토 포르타 B1층",
                           desc: "바삭한 돈카츠와 깔끔한 정식 구성. 익숙한 메뉴로 만족도가 높습니다.",
                           mapQuery: "Katsukura Kyoto Porta",
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -397,6 +404,7 @@ window.TRIP_DATA = {
                           id: "isetan-sale",
                           label: "JR 교토 이세탄 식품관 마감 세일",
                           note: "19:15 이후 30~50% 할인",
+                          where: "JR 교토 이세탄 B1~B2층",
                           desc: "도시락·초밥을 저렴하게 살 수 있어 야식/다음날 간식으로 유용합니다.",
                           mapQuery: "JR Kyoto Isetan",
                           cost: { "min": 800, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -405,6 +413,7 @@ window.TRIP_DATA = {
                           id: "skyway",
                           label: "스카이웨이 야경",
                           note: "10층 무료 전망",
+                          where: "교토역 빌딩 10층",
                           desc: "교토역 내부 이동으로 야경을 가볍게 즐길 수 있어 부모님 동선에 좋아요.",
                           mapQuery: "Kyoto Station Skyway"
                         },
@@ -412,6 +421,7 @@ window.TRIP_DATA = {
                           id: "grand-stairway",
                           label: "대계단 LED 쇼",
                           note: "교토역 4~11층",
+                          where: "교토역 빌딩 4~11층",
                           desc: "저녁 시간에 무료로 즐길 수 있는 대표 포토 스팟입니다.",
                           mapQuery: "Kyoto Station Grand Stairway"
                         }
@@ -438,6 +448,7 @@ window.TRIP_DATA = {
                     mapQuery: "Lawson Kansai Airport Terminal 1"
                   },
                   tags: ["간식"],
+                  where: "간사이 공항 T1 2층",
                   costs: [
                     {
                       label: "간식",
@@ -559,6 +570,7 @@ window.TRIP_DATA = {
                           label: "모리타야 (Moritaya)",
                           note: "전통 스키야키",
                           menu: "스키야키 정식 8,800~13,000엔",
+                          where: "JR 교토 이세탄 11층",
                           desc: "고급 스키야키 전문점으로 가족 단위 식사에 적합합니다.",
                           mapQuery: "Moritaya JR Kyoto Isetan",
                           cost: { "min": 8800, "max": 13000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -577,6 +589,7 @@ window.TRIP_DATA = {
                           label: "카츠쿠라 포르타 (Katsukura Porta)",
                           note: "프리미엄 돈카츠",
                           menu: "돈카츠 세트 2,500엔",
+                          where: "교토 포르타 B1층",
                           desc: "기본에 충실한 돈카츠 정식. 실패 확률이 낮아요.",
                           mapQuery: "Katsukura Kyoto Porta",
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -601,6 +614,7 @@ window.TRIP_DATA = {
                           id: "isetan-sale-b",
                           label: "JR 교토 이세탄 식품관 마감 세일",
                           note: "19:15 이후 30~50% 할인",
+                          where: "JR 교토 이세탄 B1~B2층",
                           desc: "현지 도시락을 저렴하게 구매할 수 있어요.",
                           mapQuery: "JR Kyoto Isetan",
                           cost: { "min": 800, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -609,6 +623,7 @@ window.TRIP_DATA = {
                           id: "skyway-b",
                           label: "스카이웨이 야경",
                           note: "10층 무료 전망",
+                          where: "교토역 빌딩 10층",
                           desc: "긴 이동 없이 야경을 감상하기 좋은 코스입니다.",
                           mapQuery: "Kyoto Station Skyway"
                         }
@@ -657,6 +672,7 @@ window.TRIP_DATA = {
                           label: "551 호라이 (551 Horai)",
                           note: "오사카 명물 만두",
                           menu: "부타만 2개 580엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "빠르게 한 끼 해결할 수 있어 공항 이동에 좋습니다.",
                           mapQuery: "551 Horai Kansai Airport",
                           cost: { "min": 580, "max": 960, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -666,6 +682,7 @@ window.TRIP_DATA = {
                           label: "키네야 무기마루 (Kineya Mugimaru)",
                           note: "따뜻한 우동",
                           menu: "우동 600~900엔",
+                          where: "간사이 공항 T1 2층",
                           desc: "속을 편하게 채울 수 있는 면요리 위주 선택지입니다.",
                           mapQuery: "Kineya Mugimaru Kansai Airport",
                           cost: { "min": 600, "max": 900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
@@ -675,6 +692,7 @@ window.TRIP_DATA = {
                           label: "간코 스시 (Ganko Sushi)",
                           note: "좌석 초밥 정식",
                           menu: "초밥 정식 2,500~3,500엔",
+                          where: "간사이 공항 T1 3층",
                           desc: "도착 첫날에 차분하게 정식으로 식사하고 싶을 때 좋습니다.",
                           mapQuery: "Ganko Sushi Kansai Airport",
                           cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -776,6 +794,7 @@ window.TRIP_DATA = {
                           label: "모리타야 (Moritaya)",
                           note: "전통 스키야키",
                           menu: "스키야키 정식 8,800~13,000엔",
+                          where: "JR 교토 이세탄 11층",
                           desc: "교토 도착 첫날, 분위기 있게 정찬을 즐길 때 좋습니다.",
                           mapQuery: "Moritaya JR Kyoto Isetan",
                           cost: { "min": 8800, "max": 13000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -803,6 +822,7 @@ window.TRIP_DATA = {
                           label: "카츠쿠라 포르타 (Katsukura Porta)",
                           note: "프리미엄 돈카츠",
                           menu: "히레카츠 세트 2,500엔",
+                          where: "교토 포르타 B1층",
                           desc: "부담 없이 모두가 만족하기 쉬운 메뉴입니다.",
                           mapQuery: "Katsukura Kyoto Porta",
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -851,6 +871,7 @@ window.TRIP_DATA = {
                           id: "isetan-c",
                           label: "JR 교토 이세탄 식품관",
                           note: "19:15 이후 마감 세일",
+                          where: "JR 교토 이세탄 B1~B2층",
                           desc: "도시락과 초밥을 할인 가격에 구매할 수 있어요.",
                           mapQuery: "JR Kyoto Isetan",
                           cost: { "min": 800, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -859,6 +880,7 @@ window.TRIP_DATA = {
                           id: "skyway-c",
                           label: "스카이웨이",
                           note: "10층 무료 전망",
+                          where: "교토역 빌딩 10층",
                           desc: "교토역 내부에서 부담 없이 야경을 감상할 수 있습니다.",
                           mapQuery: "Kyoto Station Skyway"
                         },
@@ -866,6 +888,7 @@ window.TRIP_DATA = {
                           id: "grand-stairway-c",
                           label: "대계단 LED 쇼",
                           note: "교토역 4~11층",
+                          where: "교토역 빌딩 4~11층",
                           desc: "빛 연출이 멋진 야간 포토 스팟입니다.",
                           mapQuery: "Kyoto Station Grand Stairway"
                         },
@@ -874,6 +897,7 @@ window.TRIP_DATA = {
                           label: "나카무라 토키치 (Nakamura Tokichi)",
                           note: "말차 디저트",
                           menu: "말차 젤리 990엔",
+                          where: "JR 교토 이세탄 3층",
                           desc: "진한 말차 디저트를 좋아하면 꼭 들를 만한 곳입니다.",
                           mapQuery: "Nakamura Tokichi Kyoto Station",
                           cost: { "min": 990, "max": 990, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -883,6 +907,7 @@ window.TRIP_DATA = {
                           label: "시즈야 팥빵 (Sizuya)",
                           note: "교토 인기 빵",
                           menu: "오구라 안팡 250엔",
+                          where: "교토역 하치조 출구 1층",
                           desc: "간단한 간식이나 아침용으로 좋아요.",
                           mapQuery: "Sizuya Kyoto Station",
                           cost: { "min": 250, "max": 250, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
@@ -1289,6 +1314,7 @@ window.TRIP_DATA = {
                   label: "돈카츠 와코 (Wako)",
                   note: "리필 제공",
                   menu: "돈카츠 정식 1,800~2,200엔",
+                  where: "JR 교토 이세탄 11층",
                   desc: "밥/양배추 리필이 가능해 든든한 점심으로 좋아요.",
                   mapQuery: "Wako Kyoto Isetan",
                   cost: { "min": 1800, "max": 2200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -1298,6 +1324,7 @@ window.TRIP_DATA = {
                   label: "교토 와쿠덴 (Kyoto Wakuden)",
                   note: "정통 일식",
                   menu: "정식 3,000~4,000엔",
+                  where: "JR 교토 이세탄 11층",
                   desc: "조용하고 정갈한 분위기. 여행 마지막 날 차분하게 마무리하기 좋습니다.",
                   mapQuery: "Kyoto Wakuden Isetan",
                   cost: { "min": 3000, "max": 4000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -1307,6 +1334,7 @@ window.TRIP_DATA = {
                   label: "포르타 식당가 (Porta)",
                   note: "다양한 메뉴",
                   menu: "라멘/덮밥/스시 1,000~2,000엔",
+                  where: "교토 포르타 B1~B2층",
                   desc: "각자 취향에 맞는 식당을 바로 고를 수 있어 선택 스트레스가 적습니다.",
                   mapQuery: "Kyoto Porta",
                   cost: { "min": 1000, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -1333,29 +1361,32 @@ window.TRIP_DATA = {
               title: "카페/선물 선택",
               mode: "multi",
               options: [
-                {
-                  id: "tokichi-cafe",
-                  label: "나카무라 토키치 (Nakamura Tokichi)",
-                  note: "말차 디저트",
-                  menu: "말차 젤리 990엔",
-                  desc: "진한 말차 디저트를 즐기기 좋은 대표 카페입니다.",
+                        {
+                          id: "tokichi-cafe",
+                          label: "나카무라 토키치 (Nakamura Tokichi)",
+                          note: "말차 디저트",
+                          menu: "말차 젤리 990엔",
+                          where: "JR 교토 이세탄 3층",
+                          desc: "진한 말차 디저트를 즐기기 좋은 대표 카페입니다.",
                   mapQuery: "Nakamura Tokichi Kyoto Station",
                   cost: { "min": 990, "max": 990, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                 },
-                {
-                  id: "inoda",
-                  label: "이노다 커피 (Inoda Coffee)",
-                  note: "클래식 카페",
-                  menu: "커피/디저트 800~1,200엔",
-                  desc: "레트로한 분위기에서 천천히 쉬기 좋은 공간입니다.",
+                        {
+                          id: "inoda",
+                          label: "이노다 커피 (Inoda Coffee)",
+                          note: "클래식 카페",
+                          menu: "커피/디저트 800~1,200엔",
+                          where: "교토 포르타 지하",
+                          desc: "레트로한 분위기에서 천천히 쉬기 좋은 공간입니다.",
                   mapQuery: "Inoda Coffee Kyoto",
                   cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                 },
-                {
-                  id: "isetan-b1",
-                  label: "이세탄 B1 식품관 (Isetan)",
-                  note: "기념품 쇼핑",
-                  desc: "말차 과자와 지역 과자를 마지막에 빠르게 구매하기 좋은 곳입니다.",
+                        {
+                          id: "isetan-b1",
+                          label: "이세탄 B1 식품관 (Isetan)",
+                          note: "기념품 쇼핑",
+                          where: "JR 교토 이세탄 B1~B2층",
+                          desc: "말차 과자와 지역 과자를 마지막에 빠르게 구매하기 좋은 곳입니다.",
                   mapQuery: "JR Kyoto Isetan"
                 }
               ]
@@ -1413,6 +1444,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "입국 수속, 교통, 식사를 한 번에 해결할 수 있는 간사이 공항의 핵심 터미널입니다.",
+      building: "간사이 공항 T1",
+      floor: "2~4층",
       features: ["공항 내 식당/교통/ATM 집중", "T2↔T1 셔틀 연계"],
       pros: ["이동 최소화", "시설이 한 곳에 모여 있음"],
       cons: ["피크 시간 혼잡", "가격대가 높을 수 있음"],
@@ -1620,6 +1653,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 내부 10층 통로에서 무료로 야경을 볼 수 있는 전망 코스입니다.",
+      building: "교토역 빌딩",
+      floor: "10층",
       features: ["무료 전망", "실내 동선"],
       pros: ["야경 감상"],
       cons: ["혼잡 가능"]
@@ -1628,6 +1663,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "LED 조명 쇼가 열리는 계단형 광장으로 사진 찍기 좋은 포인트입니다.",
+      building: "교토역 빌딩",
+      floor: "4~11층",
       features: ["LED 쇼", "사진 포인트"],
       pros: ["무료 관람"],
       cons: ["혼잡 가능"]
@@ -1636,6 +1673,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토 타워 옆 쇼핑/맛집 복합 공간으로 짧게 들르기 좋습니다.",
+      building: "교토 타워 산도",
+      floor: "B1~2층",
       features: ["기념품/로컬 맥주", "실내 공간"],
       pros: ["간단 쇼핑"],
       cons: ["혼잡 가능"]
@@ -1644,6 +1683,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 백화점 식품관으로 마감 세일 시간에 도시락을 저렴하게 살 수 있습니다.",
+      building: "JR 교토 이세탄 (교토역 빌딩)",
+      floor: "B1~B2층 (식품관)",
       features: ["백화점 식품관", "마감 세일"],
       pros: ["야식/선물 구매"],
       cons: ["저녁 혼잡"]
@@ -1660,9 +1701,51 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "공항 내 편의점으로 짧은 시간에 간단한 요기를 해결할 수 있습니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
       features: ["간단 요기", "빠른 회전"],
       pros: ["시간 절약"],
       cons: ["좌석 제한"]
+    },
+    "seven bank kansai airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "트래블로그 등 해외카드 출금이 가능한 대표 ATM입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층 중앙 로비 / 4층 국제선 출발층",
+      features: ["24시간 이용", "국제카드 출금"],
+      pros: ["가족 단위 출금에 편리"],
+      cons: ["피크 시간 혼잡"]
+    },
+    "aeon bank kansai airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "트래블월렛 등 선불카드 출금에 유용한 ATM입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층 중앙",
+      features: ["국내 카드 출금", "대체 출금처"],
+      pros: ["현금 확보 용이"],
+      cons: ["위치 확인 필요"]
+    },
+    "jr ticket office kansai airport station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "ICOCA 발급과 하루카 티켓 수령을 한 번에 해결하는 JR 매표 구역입니다.",
+      building: "간사이공항역 (JR)",
+      floor: "1층 (T1 연결)",
+      features: ["ICOCA 발급", "하루카 지정석 발권"],
+      pros: ["공항에서 교통 준비 완료"],
+      cons: ["대기 발생 가능"]
+    },
+    "kyoto ramen street": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 빌딩 10층에 모인 라멘 전문 구역으로 다양한 스타일을 고를 수 있습니다.",
+      building: "교토역 빌딩",
+      floor: "10층 (라멘코지)",
+      features: ["라멘 전문 존", "다양한 메뉴"],
+      pros: ["선택 폭 넓음"],
+      cons: ["식사 시간 대기"]
     },
     "asics factory outlet rinku": {
       rating: null,
@@ -1782,6 +1865,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "오사카 대표 만두 체인으로 테이크아웃이 가능해 공항 이동 중에도 먹기 좋습니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
       features: ["오사카 명물 만두", "테이크아웃 가능"],
       pros: ["빠른 회전", "가성비"],
       cons: ["줄이 긴 편"]
@@ -1790,6 +1875,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "따뜻한 우동과 세트 메뉴로 빠르게 한 끼를 해결할 수 있는 식당입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
       features: ["자가제면 우동", "세트 구성 다양"],
       pros: ["메뉴 선택 폭 넓음"],
       cons: ["혼잡 시 대기"]
@@ -1798,6 +1885,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "정갈한 초밥 정식을 차분하게 먹기 좋은 좌석 식사형 스시집입니다.",
+      building: "간사이 공항 T1",
+      floor: "3층",
       features: ["정갈한 초밥 정식"],
       pros: ["좌석 식사 가능"],
       cons: ["가격대 높음"]
@@ -1806,6 +1895,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "짧은 시간에 먹기 좋은 규동 전문점으로 가성비가 좋습니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
       features: ["규동 중심", "빠른 식사"],
       pros: ["가성비"],
       cons: ["좌석 한정"]
@@ -1814,6 +1905,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "생선/닭요리 등 부담 없는 가정식 정식을 제공하는 체인입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
       features: ["가정식 정식", "속 편한 메뉴"],
       pros: ["다양한 정식"],
       cons: ["대기 가능"]
@@ -1846,6 +1939,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토 대표 스키야키 전문점으로 고급스러운 식사를 원할 때 적합합니다.",
+      building: "JR 교토 이세탄",
+      floor: "11층",
       features: ["스키야키", "이세탄 11층"],
       pros: ["야경 뷰"],
       cons: ["예약 권장"]
@@ -1862,6 +1957,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토에서 유명한 돈카츠 체인으로 깔끔한 정식 구성이 강점입니다.",
+      building: "교토 포르타",
+      floor: "B1층",
       features: ["프리미엄 돈카츠"],
       pros: ["정식 구성"],
       cons: ["대기 가능"]
@@ -1878,6 +1975,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "진한 말차 디저트로 유명한 카페로, 디저트 타임에 인기입니다.",
+      building: "JR 교토 이세탄",
+      floor: "3층",
       features: ["말차 디저트"],
       pros: ["디저트 만족도 높음"],
       cons: ["대기 가능"]
@@ -1886,6 +1985,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토 팥빵으로 유명한 베이커리로 간식이나 아침으로 좋습니다.",
+      building: "교토역 하치조 출구",
+      floor: "1층",
       features: ["교토 팥빵"],
       pros: ["가성비 간식"],
       cons: ["빵 품절 가능"]
@@ -2006,6 +2107,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "깔끔한 돈카츠 정식과 리필 서비스로 유명한 체인입니다.",
+      building: "JR 교토 이세탄",
+      floor: "11층",
       features: ["돈카츠 정식"],
       pros: ["리필 제공"],
       cons: ["식사 시간 대기"]
@@ -2014,6 +2117,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "정통 일식을 조용한 분위기에서 즐길 수 있는 식당입니다.",
+      building: "JR 교토 이세탄",
+      floor: "11층",
       features: ["정통 일식"],
       pros: ["조용한 분위기"],
       cons: ["가격대 높음"]
@@ -2022,6 +2127,8 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 지하상가로 다양한 식당과 쇼핑을 한 번에 즐길 수 있습니다.",
+      building: "교토 포르타",
+      floor: "B1~B2층",
       features: ["지하 상가", "다양한 식당"],
       pros: ["날씨 영향 적음"],
       cons: ["사람 많음"]
