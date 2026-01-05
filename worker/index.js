@@ -2,6 +2,8 @@ import { PLACE_QUERIES } from "./places.js";
 
 const DEFAULT_CACHE_SECONDS = 60 * 60 * 24 * 7;
 const RATINGS_KEY = "ratings:v1";
+const RATINGS_CURSOR_KEY = "ratings:cursor";
+const DEFAULT_RATINGS_BATCH = 20;
 const FALLBACK_ORIGIN = "*";
 
 function parseAllowedOrigins(env) {
@@ -149,13 +151,17 @@ async function saveRatings(store, payload) {
   await store.put(RATINGS_KEY, JSON.stringify(payload));
 }
 
-async function updateRatingsSnapshot(store, apiKey, queries) {
+async function updateRatingsSnapshot(store, apiKey, queries, startIndex, limit) {
   const language = "ko";
   const snapshot = await loadRatings(store);
   const items = snapshot.items || {};
   const now = new Date().toISOString();
+  const total = queries.length;
+  const start = Math.max(0, Number.isFinite(startIndex) ? startIndex : 0);
+  const size = Math.max(1, Number.isFinite(limit) ? limit : DEFAULT_RATINGS_BATCH);
+  const slice = queries.slice(start, start + size);
 
-  for (const query of queries) {
+  for (const query of slice) {
     try {
       const key = normalizeKey(query);
       const existing = items[key] || {};
@@ -197,7 +203,14 @@ async function updateRatingsSnapshot(store, apiKey, queries) {
 
   const payload = { updatedAt: now, items };
   await saveRatings(store, payload);
-  return { updatedAt: now, count: Object.keys(items).length };
+  const nextCursor = start + slice.length >= total ? 0 : start + slice.length;
+  return {
+    updatedAt: now,
+    count: Object.keys(items).length,
+    processed: slice.length,
+    total,
+    nextCursor
+  };
 }
 
 export default {
@@ -321,8 +334,13 @@ export default {
       }
 
       try {
-        const result = await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
-        return jsonResponse(result, 200, origin);
+      const cursorParam = Number.parseInt(url.searchParams.get("cursor") || "", 10);
+      const limitParam = Number.parseInt(url.searchParams.get("limit") || "", 10);
+      const cursor = Number.isNaN(cursorParam) ? 0 : cursorParam;
+      const limit = Number.isNaN(limitParam) ? DEFAULT_RATINGS_BATCH : limitParam;
+      const result = await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES, cursor, limit);
+      await store.put(RATINGS_CURSOR_KEY, String(result.nextCursor));
+      return jsonResponse(result, 200, origin);
       } catch (error) {
         return jsonResponse({ error: "refresh failed" }, 502, origin);
       }
@@ -397,8 +415,23 @@ export default {
     if (!store || !apiKey) {
       return;
     }
+    let cursor = 0;
+    const storedCursor = await store.get(RATINGS_CURSOR_KEY);
+    if (storedCursor) {
+      const parsed = Number.parseInt(storedCursor, 10);
+      if (!Number.isNaN(parsed)) {
+        cursor = parsed;
+      }
+    }
     try {
-      await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
+      const result = await updateRatingsSnapshot(
+        store,
+        apiKey,
+        PLACE_QUERIES,
+        cursor,
+        DEFAULT_RATINGS_BATCH
+      );
+      await store.put(RATINGS_CURSOR_KEY, String(result.nextCursor));
     } catch (error) {
       return;
     }
