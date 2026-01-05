@@ -1,4 +1,4 @@
-name = "travel-places-proxy"
+name = "travel"
 main = "worker/index.js"
 compatibility_date = "2026-01-05"
 
