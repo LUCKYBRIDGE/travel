@@ -1,4 +1,26 @@
 const DEFAULT_CACHE_SECONDS = 60 * 60 * 24 * 7;
+const FALLBACK_ORIGIN = "*";
+
+function parseAllowedOrigins(env) {
+  const raw = env.ALLOWED_ORIGINS || env.ALLOWED_ORIGIN || FALLBACK_ORIGIN;
+  return raw
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+function resolveCorsOrigin(requestOrigin, allowedOrigins) {
+  if (!allowedOrigins.length) {
+    return FALLBACK_ORIGIN;
+  }
+  if (allowedOrigins.includes(FALLBACK_ORIGIN)) {
+    return FALLBACK_ORIGIN;
+  }
+  if (!requestOrigin) {
+    return allowedOrigins[0];
+  }
+  return allowedOrigins.includes(requestOrigin) ? requestOrigin : "";
+}
 
 function buildCorsHeaders(origin) {
   return {
@@ -82,7 +104,9 @@ async function fetchPlaceDetails(placeId, apiKey, language) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    const origin = env.ALLOWED_ORIGIN || "*";
+    const allowedOrigins = parseAllowedOrigins(env);
+    const requestOrigin = request.headers.get("Origin") || "";
+    const origin = resolveCorsOrigin(requestOrigin, allowedOrigins) || "null";
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: buildCorsHeaders(origin) });
@@ -90,6 +114,10 @@ export default {
 
     if (request.method !== "GET") {
       return jsonResponse({ error: "method not allowed" }, 405, origin);
+    }
+
+    if (requestOrigin && origin === "null") {
+      return jsonResponse({ error: "origin not allowed" }, 403, origin);
     }
 
     if (url.pathname !== "/api/places") {
