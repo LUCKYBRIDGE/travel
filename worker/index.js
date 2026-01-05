@@ -156,39 +156,43 @@ async function updateRatingsSnapshot(store, apiKey, queries) {
   const now = new Date().toISOString();
 
   for (const query of queries) {
-    const key = normalizeKey(query);
-    const existing = items[key] || {};
-    let placeId = existing.placeId;
-    let placeName = existing.name || "";
+    try {
+      const key = normalizeKey(query);
+      const existing = items[key] || {};
+      let placeId = existing.placeId;
+      let placeName = existing.name || "";
 
-    if (!placeId) {
-      const resolved = await resolvePlaceId(query, apiKey, language);
-      if (!resolved || resolved.error || !resolved.placeId) {
+      if (!placeId) {
+        const resolved = await resolvePlaceId(query, apiKey, language);
+        if (!resolved || resolved.error || !resolved.placeId) {
+          continue;
+        }
+        placeId = resolved.placeId;
+        placeName = resolved.name || placeName;
+      }
+
+      const details = await fetchPlaceDetails(placeId, apiKey, language);
+      if (!details || details.error) {
         continue;
       }
-      placeId = resolved.placeId;
-      placeName = resolved.name || placeName;
-    }
+      const result = details.result || {};
+      const rating = typeof result.rating === "number" ? result.rating : null;
+      const ratingCount =
+        typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
 
-    const details = await fetchPlaceDetails(placeId, apiKey, language);
-    if (!details || details.error) {
+      items[key] = {
+        query,
+        placeId,
+        name: result.name || placeName || "",
+        rating,
+        ratingCount,
+        popularity: inferPopularity(ratingCount),
+        source: "Google",
+        updatedAt: now
+      };
+    } catch (error) {
       continue;
     }
-    const result = details.result || {};
-    const rating = typeof result.rating === "number" ? result.rating : null;
-    const ratingCount =
-      typeof result.user_ratings_total === "number" ? result.user_ratings_total : null;
-
-    items[key] = {
-      query,
-      placeId,
-      name: result.name || placeName || "",
-      rating,
-      ratingCount,
-      popularity: inferPopularity(ratingCount),
-      source: "Google",
-      updatedAt: now
-    };
   }
 
   const payload = { updatedAt: now, items };
@@ -316,8 +320,12 @@ export default {
         return jsonResponse({ error: "unauthorized" }, 403, origin);
       }
 
-      const result = await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
-      return jsonResponse(result, 200, origin);
+      try {
+        const result = await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
+        return jsonResponse(result, 200, origin);
+      } catch (error) {
+        return jsonResponse({ error: "refresh failed" }, 502, origin);
+      }
     }
 
     if (url.pathname === "/api/sync") {
@@ -389,6 +397,10 @@ export default {
     if (!store || !apiKey) {
       return;
     }
-    await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
+    try {
+      await updateRatingsSnapshot(store, apiKey, PLACE_QUERIES);
+    } catch (error) {
+      return;
+    }
   }
 };
