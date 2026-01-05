@@ -83,6 +83,16 @@ async function resolvePlaceId(query, apiKey, language) {
   });
   const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?${params.toString()}`;
   const data = await fetchJson(url);
+  if (data.status && data.status !== "OK") {
+    if (data.status === "ZERO_RESULTS") {
+      return { placeId: null, name: "", status: data.status };
+    }
+    return {
+      error: true,
+      status: data.status,
+      message: data.error_message || "Places API error"
+    };
+  }
   const candidate = data.candidates && data.candidates[0];
   if (!candidate || !candidate.place_id) {
     return null;
@@ -98,7 +108,15 @@ async function fetchPlaceDetails(placeId, apiKey, language) {
     key: apiKey
   });
   const url = `https://maps.googleapis.com/maps/api/place/details/json?${params.toString()}`;
-  return fetchJson(url);
+  const data = await fetchJson(url);
+  if (data.status && data.status !== "OK") {
+    return {
+      error: true,
+      status: data.status,
+      message: data.error_message || "Places API error"
+    };
+  }
+  return data;
 }
 
 export default {
@@ -145,7 +163,14 @@ export default {
 
       if (!placeId) {
         const resolved = await resolvePlaceId(query, apiKey, language);
-        if (!resolved) {
+        if (resolved && resolved.error) {
+          return jsonResponse(
+            { error: "places api error", status: resolved.status, message: resolved.message },
+            502,
+            origin
+          );
+        }
+        if (!resolved || !resolved.placeId) {
           return jsonResponse({ error: "place not found" }, 404, origin);
         }
         placeId = resolved.placeId;
@@ -153,6 +178,13 @@ export default {
       }
 
       const details = await fetchPlaceDetails(placeId, apiKey, language);
+      if (details && details.error) {
+        return jsonResponse(
+          { error: "places api error", status: details.status, message: details.message },
+          502,
+          origin
+        );
+      }
       const result = details.result || {};
       const rating = typeof result.rating === "number" ? result.rating : null;
       const ratingCount =
