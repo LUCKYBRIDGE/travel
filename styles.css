@@ -474,6 +474,22 @@ a {
   background: #fff;
 }
 
+.place-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.place-actions button {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
 .place-info summary {
   cursor: pointer;
   font-weight: 700;

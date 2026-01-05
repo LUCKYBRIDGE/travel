@@ -38,6 +38,11 @@ window.TRIP_DATA = {
     onlineProvider: "osrm",
     onlineProfile: "driving"
   },
+  ratingApi: {
+    mode: "manual",
+    baseUrl: "",
+    cacheDays: 7
+  },
   routeHints: [
     {
       from: "Kansai International Airport Terminal 1",

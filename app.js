@@ -17,7 +17,8 @@
     checklist: "travel:checklist",
     routeMode: "travel:route-mode",
     coords: "travel:coords",
-    routes: "travel:routes"
+    routes: "travel:routes",
+    ratings: "travel:ratings"
   };
 
   const state = {
@@ -26,7 +27,8 @@
     checklist: loadStorage(STORAGE.checklist, {}),
     routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
     coords: loadStorage(STORAGE.coords, {}),
-    routes: loadStorage(STORAGE.routes, {})
+    routes: loadStorage(STORAGE.routes, {}),
+    ratings: loadStorage(STORAGE.ratings, {})
   };
   const placeDetails = data.placeDetails || {};
 
@@ -57,7 +59,20 @@
     if (!mapQuery) {
       return null;
     }
-    return placeDetails[mapQuery.trim().toLowerCase()] || null;
+    const key = mapQuery.trim().toLowerCase();
+    const base = placeDetails[key] || null;
+    const override = state.ratings[key] || null;
+    if (!override) {
+      return base;
+    }
+    if (!base) {
+      return { ...override };
+    }
+    return {
+      ...base,
+      ...override,
+      ratingSource: override.ratingSource || base.ratingSource
+    };
   }
 
   function formatRating(detail) {
@@ -70,6 +85,20 @@
         ? `, 리뷰 ${detail.ratingCount.toLocaleString("ko-KR")}개`
         : "";
     return `${detail.rating} (${source}${count})`;
+  }
+
+  function formatDate(value) {
+    if (!value) {
+      return "";
+    }
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
   }
 
   function isPlainObject(value) {
@@ -162,6 +191,7 @@
                 ${renderDetailLine("장점", detail.pros, "정보 준비중")}
                 ${renderDetailLine("단점", detail.cons, "정보 준비중")}
                 ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
+                ${detail.ratingUpdatedAt ? renderDetailLine("업데이트", formatDate(detail.ratingUpdatedAt)) : ""}
                 <div class="map-actions">
                   <a href="${buildMapLink(item.mapQuery)}" target="_blank" rel="noreferrer">지도 열기</a>
                   <button type="button" data-copy="${item.mapQuery}">검색어 복사</button>
@@ -203,7 +233,13 @@
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}
       ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
+      ${detail.ratingUpdatedAt ? renderDetailLine("업데이트", formatDate(detail.ratingUpdatedAt)) : ""}
       ${renderLinks(detail, mapQuery)}
+      ${
+        getRatingApiBase()
+          ? `<div class="place-actions"><button type="button" data-rating-update="${mapQuery}">평점 업데이트</button></div>`
+          : ""
+      }
       ${options.showNearby ? renderNearbyList(detail.nearby) : ""}
     `;
 
@@ -239,7 +275,8 @@
         checklist: state.checklist,
         routeMode: state.routeMode,
         routes: state.routes,
-        coords: state.coords
+        coords: state.coords,
+        ratings: state.ratings
       }
     };
   }
@@ -266,7 +303,8 @@
       checklist: isPlainObject(base.checklist) ? base.checklist : {},
       routeMode: typeof base.routeMode === "string" ? base.routeMode : state.routeMode,
       routes: isPlainObject(base.routes) ? base.routes : {},
-      coords: isPlainObject(base.coords) ? base.coords : {}
+      coords: isPlainObject(base.coords) ? base.coords : {},
+      ratings: isPlainObject(base.ratings) ? base.ratings : {}
     };
   }
 
@@ -282,12 +320,14 @@
     state.routeMode = next.routeMode;
     state.routes = next.routes;
     state.coords = next.coords;
+    state.ratings = next.ratings;
     saveStorage(STORAGE.options, state.options);
     saveStorage(STORAGE.choices, state.choices);
     saveStorage(STORAGE.checklist, state.checklist);
     saveStorage(STORAGE.routeMode, state.routeMode);
     saveStorage(STORAGE.routes, state.routes);
     saveStorage(STORAGE.coords, state.coords);
+    saveStorage(STORAGE.ratings, state.ratings);
     render();
   }
 
@@ -302,6 +342,47 @@
     link.click();
     link.remove();
     URL.revokeObjectURL(url);
+  }
+
+  function getRatingApiBase() {
+    return String(data.ratingApi?.baseUrl || "").replace(/\/$/, "");
+  }
+
+  function buildRatingUrl(query) {
+    const base = getRatingApiBase();
+    if (!base || !query) {
+      return "";
+    }
+    return `${base}/api/places?query=${encodeURIComponent(query)}`;
+  }
+
+  async function fetchRatingUpdate(query) {
+    const url = buildRatingUrl(query);
+    if (!url) {
+      throw new Error("rating api not configured");
+    }
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("rating api error");
+    }
+    return response.json();
+  }
+
+  function applyRatingUpdate(mapQuery, payload) {
+    const key = mapQuery.trim().toLowerCase();
+    const rating = typeof payload.rating === "number" ? payload.rating : null;
+    const ratingCount =
+      typeof payload.ratingCount === "number" ? payload.ratingCount : null;
+    const popularity = payload.popularity || "";
+    const updatedAt = payload.updatedAt || new Date().toISOString();
+    state.ratings[key] = {
+      rating,
+      ratingCount,
+      popularity,
+      ratingSource: payload.source || "Google",
+      ratingUpdatedAt: updatedAt
+    };
+    saveStorage(STORAGE.ratings, state.ratings);
   }
 
   function buildRouteKey(fromQuery, toQuery) {
@@ -922,6 +1003,7 @@
             rating: formatRating(detail),
             summary,
             popularity: detail?.popularity || "",
+            ratingUpdatedAt: detail?.ratingUpdatedAt || "",
             building: detail?.building || "",
             floor: detail?.floor || "",
             area: detail?.area || ""
@@ -948,6 +1030,7 @@
                   rating: formatRating(nearbyDetail),
                   summary: nearbySummary,
                   popularity: nearbyDetail?.popularity || "",
+                  ratingUpdatedAt: nearbyDetail?.ratingUpdatedAt || "",
                   building: nearbyDetail?.building || nearby.building || "",
                   floor: nearbyDetail?.floor || nearby.floor || "",
                   area: nearbyDetail?.area || nearby.area || ""
@@ -982,6 +1065,7 @@
                 rating: formatRating(detail),
                 summary,
                 popularity: detail?.popularity || "",
+                ratingUpdatedAt: detail?.ratingUpdatedAt || "",
                 building: detail?.building || "",
                 floor: detail?.floor || "",
                 area: detail?.area || ""
@@ -1071,11 +1155,13 @@
                           <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
                           ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
                           ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
+                          ${item.ratingUpdatedAt ? `<div class="muted">업데이트: ${formatDate(item.ratingUpdatedAt)}</div>` : ""}
                           ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
                         </div>
                         <div class="map-actions">
                           <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
                           <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
+                          ${getRatingApiBase() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
                           <button type="button" data-copy="${item.query}">검색어 복사</button>
                         </div>
                       </div>
@@ -1329,6 +1415,34 @@
   });
 
   document.addEventListener("click", (event) => {
+    const ratingButton = event.target.closest("[data-rating-update]");
+    if (ratingButton) {
+      const query = ratingButton.dataset.ratingUpdate;
+      if (!query) {
+        return;
+      }
+      if (!getRatingApiBase()) {
+        showToast("평점 API 설정 필요");
+        return;
+      }
+      ratingButton.disabled = true;
+      ratingButton.textContent = "업데이트 중...";
+      fetchRatingUpdate(query)
+        .then((payload) => {
+          applyRatingUpdate(query, payload);
+          render();
+          showToast("평점 업데이트 완료");
+        })
+        .catch(() => {
+          showToast("평점 업데이트 실패");
+        })
+        .finally(() => {
+          ratingButton.disabled = false;
+          ratingButton.textContent = "평점 업데이트";
+        });
+      return;
+    }
+
     const shareExport = event.target.closest("[data-share-export]");
     if (shareExport) {
       const payload = buildSharePayload();
