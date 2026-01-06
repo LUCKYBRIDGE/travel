@@ -1,0 +1,4 @@
+/ratings.json
+  Cache-Control: no-store, must-revalidate, max-age=0
+/sw.js
+  Cache-Control: no-store, must-revalidate, max-age=0

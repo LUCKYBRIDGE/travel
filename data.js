@@ -5,6 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
+    version: "2026-01-06-1",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -43,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-1",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
