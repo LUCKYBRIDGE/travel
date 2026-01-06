@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-06T08:52:23.311Z",
+  "updatedAt": "2026-01-06T10:03:49.237Z",
   "items": {
     "551 horai kansai airport": {
       "query": "551 Horai Kansai Airport",
@@ -401,15 +401,75 @@
       "source": "Google",
       "updatedAt": "2026-01-06T08:25:21.516Z"
     },
-    "godiva kansai airport": {
-      "query": "Godiva Kansai Airport",
+    "asics rinku premium outlets": {
+      "query": "ASICS Rinku Premium Outlets",
+      "placeId": "ChIJvbKCcvy3AGARpy89-YYHgas",
+      "name": "Asics",
+      "rating": 3.9,
+      "ratingCount": 185,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-06T09:50:10.248Z"
+    },
+    "asics walking kyoto": {
+      "query": "ASICS Walking Kyoto",
+      "placeId": "ChIJwf4kIpQIAWAR42fMGq8ibDI",
+      "name": "ASICS Walking",
+      "rating": 4,
+      "ratingCount": 52,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-06T09:53:53.061Z"
+    },
+    "rinku coffee": {
+      "query": "RINKU COFFEE",
+      "placeId": "ChIJI1hnCY0BBDQRi6K2GN9X3ik",
+      "name": "RINKU COFFEE 漣漪咖啡",
+      "rating": 5,
+      "ratingCount": 7,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-06T09:54:13.175Z"
+    },
+    "godiva rinku premium outlets": {
+      "query": "GODIVA Rinku Premium Outlets",
       "placeId": "ChIJJ9Tyyv63AGARTcsyudaMl8I",
       "name": "GODIVA Rinku Premium Outlets Store",
       "rating": 3.9,
       "ratingCount": 476,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:37.770Z"
+      "updatedAt": "2026-01-06T09:51:01.233Z"
+    },
+    "unagi izumo kyoto station": {
+      "query": "Unagi Izumo Kyoto Station",
+      "placeId": "ChIJpa0SXtvnAGARzL8X4ltQxPE",
+      "name": "이즈모 우나기",
+      "rating": 4.7,
+      "ratingCount": 2637,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-06T09:52:36.993Z"
+    },
+    "komeraku chazuke & karaage restaurant": {
+      "query": "Komeraku Chazuke & Karaage Restaurant",
+      "placeId": "ChIJM2WpMMS3AGARACzi-XBeAdY",
+      "name": "Komeraku Chazuke & Karaage Restaurant",
+      "rating": 3.9,
+      "ratingCount": 54,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-06T10:03:46.857Z"
+    },
+    "kura sushi izumisano": {
+      "query": "Kura Sushi Izumisano",
+      "placeId": "ChIJGcNs9j3IAGARdfDMAOsjEpo",
+      "name": "Kura Sushi Izumisano",
+      "rating": 3.6,
+      "ratingCount": 1076,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-06T09:53:36.539Z"
     },
     "moritaya jr kyoto isetan": {
       "query": "Moritaya JR Kyoto Isetan",
@@ -441,15 +501,15 @@
       "source": "Google",
       "updatedAt": "2026-01-06T04:53:40.047Z"
     },
-    "nakasu kansai airport": {
-      "query": "Nakasu Kansai Airport",
-      "placeId": "ChIJ9_rNIxO5AGARiI-QjZ-ncfE",
-      "name": "간사이 국제공항",
-      "rating": 4,
-      "ratingCount": 20216,
-      "popularity": "관광객 많음",
+    "nakau kansai airport shop": {
+      "query": "Nakau Kansai Airport Shop",
+      "placeId": "ChIJP4ltIcO5AGARnQ4pGUQeDd0",
+      "name": "Nakau Kansai Airport Shop",
+      "rating": 3.7,
+      "ratingCount": 436,
+      "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:40.859Z"
+      "updatedAt": "2026-01-06T10:03:47.836Z"
     },
     "nakau kyoto station": {
       "query": "Nakau Kyoto Station",
@@ -491,15 +551,15 @@
       "source": "Google",
       "updatedAt": "2026-01-06T04:53:43.998Z"
     },
-    "ootoya kansai airport": {
-      "query": "Ootoya Kansai Airport",
+    "botejyu 1946 kansai international airport": {
+      "query": "Botejyu 1946 Kansai International Airport",
       "placeId": "ChIJTx58B-e5AGARB-X3d0zT-mU",
       "name": "보테쥬 1946 칸사이 국제공항점",
       "rating": 3.4,
       "ratingCount": 443,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:44.796Z"
+      "updatedAt": "2026-01-06T09:55:01.562Z"
     },
     "pontocho alley": {
       "query": "Pontocho Alley",

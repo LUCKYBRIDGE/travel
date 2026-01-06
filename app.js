@@ -445,6 +445,7 @@
                   ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
                 </div>
                 <div class="muted">평점: ${formatRating(detail)}</div>
+                ${detail.placeName ? renderDetailLine("지도 표기", detail.placeName) : ""}
                 ${renderTagRow(category, tags)}
                 ${locationLines}
                 ${renderDetailLine("특징", detail.features, "정보 준비중")}
@@ -490,6 +491,7 @@
         <a href="${buildMapLink(mapQuery)}" target="_blank" rel="noreferrer">열기</a>
         <span class="rating">평점: ${formatRating(detail)}</span>
       </div>
+      ${detail.placeName ? renderDetailLine("지도 표기", detail.placeName) : ""}
       ${renderTagRow(category, tags)}
       ${summary ? `<div class="place-summary">${summary}</div>` : ""}
       ${locationLines}
@@ -740,12 +742,16 @@
       typeof payload.ratingCount === "number" ? payload.ratingCount : null;
     const popularity = payload.popularity || "";
     const updatedAt = payload.updatedAt || new Date().toISOString();
+    const placeName = payload.name || payload.placeName || "";
+    const placeId = payload.placeId || "";
     state.ratings[key] = {
       rating,
       ratingCount,
       popularity,
       ratingSource: payload.source || "Google",
-      ratingUpdatedAt: updatedAt
+      ratingUpdatedAt: updatedAt,
+      placeName,
+      placeId
     };
     saveStorage(STORAGE.ratings, state.ratings);
   }
@@ -760,7 +766,9 @@
         ratingCount: typeof entry.ratingCount === "number" ? entry.ratingCount : null,
         popularity: entry.popularity || "",
         ratingSource: entry.source || "Google",
-        ratingUpdatedAt: entry.updatedAt || snapshot.updatedAt || ""
+        ratingUpdatedAt: entry.updatedAt || snapshot.updatedAt || "",
+        placeName: entry.name || "",
+        placeId: entry.placeId || ""
       };
     });
     state.ratings = normalized;
@@ -1677,6 +1685,7 @@
                             ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
                             <div class="muted">${item.note}</div>
                             <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
+                            ${detail.placeName ? `<div class="muted">지도 표기: ${detail.placeName}</div>` : ""}
                             ${tagRow}
                             ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
                             ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}

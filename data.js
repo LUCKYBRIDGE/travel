@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-3",
+    version: "2026-01-06-4",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-3",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-4",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -280,24 +280,24 @@ window.TRIP_DATA = {
                           cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                         {
-                          id: "nakasu",
-                          label: "나카스 규동 (Nakasu)",
-                          note: "간단·빠른 식사",
-                          menu: "규동 약 600엔",
+                          id: "nakau-airport",
+                          label: "나카우 공항점 (Nakau)",
+                          note: "간단·빠른 덮밥",
+                          menu: "규동/오야코동 500~700엔",
                           where: "간사이 공항 T1 2층",
                           desc: "시간이 빠듯할 때 든든하게 먹기 좋아요. 대기 시간이 짧은 편입니다.",
-                          mapQuery: "Nakasu Kansai Airport",
-                          cost: { "min": 600, "max": 600, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
+                          mapQuery: "Nakau Kansai Airport Shop",
+                          cost: { "min": 500, "max": 700, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         },
                         {
-                          id: "ootoya",
-                          label: "오토야 (Ootoya)",
-                          note: "속 편한 가정식",
-                          menu: "가정식 정식 1,200~1,500엔",
+                          id: "botejyu",
+                          label: "보테쥬 1946 (Botejyu 1946)",
+                          note: "오코노미야키/야키소바",
+                          menu: "오코노미야키 1,200~1,800엔",
                           where: "간사이 공항 T1 2층",
-                          desc: "생선/닭요리 등 부담 없는 메뉴가 많아 부모님 동반에 안정적인 선택입니다.",
-                          mapQuery: "Ootoya Kansai Airport",
-                          cost: { "min": 1200, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
+                          desc: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있어요.",
+                          mapQuery: "Botejyu 1946 Kansai International Airport",
+                          cost: { "min": 1200, "max": 1800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
                       ]
                     }
@@ -514,19 +514,19 @@ window.TRIP_DATA = {
                         {
                           id: "komeraku",
                           label: "코메라쿠 (Komeraku)",
-                          note: "가성비 해산물 덮밥",
+                          note: "오차즈케/덮밥",
                           menu: "해산물 덮밥 1,500~1,900엔",
-                          desc: "해산물을 가볍게 즐기기 좋고 가격대도 무난합니다.",
-                          mapQuery: "Komeraku Rinku",
+                          desc: "해산물과 덮밥을 가볍게 즐기기 좋고 가격대도 무난합니다.",
+                          mapQuery: "Komeraku Chazuke & Karaage Restaurant",
                           cost: { "min": 1500, "max": 1900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                         {
-                          id: "kurasushi",
-                          label: "쿠라 스시 (Kura Sushi)",
-                          note: "회전초밥 캐주얼",
+                          id: "kura-izumisano",
+                          label: "쿠라 스시 이즈미사노 (Kura Sushi Izumisano)",
+                          note: "린쿠 인근 회전초밥",
                           menu: "회전초밥 125엔~",
-                          desc: "입맛이 갈릴 때 부담 없이 선택 가능한 회전초밥 체인입니다.",
-                          mapQuery: "Kura Sushi Rinku",
+                          desc: "린쿠 인근 지점으로 이동이 필요합니다.",
+                          mapQuery: "Kura Sushi Izumisano",
                           cost: { "min": 125, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
                       ]
@@ -541,8 +541,8 @@ window.TRIP_DATA = {
                   summary: "아울렛 내 아식스 매장을 집중 방문합니다.",
                   details: ["린쿠 아울렛 아식스 팩토리"],
                   location: {
-                    name: "아식스 아울렛 (ASICS Factory Outlet Rinku)",
-                    mapQuery: "ASICS Factory Outlet Rinku"
+                    name: "아식스 아울렛 (ASICS Rinku Premium Outlets)",
+                    mapQuery: "ASICS Rinku Premium Outlets"
                   },
                   tags: ["쇼핑"]
                 },
@@ -853,11 +853,11 @@ window.TRIP_DATA = {
                         },
                         {
                           id: "izumo",
-                          label: "이즈모 교토 (Izumo Kyoto)",
-                          note: "비주얼 강한 장어덮밥",
-                          menu: "계란말이 장어덮밥 3,000엔",
-                          desc: "사진이 잘 나오는 메뉴로 특별한 식사를 원할 때 추천합니다.",
-                          mapQuery: "Izumo Kyoto Station",
+                          label: "이즈모 우나기 (Unagi Izumo)",
+                          note: "장어덮밥",
+                          menu: "장어덮밥 약 3,000엔",
+                          desc: "장어덮밥 전문점입니다. 지점 위치는 지도에서 확인해 주세요.",
+                          mapQuery: "Unagi Izumo Kyoto Station",
                           cost: { "min": 3000, "max": 3000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
                       ]
@@ -1118,10 +1118,10 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "asics",
-                  label: "아식스 스토어 교토 (ASICS Store Kyoto)",
-                  note: "지점명 확인 필요",
-                  desc: "린쿠에서 못 구한 모델과 사이즈를 찾기 좋은 공식 스토어입니다. 정확한 지점은 지도에서 확인해 주세요.",
-                  mapQuery: "ASICS Store Kyoto"
+                  label: "아식스 워킹 (ASICS Walking)",
+                  note: "지점 확인 필요",
+                  desc: "린쿠에서 못 구한 모델과 사이즈를 찾기 좋은 공식 스토어입니다. 지도에서 지점을 확인해 주세요.",
+                  mapQuery: "ASICS Walking Kyoto"
                 },
                 {
                   id: "smart-coffee",
@@ -1524,19 +1524,19 @@ window.TRIP_DATA = {
           cons: ["가격대 높음"]
         },
         {
-          name: "나카스 덮밥 (Nakasu)",
-          mapQuery: "Nakasu Kansai Airport",
+          name: "나카우 공항점 (Nakau)",
+          mapQuery: "Nakau Kansai Airport Shop",
           type: "식사",
-          features: ["규동/덮밥", "빠른 회전"],
+          features: ["규동/오야코동", "빠른 회전"],
           pros: ["가성비"],
           cons: ["좌석 한정"]
         },
         {
-          name: "오토야 (Ootoya)",
-          mapQuery: "Ootoya Kansai Airport",
+          name: "보테쥬 1946 (Botejyu 1946)",
+          mapQuery: "Botejyu 1946 Kansai International Airport",
           type: "식사",
-          features: ["가정식 정식", "속 편한 메뉴"],
-          pros: ["부담 없는 한 끼"],
+          features: ["오코노미야키", "철판요리"],
+          pros: ["오사카 스타일 식사"],
           cons: ["식사 시간 대기"]
         },
         {
@@ -1555,14 +1555,6 @@ window.TRIP_DATA = {
           pros: ["카페인 충전"],
           cons: ["혼잡 가능"]
         },
-        {
-          name: "고디바 (GODIVA)",
-          mapQuery: "Godiva Kansai Airport",
-          type: "디저트",
-          features: ["초콜릿/아이스"],
-          pros: ["간단한 선물"],
-          cons: ["가격대 높음"]
-        }
       ]
     },
     "kansai international airport": {
@@ -1599,10 +1591,10 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
-          name: "브룩클린 로스팅 컴퍼니 (Brooklyn Roasting)",
-          mapQuery: "Brooklyn Roasting Company Rinku",
+          name: "린쿠 커피 (RINKU COFFEE)",
+          mapQuery: "RINKU COFFEE",
           type: "카페",
-          features: ["바다 뷰 라떼", "휴식 공간"],
+          features: ["카페 휴식", "가벼운 음료"],
           pros: ["짧은 휴식에 적합"],
           cons: ["좌석 한정"]
         },
@@ -1616,11 +1608,19 @@ window.TRIP_DATA = {
         },
         {
           name: "코메라쿠 (Komeraku)",
-          mapQuery: "Komeraku Rinku",
+          mapQuery: "Komeraku Chazuke & Karaage Restaurant",
           type: "식사",
-          features: ["해산물 덮밥"],
+          features: ["오차즈케/덮밥"],
           pros: ["가성비"],
           cons: ["점심 혼잡"]
+        },
+        {
+          name: "고디바 (GODIVA)",
+          mapQuery: "GODIVA Rinku Premium Outlets",
+          type: "디저트",
+          features: ["초콜릿/아이스"],
+          pros: ["간단한 선물"],
+          cons: ["가격대 높음"]
         }
       ]
     },
@@ -1812,13 +1812,23 @@ window.TRIP_DATA = {
       pros: ["선택 폭 넓음"],
       cons: ["식사 시간 대기"]
     },
-    "asics factory outlet rinku": {
+    "asics rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 아울렛 내 아식스 매장으로 이월 모델을 할인된 가격에 구매하기 좋습니다.",
-      features: ["아울렛 이월 모델"],
-      pros: ["할인 폭 큼"],
+      building: "린쿠 프리미엄 아울렛",
+      features: ["아울렛 이월 모델", "러닝화/트레이닝 중심"],
+      pros: ["할인 폭 큼", "사이즈 비교 가능"],
       cons: ["사이즈 품절 가능"]
+    },
+    "rinku coffee": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "린쿠 타운에서 잠시 쉬어가기 좋은 캐주얼 카페입니다.",
+      area: "린쿠 타운",
+      features: ["카페 휴식", "가벼운 음료"],
+      pros: ["짧은 휴식에 적합"],
+      cons: ["좌석 한정"]
     },
     "kawaramachi kyoto": {
       rating: null,
@@ -1961,49 +1971,52 @@ window.TRIP_DATA = {
       pros: ["좌석 식사 가능"],
       cons: ["가격대 높음"]
     },
-    "nakasu kansai airport": {
+    "nakau kansai airport shop": {
       rating: null,
       ratingSource: "Google",
-      summary: "짧은 시간에 먹기 좋은 규동 전문점으로 가성비가 좋습니다.",
+      summary: "짧은 시간에 먹기 좋은 덮밥 체인으로 가성비가 좋습니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["규동 중심", "빠른 식사"],
+      features: ["규동/오야코동", "빠른 식사"],
       pros: ["가성비"],
       cons: ["좌석 한정"]
     },
-    "ootoya kansai airport": {
+    "botejyu 1946 kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "생선/닭요리 등 부담 없는 가정식 정식을 제공하는 체인입니다.",
+      summary: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있는 매장입니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["가정식 정식", "속 편한 메뉴"],
-      pros: ["다양한 정식"],
-      cons: ["대기 가능"]
+      features: ["오코노미야키", "철판요리"],
+      pros: ["오사카 스타일 식사"],
+      cons: ["식사 시간 대기"]
     },
     "mametora rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 아울렛 내 장어덮밥 전문점으로 제대로 된 장어 한 끼를 원할 때 선택합니다.",
+      building: "린쿠 프리미엄 아울렛",
       features: ["장어덮밥 전문"],
       pros: ["시그니처 메뉴"],
       cons: ["가격대 높음", "대기 가능"]
     },
-    "komeraku rinku": {
+    "komeraku chazuke & karaage restaurant": {
       rating: null,
       ratingSource: "Google",
-      summary: "해산물 덮밥을 합리적인 가격에 즐길 수 있는 식당입니다.",
-      features: ["해산물 덮밥"],
+      summary: "오차즈케와 덮밥을 합리적인 가격에 즐길 수 있는 식당입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      features: ["오차즈케/덮밥"],
       pros: ["가성비"],
       cons: ["점심 혼잡"]
     },
-    "kura sushi rinku": {
+    "kura sushi izumisano": {
       rating: null,
       ratingSource: "Google",
       summary: "가볍게 여러 접시를 즐길 수 있는 회전초밥 체인입니다.",
+      area: "린쿠 인근 (이즈미사노)",
       features: ["회전초밥"],
       pros: ["가벼운 식사"],
-      cons: ["대기 가능"]
+      cons: ["대기 가능", "이동 필요"]
     },
     "nana's green tea kansai airport": {
       rating: null,
@@ -2025,12 +2038,11 @@ window.TRIP_DATA = {
       pros: ["카페인 충전"],
       cons: ["혼잡 가능"]
     },
-    "godiva kansai airport": {
+    "godiva rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "초콜릿과 디저트로 간단히 당을 보충하기 좋은 매장입니다.",
-      building: "간사이 공항 T1",
-      floor: "2층",
+      building: "린쿠 프리미엄 아울렛",
       features: ["초콜릿/아이스"],
       pros: ["선물/간식"],
       cons: ["가격대 높음"]
@@ -2071,6 +2083,15 @@ window.TRIP_DATA = {
       features: ["24시간", "가성비"],
       pros: ["대기 적음"],
       cons: ["분위기 단순"]
+    },
+    "unagi izumo kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "장어덮밥 전문점으로 든든한 한 끼를 원할 때 선택합니다.",
+      area: "교토역 인근",
+      features: ["장어덮밥", "따뜻한 한 끼"],
+      pros: ["든든한 메뉴"],
+      cons: ["지점 위치 확인 필요"]
     },
     "nakamura tokichi kyoto station": {
       rating: null,
@@ -2164,7 +2185,7 @@ window.TRIP_DATA = {
       pros: ["브랜드 신뢰도"],
       cons: ["품절 가능"]
     },
-    "asics store kyoto": {
+    "asics walking kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "최신 러닝화 라인업을 확인할 수 있는 공식 스토어입니다.",
