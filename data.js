@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-1",
+    version: "2026-01-06-2",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-1",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-2",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -379,6 +379,7 @@ window.TRIP_DATA = {
                           label: "야키니쿠 히로 (Yakiniku Hiro)",
                           note: "와규 구이",
                           menu: "7종 모둠 5,980엔",
+                          where: "교토역 인근",
                           desc: "고기 좋아하는 가족에게 안정적인 선택. 예약하면 대기 시간을 줄일 수 있어요.",
                           mapQuery: "Yakiniku Hiro Kyoto Station",
                           cost: { "min": 5980, "max": 5980, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
@@ -1889,33 +1890,33 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 둘러보기 좋습니다.",
-      features: ["잡화/기념품", "도보 이동"],
-      pros: ["짧은 동선"],
+      features: ["잡화/기념품", "아케이드 산책"],
+      pros: ["짧은 동선", "날씨 영향 적음"],
       cons: ["인파 많음"]
     },
     "nishiki market": {
       rating: null,
       ratingSource: "Google",
       summary: "교토 대표 먹거리 시장으로 간식과 반찬을 가볍게 즐길 수 있습니다.",
-      features: ["먹거리/기념품"],
-      pros: ["현지 분위기"],
+      features: ["먹거리/기념품", "아케이드 골목"],
+      pros: ["현지 분위기", "짧은 동선"],
       cons: ["혼잡", "현금 필요"]
     },
     "新京極商店街": {
       rating: null,
       ratingSource: "Google",
       summary: "비가 와도 둘러보기 좋은 실내형 상점가입니다.",
-      features: ["실내 상점가"],
-      pros: ["날씨 영향 적음"],
+      features: ["실내 상점가", "간식/잡화 밀집"],
+      pros: ["날씨 영향 적음", "쇼핑 동선 짧음"],
       cons: ["인파 많음"]
     },
     "pontocho alley": {
       rating: null,
       ratingSource: "Google",
       summary: "저녁 시간 산책에 좋은 골목길로 분위기 좋은 식당이 많습니다.",
-      features: ["저녁 산책", "식당가"],
-      pros: ["분위기 좋음"],
-      cons: ["저녁 혼잡"]
+      features: ["저녁 산책", "전통 골목 분위기"],
+      pros: ["분위기 좋음", "사진 포인트"],
+      cons: ["저녁 혼잡", "골목이 좁음"]
     },
     "kamo river kyoto": {
       rating: null,
@@ -2032,20 +2033,21 @@ window.TRIP_DATA = {
     "moritaya jr kyoto isetan": {
       rating: null,
       ratingSource: "Google",
-      summary: "교토 대표 스키야키 전문점으로 고급스러운 식사를 원할 때 적합합니다.",
+      summary: "교토 대표 스키야키 전문점으로 고급스럽고 차분한 분위기의 좌석 식사를 제공합니다.",
       building: "JR 교토 이세탄",
       floor: "11층",
-      features: ["스키야키", "이세탄 11층"],
-      pros: ["야경 뷰"],
-      cons: ["예약 권장"]
+      features: ["스키야키 중심", "교토역 직결 백화점 레스토랑가"],
+      pros: ["좌석 식사 안정적", "야경 뷰"],
+      cons: ["가격대 높음", "예약 권장"]
     },
     "yakiniku hiro kyoto station": {
       rating: null,
       ratingSource: "Google",
       summary: "와규 구이를 다양한 부위로 즐길 수 있는 인기 야키니쿠 식당입니다.",
-      features: ["와규 구이"],
-      pros: ["가족 식사 최적"],
-      cons: ["예약 필요 가능"]
+      area: "교토역 인근",
+      features: ["와규 구이", "가족 단위 좌석"],
+      pros: ["가족 식사 최적", "풍부한 메뉴 구성"],
+      cons: ["저녁 대기 가능", "예약 권장"]
     },
     "katsukura kyoto porta": {
       rating: null,
@@ -2089,9 +2091,9 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "오층탑이 상징인 사찰로, 21일 코보산 장날이 특히 유명합니다.",
-      features: ["오층탑", "21일 코보산"],
-      pros: ["시장 분위기"],
-      cons: ["현금 필요"]
+      features: ["오층탑", "21일 코보산 장날", "경내 산책"],
+      pros: ["시장 분위기", "사진 포인트"],
+      cons: ["현금 필요", "장날 혼잡"]
     },
     "higashi honganji temple": {
       rating: null,
