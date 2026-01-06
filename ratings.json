@@ -1,4 +1,245 @@
 {
-  "updatedAt": "",
-  "items": {}
+  "updatedAt": "2026-01-05T08:03:23.190Z",
+  "items": {
+    "551 horai kansai airport": {
+      "query": "551 Horai Kansai Airport",
+      "placeId": "ChIJl7KRsaO5AGARcIgQ68L_PlQ",
+      "name": "551 Horai Kansai Airport Branch",
+      "rating": 4.1,
+      "ratingCount": 293,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "asics factory outlet rinku": {
+      "query": "ASICS Factory Outlet Rinku",
+      "placeId": "ChIJU8_-axcBBDQRptNHvxG6kyw",
+      "name": "ASICS Harbour City",
+      "rating": 4.1,
+      "ratingCount": 17,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "asics store kyoto": {
+      "query": "ASICS Store Kyoto",
+      "placeId": "ChIJwf4kIpQIAWAR42fMGq8ibDI",
+      "name": "ASICS Walking",
+      "rating": 4,
+      "ratingCount": 52,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "aeon mall kyoto": {
+      "query": "Aeon Mall Kyoto",
+      "placeId": "ChIJ8Uuuf6kIAWARFFrpsu-HJHQ",
+      "name": "이온몰 교토",
+      "rating": 4,
+      "ratingCount": 15002,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "brooklyn roasting company rinku": {
+      "query": "Brooklyn Roasting Company Rinku",
+      "placeId": "ChIJZ14Mv2jnAGART3u5Qc-BIxY",
+      "name": "브루클린 로스팅 컴퍼니 난바",
+      "rating": 4.4,
+      "ratingCount": 1468,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "ganko sushi kansai airport": {
+      "query": "Ganko Sushi Kansai Airport",
+      "placeId": "ChIJPyP6rOLxAGARK3wy5kkkd0Q",
+      "name": "Ganko Sushi",
+      "rating": 3.8,
+      "ratingCount": 127,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "grill capital touyoutei": {
+      "query": "Grill Capital Touyoutei",
+      "placeId": "ChIJF7FjtZsIAWAR38y50-IJHXY",
+      "name": "Grill Capital Touyoutei - Kyoto Porta",
+      "rating": 4.2,
+      "ratingCount": 1420,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "higashi honganji temple": {
+      "query": "Higashi Honganji Temple",
+      "placeId": "ChIJkWH_sqUIAWARWsn28jWc7y0",
+      "name": "히가시혼간지",
+      "rating": 4.5,
+      "ratingCount": 12087,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "honke owariya": {
+      "query": "Honke Owariya",
+      "placeId": "ChIJ5epEaYYIAWARvASBVbwnCOM",
+      "name": "혼케 오와리야 본점",
+      "rating": 4.3,
+      "ratingCount": 2358,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "hotel vischio kyoto by granvia": {
+      "query": "Hotel Vischio Kyoto by GRANVIA",
+      "placeId": "ChIJ8UDer60IAWARP0UCq4fbAP0",
+      "name": "호텔 비스키오 교토 바이 그란비아",
+      "rating": 4.5,
+      "ratingCount": 1249,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "inoda coffee kyoto": {
+      "query": "Inoda Coffee Kyoto",
+      "placeId": "ChIJHYWgPJAIAWAR1EwyilguU10",
+      "name": "Inoda Coffee - Main Shop",
+      "rating": 4.3,
+      "ratingCount": 5165,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "ippodo tea store kyoto": {
+      "query": "Ippodo Tea Store Kyoto",
+      "placeId": "ChIJcadqE4wIAWAR2BeU0_UOXtE",
+      "name": "잇포도차호 교토혼텐",
+      "rating": 4.5,
+      "ratingCount": 2405,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "izumo kyoto station": {
+      "query": "Izumo Kyoto Station",
+      "placeId": "ChIJ7wKLka4IAWARCByidG5EGrY",
+      "name": "교토 역",
+      "rating": 4.3,
+      "ratingCount": 8561,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "jr haruka kansai airport station": {
+      "query": "JR Haruka Kansai Airport Station",
+      "placeId": "ChIJ1wO5URO5AGARXZucj1YFJhI",
+      "name": "간사이 공항",
+      "rating": 4.1,
+      "ratingCount": 2029,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "jr haruka kyoto station": {
+      "query": "JR Haruka Kyoto Station",
+      "placeId": "ChIJ7wKLka4IAWARCByidG5EGrY",
+      "name": "교토 역",
+      "rating": 4.3,
+      "ratingCount": 8561,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "jr kyoto isetan": {
+      "query": "JR Kyoto Isetan",
+      "placeId": "ChIJu_u7564IAWAR59CKVpnyvOE",
+      "name": "JR교토 이세탄백화점",
+      "rating": 4,
+      "ratingCount": 8728,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "jr ticket office kansai airport station": {
+      "query": "JR Ticket Office Kansai Airport Station",
+      "placeId": "ChIJM1ZtUxO5AGARfBAQ71q-XXc",
+      "name": "간사이국제공항 JR매표소",
+      "rating": 3.8,
+      "ratingCount": 187,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "kamo river kyoto": {
+      "query": "Kamo River Kyoto",
+      "placeId": "ChIJKZsHV-QIAWARAwyExuxohlc",
+      "name": "가모 강",
+      "rating": 4.6,
+      "ratingCount": 739,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "kansai international airport": {
+      "query": "Kansai International Airport",
+      "placeId": "ChIJ9_rNIxO5AGARiI-QjZ-ncfE",
+      "name": "간사이 국제공항",
+      "rating": 4,
+      "ratingCount": 20210,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T08:03:23.190Z"
+    },
+    "kansai international airport terminal 1": {
+      "query": "Kansai International Airport Terminal 1",
+      "placeId": "ChIJ9_rNIxO5AGARiI-QjZ-ncfE",
+      "name": "간사이 국제공항",
+      "rating": 4,
+      "ratingCount": 20210,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T07:06:11.063Z"
+    },
+    "katsukura kyoto porta": {
+      "query": "Katsukura Kyoto Porta",
+      "placeId": "ChIJAWwhhZkIAWARBmPflL1c4yQ",
+      "name": "돈카츠 가츠쿠라 교토포르타점",
+      "rating": 4.4,
+      "ratingCount": 1214,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-05T07:06:11.063Z"
+    },
+    "kawaramachi kyoto": {
+      "query": "Kawaramachi Kyoto",
+      "placeId": "ChIJcc2K5pUIAWARakHoDLhg7HU",
+      "name": "가와라마치 거리",
+      "rating": 4.3,
+      "ratingCount": 142,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T07:06:11.063Z"
+    },
+    "kineya mugimaru kansai airport": {
+      "query": "Kineya Mugimaru Kansai Airport",
+      "placeId": "ChIJJQ143GO5AGARqAlAZwkQYq4",
+      "name": "Kineya Mugimaru @ KIX",
+      "rating": 4.2,
+      "ratingCount": 214,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-05T07:06:11.063Z"
+    },
+    "kinkaku-ji": {
+      "query": "Kinkaku-ji",
+      "placeId": "ChIJvUbrwCCoAWARX2QiHCsn5A4",
+      "name": "금각사",
+      "rating": 4.5,
+      "ratingCount": 64745,
+      "popularity": "관광객 많음",
+      "source": "Google",
+      "updatedAt": "2026-01-05T07:06:11.063Z"
+    }
+  }
 }
