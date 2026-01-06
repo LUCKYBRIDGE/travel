@@ -69,9 +69,16 @@ async function main() {
     await sleep(delayMs);
   }
 
-  const payload = { updatedAt: new Date().toISOString(), items };
+  const filteredItems = {};
+  queries.forEach((query) => {
+    const key = normalizeKey(query);
+    if (items[key]) {
+      filteredItems[key] = items[key];
+    }
+  });
+  const payload = { updatedAt: new Date().toISOString(), items: filteredItems };
   fs.writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
-  const count = Object.keys(items).length;
+  const count = Object.keys(filteredItems).length;
   console.log(`Saved ${count} ratings to ${outputPath}`);
 }
 

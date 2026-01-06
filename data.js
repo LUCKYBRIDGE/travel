@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-4",
+    version: "2026-01-06-5",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-4",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-5",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -395,6 +395,16 @@ window.TRIP_DATA = {
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                         {
+                          id: "sushi-musashi",
+                          label: "스시노무사시 교토역 (Sushi no Musashi)",
+                          note: "회전초밥",
+                          menu: "회전초밥 150엔~",
+                          where: "교토역 앞",
+                          desc: "회전초밥 스타일이라 취향대로 여러 접시를 고르기 쉽습니다.",
+                          mapQuery: "Sushi no Musashi Kyoto Station",
+                          cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
                           id: "nakau",
                           label: "나카우 교토역 (Nakau Kyoto Station)",
                           note: "24시간 간편식",
@@ -520,15 +530,6 @@ window.TRIP_DATA = {
                           mapQuery: "Komeraku Chazuke & Karaage Restaurant",
                           cost: { "min": 1500, "max": 1900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
-                        {
-                          id: "kura-izumisano",
-                          label: "쿠라 스시 이즈미사노 (Kura Sushi Izumisano)",
-                          note: "린쿠 인근 회전초밥",
-                          menu: "회전초밥 125엔~",
-                          desc: "린쿠 인근 지점으로 이동이 필요합니다.",
-                          mapQuery: "Kura Sushi Izumisano",
-                          cost: { "min": 125, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        }
                       ]
                     }
                   ]
@@ -606,6 +607,16 @@ window.TRIP_DATA = {
                           desc: "기본에 충실한 돈카츠 정식. 실패 확률이 낮아요.",
                           mapQuery: "Katsukura Kyoto Porta",
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "sushi-musashi-b",
+                          label: "스시노무사시 교토역 (Sushi no Musashi)",
+                          note: "회전초밥",
+                          menu: "회전초밥 150엔~",
+                          where: "교토역 앞",
+                          desc: "회전초밥 스타일이라 취향대로 여러 접시를 고르기 쉽습니다.",
+                          mapQuery: "Sushi no Musashi Kyoto Station",
+                          cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                         {
                           id: "nakau-b",
@@ -843,6 +854,16 @@ window.TRIP_DATA = {
                           cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                         {
+                          id: "sushi-musashi-c",
+                          label: "스시노무사시 교토역 (Sushi no Musashi)",
+                          note: "회전초밥",
+                          menu: "회전초밥 150엔~",
+                          where: "교토역 앞",
+                          desc: "회전초밥 스타일이라 취향대로 여러 접시를 고르기 쉽습니다.",
+                          mapQuery: "Sushi no Musashi Kyoto Station",
+                          cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
                           id: "nakau-c",
                           label: "나카우 교토역 (Nakau Kyoto Station)",
                           note: "24시간 간편식",
@@ -851,15 +872,6 @@ window.TRIP_DATA = {
                           mapQuery: "Nakau Kyoto Station",
                           cost: { "min": 490, "max": 490, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
-                        {
-                          id: "izumo",
-                          label: "이즈모 우나기 (Unagi Izumo)",
-                          note: "장어덮밥",
-                          menu: "장어덮밥 약 3,000엔",
-                          desc: "장어덮밥 전문점입니다. 지점 위치는 지도에서 확인해 주세요.",
-                          mapQuery: "Unagi Izumo Kyoto Station",
-                          cost: { "min": 3000, "max": 3000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        }
                       ]
                     }
                   ]
@@ -1115,13 +1127,6 @@ window.TRIP_DATA = {
                   note: "고급 말차",
                   desc: "진한 말차를 찾는 분에게 추천. 인기 제품은 품절이 빠릅니다.",
                   mapQuery: "Marukyu Koyamaen Kyoto"
-                },
-                {
-                  id: "asics",
-                  label: "아식스 워킹 (ASICS Walking)",
-                  note: "지점 확인 필요",
-                  desc: "린쿠에서 못 구한 모델과 사이즈를 찾기 좋은 공식 스토어입니다. 지도에서 지점을 확인해 주세요.",
-                  mapQuery: "ASICS Walking Kyoto"
                 },
                 {
                   id: "smart-coffee",
@@ -1500,6 +1505,22 @@ window.TRIP_DATA = {
           cons: ["좌석 제한"]
         },
         {
+          name: "패밀리마트 (FamilyMart)",
+          mapQuery: "FamilyMart Kansai International Airport Terminal 1",
+          type: "편의점",
+          features: ["간단 요기", "음료/간식"],
+          pros: ["동선 간단"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "도토루 커피 (Doutor Coffee)",
+          mapQuery: "Doutor Coffee Kansai International Airport",
+          type: "카페",
+          features: ["커피/샌드위치", "짧은 휴식"],
+          pros: ["짧은 휴식에 적합"],
+          cons: ["좌석 제한"]
+        },
+        {
           name: "551 호라이 (551 Horai)",
           mapQuery: "551 Horai Kansai Airport",
           type: "식사",
@@ -1581,6 +1602,14 @@ window.TRIP_DATA = {
           features: ["바다 산책로", "노을 명소"],
           pros: ["사진 포인트"],
           cons: ["날씨 영향"]
+        },
+        {
+          name: "린쿠노유 (Rinku no Yu)",
+          mapQuery: "Rinku no Yu",
+          type: "휴식",
+          features: ["온천/사우나", "피로 회복"],
+          pros: ["여행 피로 해소"],
+          cons: ["시간 필요"]
         },
         {
           name: "린쿠 시클 (Rinku Pleasure Town Seacle)",
@@ -1665,6 +1694,22 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
+          name: "스타벅스 교토역 서쪽 출구",
+          mapQuery: "Starbucks Coffee - JR Kyoto Station West Entrance",
+          type: "카페",
+          features: ["커피/음료", "테이크아웃"],
+          pros: ["동선 짧음"],
+          cons: ["피크 시간 혼잡"]
+        },
+        {
+          name: "요도바시 카메라 교토",
+          mapQuery: "Yodobashi Camera Kyoto",
+          type: "쇼핑",
+          features: ["전자기기/잡화", "대형 매장"],
+          pros: ["선물/필요 물품 구매"],
+          cons: ["체류 시간 길어질 수 있음"]
+        },
+        {
           name: "교토역 스카이웨이 (Kyoto Station Skyway)",
           mapQuery: "Kyoto Station Skyway",
           type: "야경",
@@ -1713,6 +1758,34 @@ window.TRIP_DATA = {
           cons: ["품절 가능"]
         }
       ]
+    },
+    "sushi no musashi kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 앞의 회전초밥 체인으로 간단히 한 끼 해결하기 좋습니다.",
+      area: "교토역 앞",
+      features: ["회전초밥", "빠른 회전"],
+      pros: ["메뉴 선택 쉬움"],
+      cons: ["피크 시간 대기"]
+    },
+    "starbucks coffee - jr kyoto station west entrance": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 서쪽 출구 근처에 있어 이동 중 잠깐 쉬기 좋은 카페입니다.",
+      building: "교토역 (서쪽 출구)",
+      floor: "1층",
+      features: ["커피/음료", "테이크아웃"],
+      pros: ["동선 짧음"],
+      cons: ["혼잡 가능"]
+    },
+    "yodobashi camera kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 바로 옆 대형 전자상가로 필요한 물품을 한번에 구매할 수 있습니다.",
+      building: "요도바시 카메라 교토",
+      features: ["전자기기/잡화", "대형 매장"],
+      pros: ["선물/필요 물품 구매"],
+      cons: ["체류 시간 길어질 수 있음"]
     },
     "kyoto station skyway": {
       rating: null,
@@ -1829,6 +1902,15 @@ window.TRIP_DATA = {
       features: ["카페 휴식", "가벼운 음료"],
       pros: ["짧은 휴식에 적합"],
       cons: ["좌석 한정"]
+    },
+    "rinku no yu": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "린쿠 타운의 온천/사우나 시설로 피로를 풀기에 좋습니다.",
+      area: "린쿠 타운",
+      features: ["온천/사우나", "휴식 공간"],
+      pros: ["여행 피로 해소"],
+      cons: ["체류 시간 필요"]
     },
     "kawaramachi kyoto": {
       rating: null,
@@ -2009,15 +2091,6 @@ window.TRIP_DATA = {
       pros: ["가성비"],
       cons: ["점심 혼잡"]
     },
-    "kura sushi izumisano": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "가볍게 여러 접시를 즐길 수 있는 회전초밥 체인입니다.",
-      area: "린쿠 인근 (이즈미사노)",
-      features: ["회전초밥"],
-      pros: ["가벼운 식사"],
-      cons: ["대기 가능", "이동 필요"]
-    },
     "nana's green tea kansai airport": {
       rating: null,
       ratingSource: "Google",
@@ -2037,6 +2110,26 @@ window.TRIP_DATA = {
       features: ["커피/음료", "테이크아웃"],
       pros: ["카페인 충전"],
       cons: ["혼잡 가능"]
+    },
+    "familymart kansai international airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "간단한 간식과 음료를 빠르게 구매하기 좋은 편의점입니다.",
+      building: "간사이 공항 T1",
+      floor: "1층",
+      features: ["음료/간식", "빠른 구매"],
+      pros: ["동선 간단"],
+      cons: ["혼잡 가능"]
+    },
+    "doutor coffee kansai international airport": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "공항 이동 중 짧게 쉬기 좋은 커피 체인입니다.",
+      building: "간사이 공항 T1",
+      floor: "1층 (노스게이트)",
+      features: ["커피/샌드위치", "짧은 휴식"],
+      pros: ["빠른 회전"],
+      cons: ["좌석 제한"]
     },
     "godiva rinku premium outlets": {
       rating: null,
@@ -2083,15 +2176,6 @@ window.TRIP_DATA = {
       features: ["24시간", "가성비"],
       pros: ["대기 적음"],
       cons: ["분위기 단순"]
-    },
-    "unagi izumo kyoto station": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "장어덮밥 전문점으로 든든한 한 끼를 원할 때 선택합니다.",
-      area: "교토역 인근",
-      features: ["장어덮밥", "따뜻한 한 끼"],
-      pros: ["든든한 메뉴"],
-      cons: ["지점 위치 확인 필요"]
     },
     "nakamura tokichi kyoto station": {
       rating: null,
@@ -2184,15 +2268,6 @@ window.TRIP_DATA = {
       features: ["고급 말차"],
       pros: ["브랜드 신뢰도"],
       cons: ["품절 가능"]
-    },
-    "asics walking kyoto": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "최신 러닝화 라인업을 확인할 수 있는 공식 스토어입니다.",
-      area: "교토 시내",
-      features: ["신상/사이즈 다양", "공식 스토어"],
-      pros: ["피팅 편리", "라인업 확인 용이"],
-      cons: ["할인 적음", "지점명 확인 필요"]
     },
     "smart coffee kyoto": {
       rating: null,
