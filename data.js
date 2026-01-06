@@ -1512,6 +1512,54 @@ window.TRIP_DATA = {
           features: ["우동/덮밥 세트"],
           pros: ["따뜻한 식사"],
           cons: ["혼잡 가능"]
+        },
+        {
+          name: "간코 스시 (Ganko Sushi)",
+          mapQuery: "Ganko Sushi Kansai Airport",
+          type: "식사",
+          features: ["초밥 정식", "좌석 식사"],
+          pros: ["차분한 식사"],
+          cons: ["가격대 높음"]
+        },
+        {
+          name: "나카스 덮밥 (Nakasu)",
+          mapQuery: "Nakasu Kansai Airport",
+          type: "식사",
+          features: ["규동/덮밥", "빠른 회전"],
+          pros: ["가성비"],
+          cons: ["좌석 한정"]
+        },
+        {
+          name: "오토야 (Ootoya)",
+          mapQuery: "Ootoya Kansai Airport",
+          type: "식사",
+          features: ["가정식 정식", "속 편한 메뉴"],
+          pros: ["부담 없는 한 끼"],
+          cons: ["식사 시간 대기"]
+        },
+        {
+          name: "나나스 그린티 (Nana's Green Tea)",
+          mapQuery: "Nana's Green Tea Kansai Airport",
+          type: "디저트",
+          features: ["말차 라떼", "디저트"],
+          pros: ["달달한 휴식"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "스타벅스 (Starbucks)",
+          mapQuery: "Starbucks Kansai Airport Terminal 1",
+          type: "카페",
+          features: ["커피/음료", "테이크아웃"],
+          pros: ["카페인 충전"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "고디바 (GODIVA)",
+          mapQuery: "Godiva Kansai Airport",
+          type: "디저트",
+          features: ["초콜릿/아이스"],
+          pros: ["간단한 선물"],
+          cons: ["가격대 높음"]
         }
       ]
     },
@@ -1949,6 +1997,36 @@ window.TRIP_DATA = {
       features: ["회전초밥"],
       pros: ["가벼운 식사"],
       cons: ["대기 가능"]
+    },
+    "nana's green tea kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "말차 라떼와 디저트로 짧게 쉬기 좋은 카페입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
+      features: ["말차 라떼", "디저트"],
+      pros: ["달달한 휴식"],
+      cons: ["좌석 제한"]
+    },
+    "starbucks kansai airport terminal 1": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "테이크아웃 위주로 빠르게 커피를 마실 수 있는 카페입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
+      features: ["커피/음료", "테이크아웃"],
+      pros: ["카페인 충전"],
+      cons: ["혼잡 가능"]
+    },
+    "godiva kansai airport": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "초콜릿과 디저트로 간단히 당을 보충하기 좋은 매장입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
+      features: ["초콜릿/아이스"],
+      pros: ["선물/간식"],
+      cons: ["가격대 높음"]
     },
     "moritaya jr kyoto isetan": {
       rating: null,
