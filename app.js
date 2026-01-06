@@ -67,6 +67,8 @@
       label: "식사",
       className: "tag-meal",
       keywords: [
+        "간식",
+        "편의점",
         "식사",
         "맛집",
         "스시",
@@ -162,7 +164,6 @@
         "하루카",
         "지하철",
         "버스",
-        "택시",
         "은행",
         "atm",
         "ticket",
@@ -422,55 +423,95 @@
     `;
   }
 
-  function renderNearbyList(nearby) {
-    if (!nearby || nearby.length === 0) {
+  function buildNearbyEntries(nearby) {
+    return nearby.map((item) => {
+      const rawDetail = getPlaceDetails(item.mapQuery) || item;
+      const category = resolveCategory(rawDetail, item.name, item.type);
+      const detail = enhanceDetail(rawDetail, category);
+      return { item, detail, category };
+    });
+  }
+
+  function renderNearbyCard(entry) {
+    const { item, detail, category } = entry;
+    const tags = buildHashtags(detail, category);
+    const locationLines = [
+      detail.building || item.building ? renderDetailLine("건물", detail.building || item.building) : "",
+      detail.floor || item.floor ? renderDetailLine("층", detail.floor || item.floor) : "",
+      detail.area || item.area ? renderDetailLine("구역", detail.area || item.area) : ""
+    ]
+      .filter(Boolean)
+      .join("");
+    return `
+      <div class="nearby-card">
+        <div class="nearby-header">
+          <strong>${item.name}</strong>
+          ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
+        </div>
+        <div class="muted">평점: ${formatRating(detail)}</div>
+        ${detail.placeName ? renderDetailLine("지도 표기", detail.placeName) : ""}
+        ${renderTagRow(category, tags)}
+        ${locationLines}
+        ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
+        ${renderDetailLine("특징", detail.features, "정보 준비중")}
+        ${renderDetailLine("장점", detail.pros, "정보 준비중")}
+        ${renderDetailLine("단점", detail.cons, "정보 준비중")}
+        ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
+        ${detail.ratingUpdatedAt ? renderDetailLine("업데이트", formatDate(detail.ratingUpdatedAt)) : ""}
+        <div class="map-actions">
+          <a href="${buildMapLink(item.mapQuery)}" target="_blank" rel="noreferrer">지도 열기</a>
+          <button type="button" data-copy="${item.mapQuery}">검색어 복사</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderNearbyList(entries) {
+    if (!entries || entries.length === 0) {
       return "";
     }
     return `
       <div class="nearby-list">
-        ${nearby
-          .map((item) => {
-            const rawDetail = getPlaceDetails(item.mapQuery) || item;
-            const category = resolveCategory(rawDetail, item.name, item.type);
-            const detail = enhanceDetail(rawDetail, category);
-            const tags = buildHashtags(detail, category);
-            const locationLines = [
-              detail.building || item.building
-                ? renderDetailLine("건물", detail.building || item.building)
-                : "",
-              detail.floor || item.floor
-                ? renderDetailLine("층", detail.floor || item.floor)
-                : "",
-              detail.area || item.area ? renderDetailLine("구역", detail.area || item.area) : ""
-            ]
-              .filter(Boolean)
-              .join("");
-            return `
-              <div class="nearby-card">
-                <div class="nearby-header">
-                  <strong>${item.name}</strong>
-                  ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
-                </div>
-                <div class="muted">평점: ${formatRating(detail)}</div>
-                ${detail.placeName ? renderDetailLine("지도 표기", detail.placeName) : ""}
-                ${renderTagRow(category, tags)}
-                ${locationLines}
-                ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
-                ${renderDetailLine("특징", detail.features, "정보 준비중")}
-                ${renderDetailLine("장점", detail.pros, "정보 준비중")}
-                ${renderDetailLine("단점", detail.cons, "정보 준비중")}
-                ${detail.popularity ? renderDetailLine("관광객", detail.popularity) : ""}
-                ${detail.ratingUpdatedAt ? renderDetailLine("업데이트", formatDate(detail.ratingUpdatedAt)) : ""}
-                <div class="map-actions">
-                  <a href="${buildMapLink(item.mapQuery)}" target="_blank" rel="noreferrer">지도 열기</a>
-                  <button type="button" data-copy="${item.mapQuery}">검색어 복사</button>
-                </div>
-              </div>
-            `;
-          })
-          .join("")}
+        ${entries.map((entry) => renderNearbyCard(entry)).join("")}
       </div>
     `;
+  }
+
+  function renderNearbySection(nearby, options = {}) {
+    if (!nearby || nearby.length === 0) {
+      return "";
+    }
+    const entries = buildNearbyEntries(nearby);
+    const primaryCategories = Array.isArray(options.primaryCategories)
+      ? options.primaryCategories
+      : [];
+    if (primaryCategories.length === 0) {
+      return `
+        <details class="nearby-toggle">
+          <summary>주변 장소 보기</summary>
+          ${renderNearbyList(entries)}
+        </details>
+      `;
+    }
+    const primary = entries.filter((entry) => primaryCategories.includes(entry.category?.id));
+    const extra = entries.filter((entry) => !primaryCategories.includes(entry.category?.id));
+    const primaryBlock = primary.length
+      ? `
+          <div class="nearby-section">
+            <div class="nearby-title">현재 일정에 맞는 주변 장소</div>
+            ${renderNearbyList(primary)}
+          </div>
+        `
+      : "";
+    const extraBlock = extra.length
+      ? `
+          <details class="nearby-toggle">
+            <summary>주변 장소 더보기</summary>
+            ${renderNearbyList(extra)}
+          </details>
+        `
+      : "";
+    return `${primaryBlock}${extraBlock}`;
   }
 
   function renderPlaceCard(mapQuery, title, options = {}) {
@@ -515,7 +556,7 @@
           ? `<div class="place-actions"><button type="button" data-rating-update="${mapQuery}">평점 업데이트</button></div>`
           : ""
       }
-      ${options.showNearby ? renderNearbyList(detail.nearby) : ""}
+      ${options.showNearby ? renderNearbySection(detail.nearby, { primaryCategories: options.nearbyCategories }) : ""}
     `;
 
     if (options.collapsible) {
@@ -1416,7 +1457,11 @@
       if (showNearby && context.nearbySet) {
         context.nearbySet.add(key);
       }
-      placeInfo = renderPlaceCard(block.location.mapQuery, block.location.name, { showNearby });
+      const nearbyCategories = getBlockCategoryIds(block);
+      placeInfo = renderPlaceCard(block.location.mapQuery, block.location.name, {
+        showNearby,
+        nearbyCategories
+      });
     }
 
     return `
@@ -1441,6 +1486,27 @@
         </div>
       </article>
     `;
+  }
+
+  function getBlockCategoryIds(block) {
+    const rawTags = Array.isArray(block.tags) ? block.tags : [];
+    const rawDetails = Array.isArray(block.details) ? block.details : [];
+    const tokens = [
+      block.title,
+      block.summary,
+      ...rawDetails,
+      ...rawTags
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const ids = new Set();
+    CATEGORY_DEFS.forEach((category) => {
+      if (category.keywords.some((keyword) => tokens.includes(keyword.toLowerCase()))) {
+        ids.add(category.id);
+      }
+    });
+    return Array.from(ids);
   }
 
   function renderDay(day, section) {

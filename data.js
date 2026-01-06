@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-6",
+    version: "2026-01-06-9",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-6",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-9",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -60,16 +60,14 @@ window.TRIP_DATA = {
       from: "Kansai International Airport Terminal 1",
       to: "Rinku Premium Outlets",
       options: [
-        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" },
-        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 2000, costMax: 2500, unit: "per_car", cars: 2 }
+        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" }
       ]
     },
     {
       from: "Rinku Premium Outlets",
       to: "JR Haruka Kansai Airport Station",
       options: [
-        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" },
-        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 2000, costMax: 2500, unit: "per_car", cars: 2 }
+        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" }
       ]
     },
     {
@@ -112,15 +110,13 @@ window.TRIP_DATA = {
       from: "Kawaramachi Kyoto",
       to: "Kinkaku-ji",
       options: [
-        { mode: "버스", timeMin: 30, timeMax: 40, costMin: 230, costMax: 230, unit: "per_person" },
-        { mode: "택시", timeMin: 20, timeMax: 25, costMin: 2500, costMax: 3000, unit: "per_car", cars: 2 }
+        { mode: "버스", timeMin: 30, timeMax: 40, costMin: 230, costMax: 230, unit: "per_person" }
       ]
     },
     {
       from: "Kinkaku-ji",
       to: "Grill Capital Touyoutei",
       options: [
-        { mode: "택시", timeMin: 10, timeMax: 15, costMin: 1500, costMax: 1800, unit: "per_car", cars: 2 },
         { mode: "버스", timeMin: 20, timeMax: 30, costMin: 230, costMax: 230, unit: "per_person" }
       ]
     },
@@ -270,22 +266,12 @@ window.TRIP_DATA = {
                           cost: { "min": 600, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         },
                         {
-                          id: "ganko",
-                          label: "간코 스시 (Ganko Sushi)",
-                          note: "정갈한 좌석 초밥 정식",
-                          menu: "초밥 정식 2,500~3,500엔",
-                          where: "간사이 공항 T1 3층",
-                          desc: "공항에서 차분하게 앉아 먹는 정식 코스. 5인 가족 식사에 안정적입니다.",
-                          mapQuery: "Ganko Sushi Kansai Airport",
-                          cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
                           id: "nakau-airport",
                           label: "나카우 공항점 (Nakau)",
                           note: "간단·빠른 덮밥",
                           menu: "규동/오야코동 500~700엔",
-                          where: "간사이 공항 T1 2층",
-                          desc: "시간이 빠듯할 때 든든하게 먹기 좋아요. 대기 시간이 짧은 편입니다.",
+                          where: "에어로플라자 3층 (보안 전)",
+                          desc: "시간이 빠듯할 때 든든하게 먹기 좋아요. 공항역 연결동이라 동선이 편합니다.",
                           mapQuery: "Nakau Kansai Airport Shop",
                           cost: { "min": 500, "max": 700, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         },
@@ -294,8 +280,8 @@ window.TRIP_DATA = {
                           label: "보테쥬 1946 (Botejyu 1946)",
                           note: "오코노미야키/야키소바",
                           menu: "오코노미야키 1,200~1,800엔",
-                          where: "간사이 공항 T1 2층",
-                          desc: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있어요.",
+                          where: "간사이 공항 T1 2층 (보안 후/국내선)",
+                          desc: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있어요. (보안 후 구역)",
                           mapQuery: "Botejyu 1946 Kansai International Airport",
                           cost: { "min": 1200, "max": 1800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
@@ -463,13 +449,13 @@ window.TRIP_DATA = {
                   end: "14:30",
                   title: "공항 간단 요기",
                   summary: "공항에서 간단히 먹고 린쿠로 바로 이동합니다.",
-                  details: ["T1 2층 로손", "타마고 산도 250엔 + 가라아게군 240엔"],
+                  details: ["T1 1층/2층 로손 (보안 전)", "타마고 산도 250엔 + 가라아게군 240엔"],
                   location: {
                     name: "로손 (Lawson)",
                     mapQuery: "Lawson Kansai Airport Terminal 1"
                   },
                   tags: ["간식"],
-                  where: "간사이 공항 T1 2층",
+                  where: "간사이 공항 T1 1층/2층 (보안 전)",
                   costs: [
                     {
                       label: "간식",
@@ -713,14 +699,6 @@ window.TRIP_DATA = {
                           cost: { "min": 600, "max": 900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         },
                         {
-                          id: "ganko-c",
-                          label: "간코 스시 (Ganko Sushi)",
-                          note: "좌석 초밥 정식",
-                          menu: "초밥 정식 2,500~3,500엔",
-                          where: "간사이 공항 T1 3층",
-                          desc: "도착 첫날에 차분하게 정식으로 식사하고 싶을 때 좋습니다.",
-                          mapQuery: "Ganko Sushi Kansai Airport",
-                          cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
                       ]
                     }
@@ -948,11 +926,7 @@ window.TRIP_DATA = {
           ]
         }
       ],
-      tips: [
-        "성인 5인은 택시 2대 필요",
-        "3km 이내 단거리는 택시가 효율적",
-        "교통카드 충전과 사찰 입장료는 현금 필요"
-      ]
+      tips: ["교통카드 충전과 사찰 입장료는 현금 필요"]
     },
     {
       id: "day2",
@@ -1238,7 +1212,6 @@ window.TRIP_DATA = {
         }
       ],
       tips: [
-        "버스 혼잡 시 금각사 → 키타야마는 택시 2대 추천",
         "시장/사찰은 카드 불가 많음"
       ]
     },
@@ -1457,9 +1430,8 @@ window.TRIP_DATA = {
     { "id": "c10", "label": "하루카 43호 탑승", "day": "day3", "category": "교통" }
   ],
   globalTips: [
-    "성인 5인은 택시 2대 필요",
-    "3km 이내 단거리는 택시가 시간 효율적",
-    "교통카드 충전과 사찰 입장료는 현금 필수"
+    "교통카드 충전과 사찰 입장료는 현금 필수",
+    "공항 탑승 게이트는 항공편별로 변동되니 전광판/앱으로 확인"
   ],
   placeDetails: {
     "kansai international airport terminal 1": {
@@ -1468,11 +1440,16 @@ window.TRIP_DATA = {
       summary: "입국 수속부터 교통·식사·ATM까지 한 번에 해결되는 간사이 공항의 핵심 터미널입니다.",
       building: "간사이 공항 T1",
       floor: "2~4층",
+      area: "중앙 로비 · 국제선 출발층",
       tags: ["공항", "교통", "식사", "ATM"],
       features: ["입국/교통/식사/ATM 집중", "JR·난카이 연결", "T2↔T1 무료 셔틀"],
       pros: ["이동 동선 짧음", "필수 절차를 한 곳에서 완료"],
       cons: ["피크 시간 혼잡", "공항가 가격대"],
-      tips: ["입국 직후 ATM·교통카드 처리", "식사는 포장 활용 시 대기 단축"],
+      tips: [
+        "입국 직후 ATM·교통카드 처리",
+        "식사는 포장 활용 시 대기 단축",
+        "(공식 지도) 1F 도착층·2F 출발층·4F 국제선 출발층 구역 확인"
+      ],
       nearby: [
         {
           name: "세븐은행 ATM (Seven Bank)",
@@ -1539,14 +1516,6 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
-          name: "간코 스시 (Ganko Sushi)",
-          mapQuery: "Ganko Sushi Kansai Airport",
-          type: "식사",
-          features: ["초밥 정식", "좌석 식사"],
-          pros: ["차분한 식사"],
-          cons: ["가격대 높음"]
-        },
-        {
           name: "나카우 공항점 (Nakau)",
           mapQuery: "Nakau Kansai Airport Shop",
           type: "식사",
@@ -1561,14 +1530,6 @@ window.TRIP_DATA = {
           features: ["오코노미야키", "철판요리"],
           pros: ["오사카 스타일 식사"],
           cons: ["식사 시간 대기"]
-        },
-        {
-          name: "나나스 그린티 (Nana's Green Tea)",
-          mapQuery: "Nana's Green Tea Kansai Airport",
-          type: "디저트",
-          features: ["말차 라떼", "디저트"],
-          pros: ["달달한 휴식"],
-          cons: ["좌석 제한"]
         },
         {
           name: "스타벅스 (Starbucks)",
@@ -1886,57 +1847,106 @@ window.TRIP_DATA = {
     "lawson kansai airport terminal 1": {
       rating: null,
       ratingSource: "Google",
-      summary: "공항 내 편의점으로 짧은 시간에 간단한 요기와 음료를 해결할 수 있습니다.",
+      summary:
+        "공항 내 편의점으로 짧은 시간에 간단한 요기와 음료를 해결할 수 있습니다. (공식 지도: T1 1F/2F 보안 전, 4F 국제선 출발층)",
       building: "간사이 공항 T1",
-      floor: "2층",
+      floor: "1층 · 2층 · 4층",
+      area: "보안 전 구역",
       tags: ["편의점", "간식", "빠른식사"],
       features: ["샌드위치/가라아게군", "간단 요기", "빠른 회전"],
       pros: ["시간 절약", "동선 간단"],
       cons: ["좌석 제한", "혼잡 가능"],
-      tips: ["이동 전 바로 먹을 간식 우선 구매", "전자레인지 이용 가능 여부 확인"]
+      tips: [
+        "이동 전 바로 먹을 간식 우선 구매",
+        "전자레인지 이용 가능 여부 확인",
+        "(공식 지도 표식) 1F 쇼핑 No.3 · 2F 쇼핑 No.4 · 4F 쇼핑 No.2"
+      ]
     },
     "seven bank kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "트래블로그 등 해외카드 출금이 가능한 대표 ATM입니다.",
+      summary:
+        "트래블로그 등 해외카드 출금이 가능한 대표 ATM입니다. (공식 지도: T1 1F 북쪽 도착층/보안 전, 2F 중앙, 4F 국제선 출발층)",
       building: "간사이 공항 T1",
-      floor: "2층 중앙 로비 / 4층 국제선 출발층",
+      floor: "1층 북측 · 2층 중앙 · 4층 출발층",
+      area: "보안 전 구역",
       tags: ["ATM", "현금", "트래블로그"],
       features: ["24시간 이용", "국제카드 출금", "여러 대 설치"],
       pros: ["가족 단위 출금에 편리", "접근성 좋음"],
       cons: ["피크 시간 혼잡"],
-      tips: ["대기 줄이 길면 다른 층 ATM 활용", "인당 필요한 현금 미리 계산"]
+      tips: [
+        "대기 줄이 길면 다른 층 ATM 활용",
+        "인당 필요한 현금 미리 계산",
+        "(공식 지도 표식) 1F 서비스 No.10, 2F 서비스 No.23, 4F 서비스 No.12",
+        "(공식 지도) 1F No.10은 Japan Post Bank ATM과 함께 표기",
+        "(주변 표식) Global WiFi North(19) · 환전소 North Shop(9) 근처",
+        "(후기) 세관 통과 후 도착홀 정면 ATM 존으로 설명",
+        "(후기) 2F ANA 카운터 맞은편/출발 로비 ATM 코너 언급",
+        "(후기) 2F Tasty Street 간판 맞은편이라는 글 다수",
+        "(로케이터) 국제선 북 출국심사장 앞 7Bank ATM 표기"
+      ],
+      links: [
+        { label: "KIX ATM 안내", url: "https://www.kansai-airport.or.jp/en/service/money/04.html" },
+        { label: "KIX T1 1F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/1f.html" },
+        { label: "KIX T1 2F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/2f.html" },
+        { label: "KIX T1 4F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/4f.html" },
+        { label: "InsideKyoto 후기", url: "https://www.insidekyoto.com/arriving-at-kansai-international-airport-kix" },
+        { label: "Seven Bank 로케이터", url: "https://location.sevenbank.co.jp/sevenbank/spot/detail?code=0000021349" },
+        { label: "후기: ANA 카운터 맞은편", url: "https://mintaka3432.tistory.com/7" }
+      ]
     },
     "aeon bank kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "트래블월렛 등 선불카드 출금에 유용한 ATM입니다.",
+      summary:
+        "트래블월렛 등 선불카드 출금에 유용한 ATM입니다. (공식 지도: T1 1F 북쪽 도착층/보안 전, 2F 중앙 출발층/보안 전)",
       building: "간사이 공항 T1",
-      floor: "2층 중앙",
+      floor: "1층 북측 · 2층 중앙",
+      area: "보안 전 구역",
       tags: ["ATM", "현금", "트래블월렛"],
       features: ["국내 카드 출금", "대체 출금처", "우체국/이온은행 ATM"],
       pros: ["현금 확보 용이", "대기 분산"],
       cons: ["위치 확인 필요"],
-      tips: ["수수료/환율 조건 확인", "소액 현금 먼저 확보"]
+      tips: [
+        "수수료/환율 조건 확인",
+        "소액 현금 먼저 확보",
+        "(공식 지도 표식) 1F 서비스 No.32, 2F 서비스 No.23",
+        "(후기) 1F 도착홀 ATM 존에 세븐/우체국 ATM과 함께 표기",
+        "(로케이터) 2F 국내선 남 출발구 ATM 코너 표기"
+      ],
+      links: [
+        { label: "KIX ATM 안내", url: "https://www.kansai-airport.or.jp/en/service/money/04.html" },
+        { label: "KIX T1 1F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/1f.html" },
+        { label: "KIX T1 2F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/2f.html" },
+        { label: "AEON Bank 로케이터", url: "https://map.aeonbank.co.jp/aeonbank/spot/detail?code=0000003487" }
+      ]
     },
     "jr ticket office kansai airport station": {
       rating: null,
       ratingSource: "Google",
-      summary: "ICOCA 발급과 하루카 티켓 수령을 한 번에 해결하는 JR 매표 구역입니다.",
+      summary:
+        "ICOCA 발급과 하루카 티켓 수령을 한 번에 해결하는 JR 매표 구역입니다. (JR-West 지도: Kansai-airport Station Concourse, JR ticket gate 근처)",
       building: "간사이공항역 (JR)",
       floor: "1층 (T1 연결)",
+      area: "개찰구 앞 발권 구역",
       tags: ["JR", "ICOCA", "하루카"],
       features: ["ICOCA 발급", "하루카 지정석 발권", "공항역 직결"],
       pros: ["공항에서 교통 준비 완료", "동선 효율적"],
       cons: ["대기 발생 가능"],
-      tips: ["QR 티켓/여권을 먼저 준비", "무인 발권기와 창구 대기 비교"]
+      tips: [
+        "QR 티켓/여권을 먼저 준비",
+        "무인 발권기와 창구 대기 비교",
+        "(JR-West 지도) ICOCA & HARUKA 세트 위치 별도 표기"
+      ]
     },
     "jr haruka kansai airport station": {
       rating: null,
       ratingSource: "Google",
-      summary: "간사이공항역의 하루카 특급 승강장으로 교토 이동의 출발 지점입니다.",
+      summary:
+        "간사이공항역의 하루카 특급 승강장으로 교토 이동의 출발 지점입니다. (JR-West 지도: JR ticket gate 통과 후 승강장)",
       building: "간사이공항역 (JR)",
       floor: "1층",
+      area: "JR 승강장",
       tags: ["하루카", "JR", "교통"],
       features: ["하루카 특급 승강장", "JR 공항역 직결", "교토 직행"],
       pros: ["직통 이동", "짐 이동 최소화"],
@@ -2136,45 +2146,39 @@ window.TRIP_DATA = {
     "551 horai kansai airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "오사카 대표 만두 체인으로 테이크아웃이 가능해 공항 이동 중에도 먹기 좋습니다.",
+      summary:
+        "오사카 대표 만두 체인으로 테이크아웃이 가능해 공항 이동 중에도 먹기 좋습니다. (공식 지도: T1 2F 보안 전)",
       building: "간사이 공항 T1",
       floor: "2층",
+      area: "2층 식당가 · 보안 전",
       tags: ["만두", "명물", "테이크아웃"],
       features: ["오사카 명물 만두", "테이크아웃 가능", "간편한 한입 간식"],
       pros: ["빠른 회전", "가성비"],
       cons: ["줄이 긴 편"],
-      tips: ["줄이 길면 포장 우선", "만두/슈마이 조합 추천"]
+      tips: ["줄이 길면 포장 우선", "만두/슈마이 조합 추천", "(공식 지도 표식) 2F 식음 No.12"]
     },
     "kineya mugimaru kansai airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "따뜻한 우동과 세트 메뉴로 빠르게 한 끼를 해결할 수 있는 식당입니다.",
+      summary:
+        "따뜻한 우동과 세트 메뉴로 빠르게 한 끼를 해결할 수 있는 식당입니다. (공식 지도: T1 2F 보안 전)",
       building: "간사이 공항 T1",
       floor: "2층",
+      area: "2층 식당가 · 보안 전",
       tags: ["우동", "세트", "식사"],
       features: ["자가제면 우동", "세트 구성 다양", "따뜻한 한 끼"],
       pros: ["메뉴 선택 폭 넓음", "좌석 식사 가능"],
       cons: ["혼잡 시 대기"],
-      tips: ["미니 덮밥 세트 활용", "피크 시간 피하기"]
-    },
-    "ganko sushi kansai airport": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "정갈한 초밥 정식을 차분하게 먹기 좋은 좌석 식사형 스시집입니다.",
-      building: "간사이 공항 T1",
-      floor: "3층",
-      tags: ["스시", "정식", "좌석"],
-      features: ["정갈한 초밥 정식", "좌석 식사", "차분한 분위기"],
-      pros: ["좌석 식사 가능", "정식 구성 안정적"],
-      cons: ["가격대 높음"],
-      tips: ["정식 메뉴로 빠르게 선택", "대기 시 주변 카페 활용"]
+      tips: ["미니 덮밥 세트 활용", "피크 시간 피하기", "(공식 지도 표식) 2F 식음 No.13"]
     },
     "nakau kansai airport shop": {
       rating: null,
       ratingSource: "Google",
-      summary: "짧은 시간에 먹기 좋은 덮밥 체인으로 가성비가 좋습니다.",
-      building: "간사이 공항 T1",
-      floor: "2층",
+      summary:
+        "짧은 시간에 먹기 좋은 덮밥 체인으로 가성비가 좋습니다. (공식 표기: AEROPLAZA 3F, 보안 전)",
+      building: "에어로플라자 (AEROPLAZA)",
+      floor: "3층",
+      area: "공항역 연결동 · 보안 전",
       tags: ["가성비", "덮밥", "빠른식사"],
       features: ["규동/오야코동", "빠른 식사", "테이크아웃 가능"],
       pros: ["가성비", "회전 빠름"],
@@ -2184,14 +2188,16 @@ window.TRIP_DATA = {
     "botejyu 1946 kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있는 매장입니다.",
+      summary:
+        "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있는 매장입니다. (공식 지도: T1 2F 보안 후 · 국내선 출발/도착 구역)",
       building: "간사이 공항 T1",
       floor: "2층",
+      area: "2층 보안 후(국내선)",
       tags: ["오코노미야키", "철판", "오사카"],
       features: ["오코노미야키", "철판요리", "따뜻한 좌석 식사"],
       pros: ["오사카 스타일 식사", "든든한 한 끼"],
       cons: ["식사 시간 대기"],
-      tips: ["인기 시간대 전후 방문", "공유 메뉴로 주문"]
+      tips: ["인기 시간대 전후 방문", "공유 메뉴로 주문", "(공식 지도) 국내선 보안 후 구역"]
     },
     "mametora rinku premium outlets": {
       rating: null,
@@ -2215,53 +2221,56 @@ window.TRIP_DATA = {
       cons: ["점심 혼잡"],
       tips: ["가벼운 식사에 적합", "피크 전후 방문"]
     },
-    "nana's green tea kansai airport": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "말차 라떼와 디저트로 짧게 쉬기 좋은 카페입니다.",
-      building: "간사이 공항 T1",
-      floor: "2층",
-      tags: ["말차", "디저트", "카페"],
-      features: ["말차 라떼", "디저트", "짧은 휴식"],
-      pros: ["달달한 휴식", "간단한 카페 타임"],
-      cons: ["좌석 제한"],
-      tips: ["테이크아웃 활용", "대표 말차 메뉴 확인"]
-    },
     "starbucks kansai airport terminal 1": {
       rating: null,
       ratingSource: "Google",
-      summary: "테이크아웃 위주로 빠르게 커피를 마실 수 있는 카페입니다.",
+      summary:
+        "테이크아웃 위주로 빠르게 커피를 마실 수 있는 카페입니다. (공식 지도: T1 1F South Shop, 2F Shop 모두 보안 전)",
       building: "간사이 공항 T1",
-      floor: "2층",
+      floor: "1층 남측 · 2층",
+      area: "보안 전 구역",
       tags: ["카페", "테이크아웃", "커피"],
       features: ["커피/음료", "테이크아웃", "빠른 이용"],
       pros: ["카페인 충전", "동선 짧음"],
       cons: ["혼잡 가능"],
-      tips: ["모바일 주문 가능 여부 확인", "잔뜩 몰릴 때는 포장"]
+      tips: [
+        "모바일 주문 가능 여부 확인",
+        "잔뜩 몰릴 때는 포장",
+        "(공식 지도 표식) 1F 식음 No.2 · 2F 식음 No.10"
+      ]
     },
     "familymart kansai international airport terminal 1": {
       rating: null,
       ratingSource: "Google",
-      summary: "간단한 간식과 음료를 빠르게 구매하기 좋은 편의점입니다.",
+      summary:
+        "간단한 간식과 음료를 빠르게 구매하기 좋은 편의점입니다. (공식 지도: T1 2F 보안 전, 국제선 출발 보안 후 각각 매장)",
       building: "간사이 공항 T1",
-      floor: "1층",
+      floor: "2층",
+      area: "보안 전/후 구역",
       tags: ["편의점", "간식", "빠른구매"],
       features: ["음료/간식", "빠른 구매", "간단 요기"],
       pros: ["동선 간단", "시간 절약"],
       cons: ["혼잡 가능"],
-      tips: ["이동 직전 필요한 간식 확보", "품절 빠른 품목 먼저 확인"]
+      tips: [
+        "이동 직전 필요한 간식 확보",
+        "품절 빠른 품목 먼저 확인",
+        "(공식 지도 표식) 2F 쇼핑 No.27 (보안 전)",
+        "(공식 지도) 보안 후 지점은 국제선 출발 구역"
+      ]
     },
     "doutor coffee kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "공항 이동 중 짧게 쉬기 좋은 커피 체인입니다.",
+      summary:
+        "공항 이동 중 짧게 쉬기 좋은 커피 체인입니다. (공식 지도: T1 1F 도착층/보안 전)",
       building: "간사이 공항 T1",
       floor: "1층 (노스게이트)",
+      area: "1층 북측 출입구 인근",
       tags: ["카페", "샌드위치", "휴식"],
       features: ["커피/샌드위치", "짧은 휴식", "빠른 회전"],
       pros: ["빠른 회전", "간단한 식사 가능"],
       cons: ["좌석 제한"],
-      tips: ["테이크아웃 활용", "잠깐 앉을 좌석 확보"]
+      tips: ["테이크아웃 활용", "잠깐 앉을 좌석 확보", "(공식 지도 표식) 1F 식음 No.1"]
     },
     "godiva rinku premium outlets": {
       rating: null,

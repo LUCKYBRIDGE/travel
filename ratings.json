@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-06T13:58:52.794Z",
+  "updatedAt": "2026-01-06T19:46:47.094Z",
   "items": {
     "551 horai kansai airport": {
       "query": "551 Horai Kansai Airport",
@@ -70,16 +70,6 @@
       "popularity": "관광객 적은 편",
       "source": "Google",
       "updatedAt": "2026-01-06T09:54:13.175Z"
-    },
-    "ganko sushi kansai airport": {
-      "query": "Ganko Sushi Kansai Airport",
-      "placeId": "ChIJPyP6rOLxAGARK3wy5kkkd0Q",
-      "name": "Ganko Sushi",
-      "rating": 3.8,
-      "ratingCount": 127,
-      "popularity": "관광객 적은 편",
-      "source": "Google",
-      "updatedAt": "2026-01-06T03:15:22.155Z"
     },
     "godiva rinku premium outlets": {
       "query": "GODIVA Rinku Premium Outlets",
@@ -430,16 +420,6 @@
       "popularity": "보통",
       "source": "Google",
       "updatedAt": "2026-01-06T04:53:39.376Z"
-    },
-    "nana's green tea kansai airport": {
-      "query": "Nana's Green Tea Kansai Airport",
-      "placeId": "ChIJ3wBwsm65AGARa66-FkdXNQ0",
-      "name": "nana’s green tea",
-      "rating": 3.5,
-      "ratingCount": 72,
-      "popularity": "관광객 적은 편",
-      "source": "Google",
-      "updatedAt": "2026-01-06T04:53:40.047Z"
     },
     "nakau kansai airport shop": {
       "query": "Nakau Kansai Airport Shop",
