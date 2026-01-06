@@ -183,37 +183,44 @@
     meal: {
       features: ["대표 메뉴 중심", "좌석 식사/테이크아웃 병행"],
       pros: ["가족 단위 이용 무난"],
-      cons: ["피크 시간 대기", "가격대 편차"]
+      cons: ["피크 시간 대기", "가격대 편차"],
+      tips: ["식사 전 웨이팅 확인", "메뉴 1~2개만 먼저 주문해보고 조정"]
     },
     cafe: {
       features: ["음료/디저트 중심", "짧은 휴식에 적합"],
       pros: ["잠깐 쉬기 좋음"],
-      cons: ["좌석 제한 가능"]
+      cons: ["좌석 제한 가능"],
+      tips: ["피크 시간은 테이크아웃 추천", "모바일 주문 가능 여부 확인"]
     },
     shopping: {
       features: ["매장 구성 다양", "이동 동선 길 수 있음"],
       pros: ["쇼핑 선택 폭 넓음"],
-      cons: ["혼잡 가능"]
+      cons: ["혼잡 가능"],
+      tips: ["우선순위 매장 먼저 방문", "사이즈/재고는 매장 직원에 문의"]
     },
     market: {
       features: ["먹거리/잡화 혼합", "현장 분위기 체험"],
       pros: ["로컬 분위기 체험"],
-      cons: ["현금 필요 가능", "혼잡"]
+      cons: ["현금 필요 가능", "혼잡"],
+      tips: ["소액 현금 준비", "먹거리는 1~2개씩 나눠서 시식"]
     },
     sight: {
       features: ["야외 관람 중심", "사진 포인트 존재"],
       pros: ["관광 만족도 높음"],
-      cons: ["날씨 영향", "도보 이동"]
+      cons: ["날씨 영향", "도보 이동"],
+      tips: ["사진 포인트 먼저 확인", "해질 무렵 시간대 추천"]
     },
     transport: {
       features: ["이동 동선 중심", "안내 표지 확인 필요"],
       pros: ["시간 절약에 도움"],
-      cons: ["혼잡 가능"]
+      cons: ["혼잡 가능"],
+      tips: ["표지판/층 안내 먼저 확인", "피크 시간 여유 있게 이동"]
     },
     stay: {
       features: ["체크인/조식 동선", "짐 보관 편의"],
       pros: ["동선 안정적"],
-      cons: ["체크인 시간 혼잡"]
+      cons: ["체크인 시간 혼잡"],
+      tips: ["체크인 전 짐 보관 확인", "조식 시간 피크 피하기"]
     }
   };
 
@@ -282,7 +289,8 @@
       ...detail,
       features: fillList(detail.features, defaults.features, 3),
       pros: fillList(detail.pros, defaults.pros, 2),
-      cons: fillList(detail.cons, defaults.cons, 2)
+      cons: fillList(detail.cons, defaults.cons, 2),
+      tips: fillList(detail.tips, defaults.tips, 2)
     };
   }
 
@@ -306,10 +314,9 @@
 
   function buildHashtags(detail, category) {
     const tags = [];
-    if (Array.isArray(detail?.tags)) {
+    if (Array.isArray(detail?.tags) && detail.tags.length) {
       tags.push(...detail.tags);
-    }
-    if (Array.isArray(detail?.features)) {
+    } else if (Array.isArray(detail?.features)) {
       tags.push(...detail.features);
     }
     const normalized = tags
@@ -448,6 +455,7 @@
                 ${detail.placeName ? renderDetailLine("지도 표기", detail.placeName) : ""}
                 ${renderTagRow(category, tags)}
                 ${locationLines}
+                ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
                 ${renderDetailLine("특징", detail.features, "정보 준비중")}
                 ${renderDetailLine("장점", detail.pros, "정보 준비중")}
                 ${renderDetailLine("단점", detail.cons, "정보 준비중")}
@@ -495,6 +503,7 @@
       ${renderTagRow(category, tags)}
       ${summary ? `<div class="place-summary">${summary}</div>` : ""}
       ${locationLines}
+      ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}

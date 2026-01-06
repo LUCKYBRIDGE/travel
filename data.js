@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-5",
+    version: "2026-01-06-6",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-5",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-6",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -1465,12 +1465,14 @@ window.TRIP_DATA = {
     "kansai international airport terminal 1": {
       rating: null,
       ratingSource: "Google",
-      summary: "입국 수속, 교통, 식사를 한 번에 해결할 수 있는 간사이 공항의 핵심 터미널입니다.",
+      summary: "입국 수속부터 교통·식사·ATM까지 한 번에 해결되는 간사이 공항의 핵심 터미널입니다.",
       building: "간사이 공항 T1",
       floor: "2~4층",
-      features: ["공항 내 식당/교통/ATM 집중", "T2↔T1 셔틀 연계"],
-      pros: ["이동 최소화", "시설이 한 곳에 모여 있음"],
-      cons: ["피크 시간 혼잡", "가격대가 높을 수 있음"],
+      tags: ["공항", "교통", "식사", "ATM"],
+      features: ["입국/교통/식사/ATM 집중", "JR·난카이 연결", "T2↔T1 무료 셔틀"],
+      pros: ["이동 동선 짧음", "필수 절차를 한 곳에서 완료"],
+      cons: ["피크 시간 혼잡", "공항가 가격대"],
+      tips: ["입국 직후 ATM·교통카드 처리", "식사는 포장 활용 시 대기 단축"],
       nearby: [
         {
           name: "세븐은행 ATM (Seven Bank)",
@@ -1581,19 +1583,23 @@ window.TRIP_DATA = {
     "kansai international airport": {
       rating: null,
       ratingSource: "Google",
-      summary: "교토와 오사카를 잇는 관문 공항으로, T1과 T2가 분리되어 있어 이동 동선을 미리 확인해두면 편합니다.",
-      features: ["국제선 허브", "T1/T2 분리"],
-      pros: ["교통 접근성 좋음"],
-      cons: ["보안/이동 대기 시간"],
+      summary: "교토·오사카 관문 공항으로 T1/T2가 분리되어 있어 터미널을 먼저 확인하는 것이 중요합니다.",
+      tags: ["공항", "교통"],
+      features: ["국제선 허브", "T1/T2 분리", "공항철도 연결"],
+      pros: ["교통 접근성 좋음", "시설 다양"],
+      cons: ["보안/이동 대기 시간", "터미널 간 이동 필요"],
+      tips: ["항공사 터미널 확인 후 이동", "셔틀 시간표 미리 확인"],
       nearby: []
     },
     "rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "공항에서 전철로 5분 거리에 있는 대형 아울렛으로, 쇼핑과 식사를 한 번에 해결하기 좋은 곳입니다.",
-      features: ["대형 아울렛", "야외 쇼핑 동선"],
+      tags: ["아울렛", "쇼핑", "공항근처"],
+      features: ["대형 아울렛", "야외 쇼핑 동선", "식사/카페 선택지"],
       pros: ["브랜드 다양", "할인율 높음"],
       cons: ["바람/추위 영향", "식사 대기 발생"],
+      tips: ["우선순위 매장 먼저 방문", "바람 대비 외투 준비"],
       nearby: [
         {
           name: "린쿠 마블 비치 (Rinku Marble Beach)",
@@ -1657,9 +1663,11 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토의 핵심 교통 허브로 쇼핑, 식사, 야경까지 한 번에 해결할 수 있는 복합 공간입니다.",
-      features: ["교통 허브", "백화점/식당 밀집"],
+      tags: ["교통", "쇼핑", "식사"],
+      features: ["교통 허브", "백화점/식당 밀집", "야경 포인트"],
       pros: ["이동이 편리", "식사 선택지 다양"],
       cons: ["동선 복잡", "피크 시간 혼잡"],
+      tips: ["층별 안내도 먼저 확인", "식사 시간 분산"],
       nearby: [
         {
           name: "교토 타워 (Kyoto Tower)",
@@ -1759,14 +1767,28 @@ window.TRIP_DATA = {
         }
       ]
     },
+    "jr haruka kyoto station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 하루카 특급 승강장으로 공항 복귀 때 이용하는 출발 지점입니다.",
+      building: "교토역",
+      area: "30번 승강장",
+      tags: ["하루카", "JR", "교통"],
+      features: ["하루카 특급 승강장", "교토역 내부", "직통 공항 이동"],
+      pros: ["직통 이동", "표지판 안내"],
+      cons: ["출발 전 혼잡 가능"],
+      tips: ["출발 10분 전 승강장 도착", "플랫폼 번호 확인"]
+    },
     "sushi no musashi kyoto station": {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 앞의 회전초밥 체인으로 간단히 한 끼 해결하기 좋습니다.",
       area: "교토역 앞",
-      features: ["회전초밥", "빠른 회전"],
-      pros: ["메뉴 선택 쉬움"],
-      cons: ["피크 시간 대기"]
+      tags: ["회전초밥", "가성비", "빠른식사"],
+      features: ["회전초밥", "빠른 회전", "가볍게 한 끼"],
+      pros: ["메뉴 선택 쉬움", "회전 빠름"],
+      cons: ["피크 시간 대기"],
+      tips: ["기본 접시로 가볍게 시작", "혼잡 시간 피하기"]
     },
     "starbucks coffee - jr kyoto station west entrance": {
       rating: null,
@@ -1774,18 +1796,22 @@ window.TRIP_DATA = {
       summary: "교토역 서쪽 출구 근처에 있어 이동 중 잠깐 쉬기 좋은 카페입니다.",
       building: "교토역 (서쪽 출구)",
       floor: "1층",
-      features: ["커피/음료", "테이크아웃"],
-      pros: ["동선 짧음"],
-      cons: ["혼잡 가능"]
+      tags: ["카페", "테이크아웃", "역내"],
+      features: ["커피/음료", "테이크아웃", "역내 접근성"],
+      pros: ["동선 짧음", "이동 중 활용"],
+      cons: ["혼잡 가능"],
+      tips: ["모바일 주문 활용", "좌석 없으면 포장 추천"]
     },
     "yodobashi camera kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 바로 옆 대형 전자상가로 필요한 물품을 한번에 구매할 수 있습니다.",
       building: "요도바시 카메라 교토",
-      features: ["전자기기/잡화", "대형 매장"],
-      pros: ["선물/필요 물품 구매"],
-      cons: ["체류 시간 길어질 수 있음"]
+      tags: ["쇼핑", "전자상가", "대형매장"],
+      features: ["전자기기/잡화", "대형 매장", "면세/세일"],
+      pros: ["선물/필요 물품 구매", "품목 다양"],
+      cons: ["체류 시간 길어질 수 있음"],
+      tips: ["구매 리스트 미리 정리", "면세 가능 여부 확인"]
     },
     "kyoto station skyway": {
       rating: null,
@@ -1793,57 +1819,81 @@ window.TRIP_DATA = {
       summary: "교토역 내부 10층 통로에서 무료로 야경을 볼 수 있는 전망 코스입니다.",
       building: "교토역 빌딩",
       floor: "10층",
-      features: ["무료 전망", "실내 동선"],
-      pros: ["야경 감상"],
-      cons: ["혼잡 가능"]
+      tags: ["야경", "무료", "실내"],
+      features: ["무료 전망", "실내 동선", "야경 포인트"],
+      pros: ["야경 감상", "실내 관람"],
+      cons: ["혼잡 가능"],
+      tips: ["일몰 직후 방문", "대계단과 함께 동선 구성"]
     },
     "kyoto station grand stairway": {
       rating: null,
       ratingSource: "Google",
-      summary: "LED 조명 쇼가 열리는 계단형 광장으로 사진 찍기 좋은 포인트입니다.",
+      summary: "LED 조명 쇼가 열리는 계단형 광장으로 무료 야경 포인트로 활용하기 좋습니다.",
       building: "교토역 빌딩",
       floor: "4~11층",
-      features: ["LED 쇼", "사진 포인트"],
-      pros: ["무료 관람"],
-      cons: ["혼잡 가능"]
+      tags: ["야경", "무료", "포토"],
+      features: ["LED 쇼 상영", "대계단 전망 포인트", "교토역 내부 연결"],
+      pros: ["무료 관람", "야경 사진 포인트"],
+      cons: ["혼잡 가능", "쇼 시작 전 대기"],
+      tips: ["쇼 시작 시간 맞춰 방문", "대계단 상단에서 사진 찍기"]
+    },
+    "kyoto tower": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 앞 대표 전망대로 시내 야경을 한눈에 볼 수 있습니다.",
+      building: "교토 타워",
+      floor: "전망대",
+      tags: ["전망", "야경", "대표명소"],
+      features: ["전망대", "도심 야경", "교토역 앞 위치"],
+      pros: ["대표 야경 포인트", "접근성 좋음"],
+      cons: ["입장료 필요", "피크 시간 혼잡"],
+      tips: ["일몰 직후 방문", "야경 중심으로 관람"]
     },
     "kyoto tower sando": {
       rating: null,
       ratingSource: "Google",
-      summary: "교토 타워 옆 쇼핑/맛집 복합 공간으로 짧게 들르기 좋습니다.",
+      summary: "교토 타워 옆 쇼핑/맛집 복합 공간으로 짧게 들러 기념품과 로컬 먹거리를 살 수 있습니다.",
       building: "교토 타워 산도",
       floor: "B1~2층",
-      features: ["기념품/로컬 맥주", "실내 공간"],
-      pros: ["간단 쇼핑"],
-      cons: ["혼잡 가능"]
+      tags: ["기념품", "맥주", "실내"],
+      features: ["로컬 맥주/푸드홀", "기념품 매장", "실내 동선"],
+      pros: ["짧은 일정에 적합", "날씨 영향 적음"],
+      cons: ["혼잡 가능", "좌석 제한"],
+      tips: ["지하 푸드홀 먼저 확인", "소포장 기념품 위주로 구매"]
     },
     "jr kyoto isetan": {
       rating: null,
       ratingSource: "Google",
-      summary: "교토역 백화점 식품관으로 마감 세일 시간에 도시락을 저렴하게 살 수 있습니다.",
+      summary: "교토역 백화점 식품관으로 마감 세일 시간에 도시락과 초밥을 저렴하게 살 수 있습니다.",
       building: "JR 교토 이세탄 (교토역 빌딩)",
       floor: "B1~B2층 (식품관)",
-      features: ["백화점 식품관", "마감 세일"],
-      pros: ["야식/선물 구매"],
-      cons: ["저녁 혼잡"]
+      tags: ["식품관", "야식", "기념품"],
+      features: ["백화점 식품관", "마감 세일", "포장 전문 매장"],
+      pros: ["야식/선물 구매", "선택 폭 넓음"],
+      cons: ["저녁 혼잡", "품절 빠름"],
+      tips: ["19:15 이후 세일 코너 확인", "보냉팩 필요 시 구매"]
     },
     "hotel vischio kyoto by granvia": {
       rating: null,
       ratingSource: "Google",
       summary: "교토역 남쪽 출구에서 도보 2분 거리의 숙소로, 조식 포함 일정에 최적입니다.",
-      features: ["교토역 도보 2분", "조식 제공"],
+      tags: ["숙소", "조식", "교토역"],
+      features: ["교토역 도보 2분", "조식 제공", "짐 보관 가능"],
       pros: ["짐 이동 편리", "아침 동선 안정적"],
-      cons: ["체크인/조식 시간 혼잡 가능"]
+      cons: ["체크인/조식 시간 혼잡 가능"],
+      tips: ["체크인 전 짐 보관 먼저 요청", "조식은 피크 전 시간대 추천"]
     },
     "lawson kansai airport terminal 1": {
       rating: null,
       ratingSource: "Google",
-      summary: "공항 내 편의점으로 짧은 시간에 간단한 요기를 해결할 수 있습니다.",
+      summary: "공항 내 편의점으로 짧은 시간에 간단한 요기와 음료를 해결할 수 있습니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["간단 요기", "빠른 회전"],
-      pros: ["시간 절약"],
-      cons: ["좌석 제한"]
+      tags: ["편의점", "간식", "빠른식사"],
+      features: ["샌드위치/가라아게군", "간단 요기", "빠른 회전"],
+      pros: ["시간 절약", "동선 간단"],
+      cons: ["좌석 제한", "혼잡 가능"],
+      tips: ["이동 전 바로 먹을 간식 우선 구매", "전자레인지 이용 가능 여부 확인"]
     },
     "seven bank kansai international airport": {
       rating: null,
@@ -1851,9 +1901,11 @@ window.TRIP_DATA = {
       summary: "트래블로그 등 해외카드 출금이 가능한 대표 ATM입니다.",
       building: "간사이 공항 T1",
       floor: "2층 중앙 로비 / 4층 국제선 출발층",
-      features: ["24시간 이용", "국제카드 출금"],
-      pros: ["가족 단위 출금에 편리"],
-      cons: ["피크 시간 혼잡"]
+      tags: ["ATM", "현금", "트래블로그"],
+      features: ["24시간 이용", "국제카드 출금", "여러 대 설치"],
+      pros: ["가족 단위 출금에 편리", "접근성 좋음"],
+      cons: ["피크 시간 혼잡"],
+      tips: ["대기 줄이 길면 다른 층 ATM 활용", "인당 필요한 현금 미리 계산"]
     },
     "aeon bank kansai international airport": {
       rating: null,
@@ -1861,9 +1913,11 @@ window.TRIP_DATA = {
       summary: "트래블월렛 등 선불카드 출금에 유용한 ATM입니다.",
       building: "간사이 공항 T1",
       floor: "2층 중앙",
-      features: ["국내 카드 출금", "대체 출금처"],
-      pros: ["현금 확보 용이"],
-      cons: ["위치 확인 필요"]
+      tags: ["ATM", "현금", "트래블월렛"],
+      features: ["국내 카드 출금", "대체 출금처", "우체국/이온은행 ATM"],
+      pros: ["현금 확보 용이", "대기 분산"],
+      cons: ["위치 확인 필요"],
+      tips: ["수수료/환율 조건 확인", "소액 현금 먼저 확보"]
     },
     "jr ticket office kansai airport station": {
       rating: null,
@@ -1871,9 +1925,23 @@ window.TRIP_DATA = {
       summary: "ICOCA 발급과 하루카 티켓 수령을 한 번에 해결하는 JR 매표 구역입니다.",
       building: "간사이공항역 (JR)",
       floor: "1층 (T1 연결)",
-      features: ["ICOCA 발급", "하루카 지정석 발권"],
-      pros: ["공항에서 교통 준비 완료"],
-      cons: ["대기 발생 가능"]
+      tags: ["JR", "ICOCA", "하루카"],
+      features: ["ICOCA 발급", "하루카 지정석 발권", "공항역 직결"],
+      pros: ["공항에서 교통 준비 완료", "동선 효율적"],
+      cons: ["대기 발생 가능"],
+      tips: ["QR 티켓/여권을 먼저 준비", "무인 발권기와 창구 대기 비교"]
+    },
+    "jr haruka kansai airport station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "간사이공항역의 하루카 특급 승강장으로 교토 이동의 출발 지점입니다.",
+      building: "간사이공항역 (JR)",
+      floor: "1층",
+      tags: ["하루카", "JR", "교통"],
+      features: ["하루카 특급 승강장", "JR 공항역 직결", "교토 직행"],
+      pros: ["직통 이동", "짐 이동 최소화"],
+      cons: ["피크 시간 혼잡"],
+      tips: ["출발 10분 전 승강장 도착", "지정석 차량 번호 확인"]
     },
     "kyoto ramen street": {
       rating: null,
@@ -1881,45 +1949,77 @@ window.TRIP_DATA = {
       summary: "교토역 빌딩 10층에 모인 라멘 전문 구역으로 다양한 스타일을 고를 수 있습니다.",
       building: "교토역 빌딩",
       floor: "10층 (라멘코지)",
-      features: ["라멘 전문 존", "다양한 메뉴"],
-      pros: ["선택 폭 넓음"],
-      cons: ["식사 시간 대기"]
+      tags: ["라멘", "식사", "역내"],
+      features: ["라멘 전문 존", "다양한 메뉴", "교토역 내부"],
+      pros: ["선택 폭 넓음", "이동 편리"],
+      cons: ["식사 시간 대기", "혼잡 가능"],
+      tips: ["피크 전후로 이동", "대기 줄 짧은 매장부터 확인"]
     },
     "asics rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 아울렛 내 아식스 매장으로 이월 모델을 할인된 가격에 구매하기 좋습니다.",
       building: "린쿠 프리미엄 아울렛",
-      features: ["아울렛 이월 모델", "러닝화/트레이닝 중심"],
-      pros: ["할인 폭 큼", "사이즈 비교 가능"],
-      cons: ["사이즈 품절 가능"]
+      tags: ["아울렛", "러닝화", "세일"],
+      features: ["아울렛 이월 모델", "러닝화/트레이닝 중심", "사이즈 비교 가능"],
+      pros: ["할인 폭 큼", "인기 모델 득템"],
+      cons: ["사이즈 품절 가능", "재고 편차"],
+      tips: ["필요 사이즈/모델 메모", "입점 위치 먼저 확인"]
     },
     "rinku coffee": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 타운에서 잠시 쉬어가기 좋은 캐주얼 카페입니다.",
       area: "린쿠 타운",
-      features: ["카페 휴식", "가벼운 음료"],
-      pros: ["짧은 휴식에 적합"],
-      cons: ["좌석 한정"]
+      tags: ["카페", "휴식", "린쿠"],
+      features: ["카페 휴식", "가벼운 음료", "짧은 동선"],
+      pros: ["짧은 휴식에 적합", "바로 쉬기 좋음"],
+      cons: ["좌석 한정"],
+      tips: ["테이크아웃 후 바닷가 산책 병행", "좌석 있으면 바로 확보"]
     },
     "rinku no yu": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 타운의 온천/사우나 시설로 피로를 풀기에 좋습니다.",
       area: "린쿠 타운",
-      features: ["온천/사우나", "휴식 공간"],
-      pros: ["여행 피로 해소"],
-      cons: ["체류 시간 필요"]
+      tags: ["온천", "휴식", "피로회복"],
+      features: ["온천/사우나", "휴식 공간", "피로 회복"],
+      pros: ["여행 피로 해소", "날씨와 무관"],
+      cons: ["체류 시간 필요"],
+      tips: ["쇼핑 후 일정이 여유로울 때 방문", "수건/편의시설 포함 여부 확인"]
+    },
+    "rinku marble beach": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "린쿠 타운 해변 산책로로 노을과 바다 풍경이 유명한 포인트입니다.",
+      area: "린쿠 타운",
+      tags: ["해변", "산책", "노을"],
+      features: ["바다 산책로", "노을 포인트", "사진 촬영"],
+      pros: ["무료 산책", "풍경이 좋음"],
+      cons: ["날씨 영향", "바람 강함"],
+      tips: ["노을 시간대 방문", "바람 대비 겉옷 준비"]
+    },
+    "rinku pleasure town seacle": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "린쿠 타운의 실내 쇼핑/카페 복합몰로 날씨 영향 없이 들르기 좋습니다.",
+      area: "린쿠 타운",
+      tags: ["쇼핑", "실내", "카페"],
+      features: ["쇼핑/카페 복합몰", "실내 동선", "레스토랑"],
+      pros: ["날씨 영향 적음", "짧은 휴식 가능"],
+      cons: ["혼잡 가능"],
+      tips: ["날씨 안 좋을 때 대안으로 활용", "카페에서 잠깐 휴식"]
     },
     "kawaramachi kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "교토 최대 쇼핑/식사 거리로 하루 종일 돌아다니기 좋은 도보 중심 상권입니다.",
       area: "교토 시내 중심",
-      features: ["쇼핑/카페 밀집", "도보 이동 중심"],
-      pros: ["하루 종일 동선 가능"],
+      tags: ["쇼핑", "식사", "도보"],
+      features: ["쇼핑/카페 밀집", "도보 이동 중심", "식사 선택지 다양"],
+      pros: ["하루 종일 동선 가능", "선택 폭 넓음"],
       cons: ["혼잡", "대기 발생"],
+      tips: ["우선순위 매장 먼저 방문", "카페/시장 휴식 포인트 확보"],
       nearby: [
         {
           name: "니시키 시장 (Nishiki Market)",
@@ -1982,46 +2082,56 @@ window.TRIP_DATA = {
     "teramachi street kyoto": {
       rating: null,
       ratingSource: "Google",
-      summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 둘러보기 좋습니다.",
+      summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 편하게 둘러보기 좋습니다.",
       area: "가와라마치 도보권",
-      features: ["잡화/기념품", "아케이드 산책"],
+      tags: ["기념품", "쇼핑", "아케이드"],
+      features: ["잡화/기념품 밀집", "아케이드 산책", "가와라마치 접근"],
       pros: ["짧은 동선", "날씨 영향 적음"],
-      cons: ["인파 많음"]
+      cons: ["인파 많음", "주말 혼잡"],
+      tips: ["가벼운 기념품 위주로 쇼핑", "중간중간 카페로 휴식"]
     },
     "nishiki market": {
       rating: null,
       ratingSource: "Google",
-      summary: "교토 대표 먹거리 시장으로 간식과 반찬을 가볍게 즐길 수 있습니다.",
+      summary: "교토 대표 먹거리 시장으로 간식과 반찬을 조금씩 맛보기 좋은 곳입니다.",
       area: "가와라마치 도보권",
-      features: ["먹거리/기념품", "아케이드 골목"],
-      pros: ["현지 분위기", "짧은 동선"],
-      cons: ["혼잡", "현금 필요"]
+      tags: ["시장", "먹거리", "현금"],
+      features: ["먹거리/기념품", "아케이드 골목", "짧은 도보 동선"],
+      pros: ["현지 분위기", "다양한 시식"],
+      cons: ["혼잡", "현금 필요"],
+      tips: ["소액 현금 준비", "1~2개씩 나눠서 맛보기"]
     },
     "新京極商店街": {
       rating: null,
       ratingSource: "Google",
-      summary: "비가 와도 둘러보기 좋은 실내형 상점가입니다.",
+      summary: "비가 와도 둘러보기 좋은 실내형 상점가로 간식과 잡화가 많습니다.",
       area: "가와라마치 도보권",
-      features: ["실내 상점가", "간식/잡화 밀집"],
+      tags: ["쇼핑", "실내", "간식"],
+      features: ["실내 상점가", "간식/잡화 밀집", "아케이드 동선"],
       pros: ["날씨 영향 적음", "쇼핑 동선 짧음"],
-      cons: ["인파 많음"]
+      cons: ["인파 많음", "주말 혼잡"],
+      tips: ["비 오는 날 대안으로 활용", "가게 간격이 좁아 천천히 이동"]
     },
     "pontocho alley": {
       rating: null,
       ratingSource: "Google",
-      summary: "저녁 시간 산책에 좋은 골목길로 분위기 좋은 식당이 많습니다.",
+      summary: "저녁 시간 산책에 좋은 골목길로 분위기 있는 식당이 많은 구역입니다.",
       area: "가와라마치 · 기온 사이",
-      features: ["저녁 산책", "전통 골목 분위기"],
+      tags: ["골목", "저녁산책", "분위기"],
+      features: ["전통 골목 분위기", "저녁 산책 동선", "식당가 밀집"],
       pros: ["분위기 좋음", "사진 포인트"],
-      cons: ["저녁 혼잡", "골목이 좁음"]
+      cons: ["저녁 혼잡", "골목이 좁음"],
+      tips: ["식사 예약 후 산책 코스로 활용", "조명이 예쁜 시간대 방문"]
     },
     "kamo river kyoto": {
       rating: null,
       ratingSource: "Google",
-      summary: "강변 산책로로 잠깐 쉬어가기에 좋습니다.",
-      features: ["강변 산책로"],
-      pros: ["휴식에 좋음"],
-      cons: ["날씨 영향"]
+      summary: "가와라마치 인근 강변 산책로로 잠깐 쉬어가기 좋은 휴식 코스입니다.",
+      tags: ["산책", "강변", "휴식"],
+      features: ["강변 산책로", "벤치/휴식 공간"],
+      pros: ["휴식에 좋음", "무료 산책"],
+      cons: ["날씨 영향", "야간 추위"],
+      tips: ["일몰 직전 산책 추천", "따뜻한 음료 준비"]
     },
     "551 horai kansai airport": {
       rating: null,
@@ -2029,9 +2139,11 @@ window.TRIP_DATA = {
       summary: "오사카 대표 만두 체인으로 테이크아웃이 가능해 공항 이동 중에도 먹기 좋습니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["오사카 명물 만두", "테이크아웃 가능"],
+      tags: ["만두", "명물", "테이크아웃"],
+      features: ["오사카 명물 만두", "테이크아웃 가능", "간편한 한입 간식"],
       pros: ["빠른 회전", "가성비"],
-      cons: ["줄이 긴 편"]
+      cons: ["줄이 긴 편"],
+      tips: ["줄이 길면 포장 우선", "만두/슈마이 조합 추천"]
     },
     "kineya mugimaru kansai airport": {
       rating: null,
@@ -2039,9 +2151,11 @@ window.TRIP_DATA = {
       summary: "따뜻한 우동과 세트 메뉴로 빠르게 한 끼를 해결할 수 있는 식당입니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["자가제면 우동", "세트 구성 다양"],
-      pros: ["메뉴 선택 폭 넓음"],
-      cons: ["혼잡 시 대기"]
+      tags: ["우동", "세트", "식사"],
+      features: ["자가제면 우동", "세트 구성 다양", "따뜻한 한 끼"],
+      pros: ["메뉴 선택 폭 넓음", "좌석 식사 가능"],
+      cons: ["혼잡 시 대기"],
+      tips: ["미니 덮밥 세트 활용", "피크 시간 피하기"]
     },
     "ganko sushi kansai airport": {
       rating: null,
@@ -2049,9 +2163,11 @@ window.TRIP_DATA = {
       summary: "정갈한 초밥 정식을 차분하게 먹기 좋은 좌석 식사형 스시집입니다.",
       building: "간사이 공항 T1",
       floor: "3층",
-      features: ["정갈한 초밥 정식"],
-      pros: ["좌석 식사 가능"],
-      cons: ["가격대 높음"]
+      tags: ["스시", "정식", "좌석"],
+      features: ["정갈한 초밥 정식", "좌석 식사", "차분한 분위기"],
+      pros: ["좌석 식사 가능", "정식 구성 안정적"],
+      cons: ["가격대 높음"],
+      tips: ["정식 메뉴로 빠르게 선택", "대기 시 주변 카페 활용"]
     },
     "nakau kansai airport shop": {
       rating: null,
@@ -2059,9 +2175,11 @@ window.TRIP_DATA = {
       summary: "짧은 시간에 먹기 좋은 덮밥 체인으로 가성비가 좋습니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["규동/오야코동", "빠른 식사"],
-      pros: ["가성비"],
-      cons: ["좌석 한정"]
+      tags: ["가성비", "덮밥", "빠른식사"],
+      features: ["규동/오야코동", "빠른 식사", "테이크아웃 가능"],
+      pros: ["가성비", "회전 빠름"],
+      cons: ["좌석 한정"],
+      tips: ["짧은 이동 시간에 적합", "포장 주문 시 대기 단축"]
     },
     "botejyu 1946 kansai international airport": {
       rating: null,
@@ -2069,27 +2187,33 @@ window.TRIP_DATA = {
       summary: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있는 매장입니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["오코노미야키", "철판요리"],
-      pros: ["오사카 스타일 식사"],
-      cons: ["식사 시간 대기"]
+      tags: ["오코노미야키", "철판", "오사카"],
+      features: ["오코노미야키", "철판요리", "따뜻한 좌석 식사"],
+      pros: ["오사카 스타일 식사", "든든한 한 끼"],
+      cons: ["식사 시간 대기"],
+      tips: ["인기 시간대 전후 방문", "공유 메뉴로 주문"]
     },
     "mametora rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "린쿠 아울렛 내 장어덮밥 전문점으로 제대로 된 장어 한 끼를 원할 때 선택합니다.",
       building: "린쿠 프리미엄 아울렛",
-      features: ["장어덮밥 전문"],
-      pros: ["시그니처 메뉴"],
-      cons: ["가격대 높음", "대기 가능"]
+      tags: ["장어덮밥", "정찬", "아울렛"],
+      features: ["장어덮밥 전문", "정찬 구성", "좌석 식사"],
+      pros: ["시그니처 메뉴", "든든한 한 끼"],
+      cons: ["가격대 높음", "대기 가능"],
+      tips: ["피크 시간 전 방문", "기본 메뉴로 시작"]
     },
     "komeraku chazuke & karaage restaurant": {
       rating: null,
       ratingSource: "Google",
       summary: "오차즈케와 덮밥을 합리적인 가격에 즐길 수 있는 식당입니다.",
       building: "린쿠 프리미엄 아울렛",
-      features: ["오차즈케/덮밥"],
-      pros: ["가성비"],
-      cons: ["점심 혼잡"]
+      tags: ["오차즈케", "가성비", "덮밥"],
+      features: ["오차즈케/덮밥", "가벼운 한 끼", "빠른 회전"],
+      pros: ["가성비", "메뉴 선택 쉬움"],
+      cons: ["점심 혼잡"],
+      tips: ["가벼운 식사에 적합", "피크 전후 방문"]
     },
     "nana's green tea kansai airport": {
       rating: null,
@@ -2097,9 +2221,11 @@ window.TRIP_DATA = {
       summary: "말차 라떼와 디저트로 짧게 쉬기 좋은 카페입니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["말차 라떼", "디저트"],
-      pros: ["달달한 휴식"],
-      cons: ["좌석 제한"]
+      tags: ["말차", "디저트", "카페"],
+      features: ["말차 라떼", "디저트", "짧은 휴식"],
+      pros: ["달달한 휴식", "간단한 카페 타임"],
+      cons: ["좌석 제한"],
+      tips: ["테이크아웃 활용", "대표 말차 메뉴 확인"]
     },
     "starbucks kansai airport terminal 1": {
       rating: null,
@@ -2107,9 +2233,11 @@ window.TRIP_DATA = {
       summary: "테이크아웃 위주로 빠르게 커피를 마실 수 있는 카페입니다.",
       building: "간사이 공항 T1",
       floor: "2층",
-      features: ["커피/음료", "테이크아웃"],
-      pros: ["카페인 충전"],
-      cons: ["혼잡 가능"]
+      tags: ["카페", "테이크아웃", "커피"],
+      features: ["커피/음료", "테이크아웃", "빠른 이용"],
+      pros: ["카페인 충전", "동선 짧음"],
+      cons: ["혼잡 가능"],
+      tips: ["모바일 주문 가능 여부 확인", "잔뜩 몰릴 때는 포장"]
     },
     "familymart kansai international airport terminal 1": {
       rating: null,
@@ -2117,9 +2245,11 @@ window.TRIP_DATA = {
       summary: "간단한 간식과 음료를 빠르게 구매하기 좋은 편의점입니다.",
       building: "간사이 공항 T1",
       floor: "1층",
-      features: ["음료/간식", "빠른 구매"],
-      pros: ["동선 간단"],
-      cons: ["혼잡 가능"]
+      tags: ["편의점", "간식", "빠른구매"],
+      features: ["음료/간식", "빠른 구매", "간단 요기"],
+      pros: ["동선 간단", "시간 절약"],
+      cons: ["혼잡 가능"],
+      tips: ["이동 직전 필요한 간식 확보", "품절 빠른 품목 먼저 확인"]
     },
     "doutor coffee kansai international airport": {
       rating: null,
@@ -2127,18 +2257,22 @@ window.TRIP_DATA = {
       summary: "공항 이동 중 짧게 쉬기 좋은 커피 체인입니다.",
       building: "간사이 공항 T1",
       floor: "1층 (노스게이트)",
-      features: ["커피/샌드위치", "짧은 휴식"],
-      pros: ["빠른 회전"],
-      cons: ["좌석 제한"]
+      tags: ["카페", "샌드위치", "휴식"],
+      features: ["커피/샌드위치", "짧은 휴식", "빠른 회전"],
+      pros: ["빠른 회전", "간단한 식사 가능"],
+      cons: ["좌석 제한"],
+      tips: ["테이크아웃 활용", "잠깐 앉을 좌석 확보"]
     },
     "godiva rinku premium outlets": {
       rating: null,
       ratingSource: "Google",
       summary: "초콜릿과 디저트로 간단히 당을 보충하기 좋은 매장입니다.",
       building: "린쿠 프리미엄 아울렛",
-      features: ["초콜릿/아이스"],
-      pros: ["선물/간식"],
-      cons: ["가격대 높음"]
+      tags: ["디저트", "초콜릿", "선물"],
+      features: ["초콜릿/아이스", "선물용 패키지", "짧은 디저트 타임"],
+      pros: ["선물/간식", "간단한 보상"],
+      cons: ["가격대 높음"],
+      tips: ["테이크아웃으로 가볍게", "선물용 패키지 확인"]
     },
     "moritaya jr kyoto isetan": {
       rating: null,
@@ -2146,18 +2280,33 @@ window.TRIP_DATA = {
       summary: "교토 대표 스키야키 전문점으로 고급스럽고 차분한 분위기의 좌석 식사를 제공합니다.",
       building: "JR 교토 이세탄",
       floor: "11층",
-      features: ["스키야키 중심", "교토역 직결 백화점 레스토랑가"],
+      tags: ["스키야키", "정찬", "뷰"],
+      features: ["스키야키 중심", "교토역 직결 백화점 레스토랑가", "차분한 좌석 분위기"],
       pros: ["좌석 식사 안정적", "야경 뷰"],
-      cons: ["가격대 높음", "예약 권장"]
+      cons: ["가격대 높음", "예약 권장"],
+      tips: ["예약 가능 여부 먼저 확인", "고기 등급/코스 선택"]
     },
     "yakiniku hiro kyoto station": {
       rating: null,
       ratingSource: "Google",
       summary: "와규 구이를 다양한 부위로 즐길 수 있는 인기 야키니쿠 식당입니다.",
       area: "교토역 인근",
-      features: ["와규 구이", "가족 단위 좌석"],
+      tags: ["야키니쿠", "와규", "예약"],
+      features: ["와규 구이", "가족 단위 좌석", "모둠 메뉴 구성"],
       pros: ["가족 식사 최적", "풍부한 메뉴 구성"],
-      cons: ["저녁 대기 가능", "예약 권장"]
+      cons: ["저녁 대기 가능", "예약 권장"],
+      tips: ["모둠 메뉴로 시작", "예약/대기번호 확인"]
+    },
+    "unagi sora kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "장어덮밥(히츠마부시)으로 유명한 식당으로 든든한 정찬을 원할 때 좋습니다.",
+      area: "교토역 인근",
+      tags: ["장어덮밥", "정찬", "예약"],
+      features: ["히츠마부시", "정갈한 정찬", "좌석 식사"],
+      pros: ["든든한 한 끼", "특별한 메뉴"],
+      cons: ["가격대 높음", "대기 가능"],
+      tips: ["예약 가능 여부 확인", "대표 메뉴 위주로 주문"]
     },
     "katsukura kyoto porta": {
       rating: null,
@@ -2165,17 +2314,21 @@ window.TRIP_DATA = {
       summary: "교토에서 유명한 돈카츠 체인으로 깔끔한 정식 구성이 강점입니다.",
       building: "교토 포르타",
       floor: "B1층",
-      features: ["프리미엄 돈카츠"],
-      pros: ["정식 구성"],
-      cons: ["대기 가능"]
+      tags: ["돈카츠", "정식", "리필"],
+      features: ["프리미엄 돈카츠", "밥/양배추 리필", "정식 구성"],
+      pros: ["정식 구성", "맛 안정적"],
+      cons: ["대기 가능"],
+      tips: ["피크 시간 피하기", "히레/로스 취향 선택"]
     },
     "nakau kyoto station": {
       rating: null,
       ratingSource: "Google",
       summary: "24시간 운영으로 늦은 시간에도 빠르게 식사할 수 있는 가성비 매장입니다.",
-      features: ["24시간", "가성비"],
-      pros: ["대기 적음"],
-      cons: ["분위기 단순"]
+      tags: ["가성비", "24시간", "덮밥"],
+      features: ["24시간", "덮밥/우동", "빠른 회전"],
+      pros: ["대기 적음", "가성비"],
+      cons: ["분위기 단순"],
+      tips: ["간단 식사 위주로 활용", "좌석 여유 시간대 확인"]
     },
     "nakamura tokichi kyoto station": {
       rating: null,
@@ -2183,9 +2336,11 @@ window.TRIP_DATA = {
       summary: "진한 말차 디저트로 유명한 카페로, 디저트 타임에 인기입니다.",
       building: "JR 교토 이세탄",
       floor: "3층",
-      features: ["말차 디저트"],
-      pros: ["디저트 만족도 높음"],
-      cons: ["대기 가능"]
+      tags: ["말차", "디저트", "카페"],
+      features: ["말차 디저트", "파르페/젤리", "선물 구매 가능"],
+      pros: ["디저트 만족도 높음", "선물 구성 다양"],
+      cons: ["대기 가능"],
+      tips: ["파르페/젤리 대표 메뉴 확인", "포장 가능 여부 문의"]
     },
     "sizuya kyoto station": {
       rating: null,
@@ -2193,113 +2348,141 @@ window.TRIP_DATA = {
       summary: "교토 팥빵으로 유명한 베이커리로 간식이나 아침으로 좋습니다.",
       building: "교토역 하치조 출구",
       floor: "1층",
-      features: ["교토 팥빵"],
-      pros: ["가성비 간식"],
-      cons: ["빵 품절 가능"]
+      tags: ["베이커리", "팥빵", "간식"],
+      features: ["교토 팥빵", "간식/아침", "테이크아웃"],
+      pros: ["가성비 간식", "빠른 구매"],
+      cons: ["빵 품절 가능"],
+      tips: ["인기 시간 전 방문", "기본 팥빵 우선 확보"]
     },
     "to-ji temple": {
       rating: null,
       ratingSource: "Google",
       summary: "오층탑이 상징인 사찰로, 21일 코보산 장날이 특히 유명합니다.",
-      features: ["오층탑", "21일 코보산 장날", "경내 산책"],
+      tags: ["사찰", "장날", "사진"],
+      features: ["오층탑 상징", "21일 코보산 장날", "넓은 경내 산책"],
       pros: ["시장 분위기", "사진 포인트"],
-      cons: ["현금 필요", "장날 혼잡"]
+      cons: ["현금 필요", "장날 혼잡"],
+      tips: ["장날은 이른 시간 방문", "소액 현금 준비"]
     },
     "higashi honganji temple": {
       rating: null,
       ratingSource: "Google",
-      summary: "넓은 경내와 목조 건축을 무료로 둘러볼 수 있는 대형 사찰입니다.",
-      features: ["대형 목조 건축", "무료 관람"],
-      pros: ["휴식에 좋음"],
-      cons: ["추위 대비"]
+      summary: "넓은 경내와 세계 최대급 목조 건축을 무료로 둘러볼 수 있는 대형 사찰입니다.",
+      tags: ["사찰", "무료", "목조"],
+      features: ["대형 목조 건축", "무료 관람", "넓은 경내"],
+      pros: ["휴식에 좋음", "부담 없는 관람"],
+      cons: ["추위 대비"],
+      tips: ["실내 바닥 착석 가능", "조용한 시간대 추천"]
     },
     "nijo castle": {
       rating: null,
       ratingSource: "Google",
       summary: "쇼군의 권력을 상징하는 성으로 화려한 건축과 정원이 인상적입니다.",
-      features: ["니노마루 궁전", "정원"],
-      pros: ["역사적 가치"],
-      cons: ["실내 이동 많음"]
+      tags: ["유적", "궁전", "정원"],
+      features: ["니노마루 궁전", "꾀꼬리 마루", "정원 산책"],
+      pros: ["역사적 가치", "관람 동선 명확"],
+      cons: ["실내 이동 많음", "혼잡 가능"],
+      tips: ["궁전 포함 티켓 확인", "실내 규정(신발) 안내 확인"]
     },
     "kinkaku-ji": {
       rating: null,
       ratingSource: "Google",
       summary: "황금빛 누각으로 유명한 교토 대표 관광지입니다.",
-      features: ["황금 누각", "일몰 뷰"],
-      pros: ["상징적 포인트"],
-      cons: ["혼잡", "현금 입장"]
+      tags: ["명소", "금각", "사진"],
+      features: ["황금 누각", "정원 산책", "일몰 뷰 포인트"],
+      pros: ["상징적 포인트", "사진 만족도 높음"],
+      cons: ["혼잡", "현금 입장"],
+      tips: ["일몰 직전 방문 추천", "입구/출구 동선 미리 확인"]
     },
     "kyoto botanical garden": {
       rating: null,
       ratingSource: "Google",
       summary: "온실과 야간 전시가 있는 식물원으로 겨울 저녁에 실내 관람이 가능합니다.",
-      features: ["실내 온실", "야간 전시"],
-      pros: ["겨울 저녁 관람"],
-      cons: ["티켓 비용"]
+      tags: ["전시", "실내", "야간"],
+      features: ["실내 온실", "야간 전시", "미디어 아트"],
+      pros: ["겨울 저녁 관람", "실내 관람 가능"],
+      cons: ["티켓 비용"],
+      tips: ["QR 티켓 미리 준비", "온실 구역 중심으로 관람"]
     },
     "sanjusangendo": {
       rating: null,
       ratingSource: "Google",
       summary: "1,001개의 관음상이 있는 긴 본당으로 평지 동선이 특징입니다.",
-      features: ["1,001 관음상", "평지 동선"],
-      pros: ["부모님 동선 편함"],
-      cons: ["현금 입장"]
+      tags: ["사찰", "실내", "평지"],
+      features: ["1,001 관음상", "긴 본당", "평지 동선"],
+      pros: ["부모님 동선 편함", "실내 관람"],
+      cons: ["현금 입장"],
+      tips: ["실내 촬영 규정 확인", "조용히 관람"]
     },
     "grill capital touyoutei": {
       rating: null,
       ratingSource: "Google",
       summary: "교토에서 오래된 함박스테이크 전문점으로 가족 외식에 인기입니다.",
-      features: ["함박스테이크", "노포"],
-      pros: ["가족 식사 만족도"],
-      cons: ["저녁 대기 가능"]
+      tags: ["함박", "가족식사", "노포"],
+      features: ["함박스테이크", "노포 분위기", "가족 외식"],
+      pros: ["가족 식사 만족도", "메뉴 만족도 높음"],
+      cons: ["저녁 대기 가능"],
+      tips: ["대기표 먼저 발급", "대기 중 근처 카페 활용"]
     },
     "ippodo tea store kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "말차와 다구를 폭넓게 갖춘 교토 대표 차 전문점입니다.",
-      features: ["말차/다구 전문"],
-      pros: ["선물용 최적"],
-      cons: ["가격대 있음"]
+      tags: ["말차", "다구", "선물"],
+      features: ["말차/다구 전문", "선물용 구성", "영문 안내"],
+      pros: ["선물용 최적", "브랜드 신뢰도"],
+      cons: ["가격대 있음"],
+      tips: ["입문자 세트 먼저 확인", "보관 방법 안내서 요청"]
     },
     "marukyu koyamaen kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "고급 말차 브랜드로 선물용 구매에 인기가 많습니다.",
-      features: ["고급 말차"],
-      pros: ["브랜드 신뢰도"],
-      cons: ["품절 가능"]
+      tags: ["말차", "선물", "고급"],
+      features: ["고급 말차", "선물용 패키지", "현지 인기"],
+      pros: ["브랜드 신뢰도", "품질 안정적"],
+      cons: ["품절 가능"],
+      tips: ["인기 제품 재고 먼저 확인", "선물용 포장 요청"]
     },
     "smart coffee kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "레트로 분위기의 노포 카페로 프렌치 토스트가 유명합니다.",
-      features: ["노포 카페", "프렌치 토스트"],
-      pros: ["분위기 좋음"],
-      cons: ["대기 가능"]
+      tags: ["카페", "노포", "디저트"],
+      features: ["노포 카페", "프렌치 토스트", "클래식 인테리어"],
+      pros: ["분위기 좋음", "대표 메뉴 확실"],
+      cons: ["대기 가능"],
+      tips: ["오픈 직후 방문 추천", "프렌치 토스트는 공유하기 좋음"]
     },
     "honke owariya": {
       rating: null,
       ratingSource: "Google",
       summary: "교토 전통 소바를 경험하기 좋은 노포입니다.",
-      features: ["전통 소바"],
-      pros: ["노포 경험"],
-      cons: ["가격대 있음"]
+      tags: ["소바", "노포", "전통"],
+      features: ["전통 소바", "넓은 좌석", "교토식 정갈한 맛"],
+      pros: ["노포 경험", "가족 방문 가능"],
+      cons: ["가격대 있음"],
+      tips: ["인기 시간대 전후 방문", "따뜻한 메뉴 선택"]
     },
     "omen shijo": {
       rating: null,
       ratingSource: "Google",
       summary: "신선한 채소와 함께 먹는 우동으로 담백한 맛이 특징입니다.",
-      features: ["채소 우동"],
-      pros: ["담백한 맛"],
-      cons: ["대기 가능"]
+      tags: ["우동", "채소", "가벼움"],
+      features: ["채소 우동", "담백한 국물", "가벼운 한 끼"],
+      pros: ["담백한 맛", "부담 없는 식사"],
+      cons: ["대기 가능"],
+      tips: ["야채 추가 옵션 확인", "점심 피크 전 방문"]
     },
     "kyogoku kaneyo": {
       rating: null,
       ratingSource: "Google",
       summary: "두툼한 계란지단이 올려진 장어덮밥으로 유명합니다.",
-      features: ["킨시동"],
-      pros: ["대표 메뉴"],
-      cons: ["가격대 있음"]
+      tags: ["장어덮밥", "노포", "명물"],
+      features: ["킨시동", "두툼한 계란지단", "노포 분위기"],
+      pros: ["대표 메뉴 확실", "사진 포인트"],
+      cons: ["가격대 있음", "대기 가능"],
+      tips: ["대표 메뉴 중심으로 주문", "여유 있는 시간대 방문"]
     },
     "wako kyoto isetan": {
       rating: null,
@@ -2307,9 +2490,11 @@ window.TRIP_DATA = {
       summary: "깔끔한 돈카츠 정식과 리필 서비스로 유명한 체인입니다.",
       building: "JR 교토 이세탄",
       floor: "11층",
-      features: ["돈카츠 정식"],
-      pros: ["리필 제공"],
-      cons: ["식사 시간 대기"]
+      tags: ["돈카츠", "정식", "리필"],
+      features: ["돈카츠 정식", "밥/양배추 리필", "백화점 레스토랑가"],
+      pros: ["리필 제공", "가족 식사 적합"],
+      cons: ["식사 시간 대기"],
+      tips: ["리필 규정 확인", "피크 시간 피하기"]
     },
     "kyoto wakuden isetan": {
       rating: null,
@@ -2317,9 +2502,11 @@ window.TRIP_DATA = {
       summary: "정통 일식을 조용한 분위기에서 즐길 수 있는 식당입니다.",
       building: "JR 교토 이세탄",
       floor: "11층",
-      features: ["정통 일식"],
-      pros: ["조용한 분위기"],
-      cons: ["가격대 높음"]
+      tags: ["일식", "정찬", "뷰"],
+      features: ["정통 일식", "정찬 구성", "창가 좌석 뷰"],
+      pros: ["조용한 분위기", "특별한 한 끼"],
+      cons: ["가격대 높음"],
+      tips: ["창가 좌석 요청", "예약 가능 여부 확인"]
     },
     "kyoto porta": {
       rating: null,
@@ -2327,17 +2514,32 @@ window.TRIP_DATA = {
       summary: "교토역 지하상가로 다양한 식당과 쇼핑을 한 번에 즐길 수 있습니다.",
       building: "교토 포르타",
       floor: "B1~B2층",
-      features: ["지하 상가", "다양한 식당"],
-      pros: ["날씨 영향 적음"],
-      cons: ["사람 많음"]
+      tags: ["지하상가", "식사", "쇼핑"],
+      features: ["지하 상가", "다양한 식당", "쇼핑 동선 집중"],
+      pros: ["날씨 영향 적음", "동선 효율적"],
+      cons: ["사람 많음"],
+      tips: ["식당가/쇼핑 구역 동선 먼저 확인", "피크 전후로 이동"]
+    },
+    "aeon mall kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 인근 대형 쇼핑몰로 실내 동선과 푸드코트가 잘 갖춰져 있습니다.",
+      area: "교토역 인근",
+      tags: ["쇼핑몰", "실내", "식사"],
+      features: ["대형 쇼핑몰", "푸드코트/레스토랑", "실내 동선"],
+      pros: ["날씨 영향 적음", "매장 선택 폭 넓음"],
+      cons: ["이동 시간 필요"],
+      tips: ["우천 시 대안으로 활용", "식사와 쇼핑 동선 분리"]
     },
     "inoda coffee kyoto": {
       rating: null,
       ratingSource: "Google",
       summary: "교토 클래식 카페로 진한 커피와 분위기가 매력입니다.",
-      features: ["클래식 카페"],
-      pros: ["분위기 좋음"],
-      cons: ["대기 가능"]
+      tags: ["카페", "클래식", "디저트"],
+      features: ["클래식 카페", "진한 커피", "전통 분위기"],
+      pros: ["분위기 좋음", "노포 경험"],
+      cons: ["대기 가능"],
+      tips: ["오픈 직후 방문", "대표 커피/디저트 세트 추천"]
     }
   }
 };
