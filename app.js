@@ -266,6 +266,23 @@
     `;
   }
 
+  function buildLocationSummary(detail) {
+    if (!detail) {
+      return "";
+    }
+    const parts = [];
+    if (detail.building) {
+      parts.push(detail.building);
+    }
+    if (detail.floor) {
+      parts.push(detail.floor);
+    }
+    if (detail.area) {
+      parts.push(detail.area);
+    }
+    return parts.join(" · ");
+  }
+
   function normalizeKey(value) {
     return String(value || "").trim().toLowerCase();
   }
@@ -981,6 +998,12 @@
           ${group.options
             .map((option) => {
               const checked = selectedIds.includes(option.id);
+              const detail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+              const ratingLine = detail
+                ? `<span class="option-rating">평점: ${formatRating(detail)}</span>`
+                : "";
+              const location = option.where || buildLocationSummary(detail);
+              const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
               return `
                 <label class="option-item ${checked ? "selected" : ""}">
                   <input
@@ -994,6 +1017,8 @@
                   <div class="option-meta">
                     <strong>${option.label}</strong>
                     ${option.summary ? `<span>${option.summary}</span>` : ""}
+                    ${ratingLine}
+                    ${locationLine}
                     ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
                 </label>
@@ -1019,6 +1044,12 @@
         ${group.options
           .map((option) => {
             const checked = selectedIds.includes(option.id);
+            const detail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+            const ratingLine = detail
+              ? `<span class="option-rating">평점: ${formatRating(detail)}</span>`
+              : "";
+            const location = option.where || buildLocationSummary(detail);
+            const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
             const placeInfo = option.mapQuery
               ? renderPlaceCard(option.mapQuery, option.label, { collapsible: true, showNearby: false })
               : "";
@@ -1038,7 +1069,8 @@
                     <strong>${option.label}</strong>
                     ${option.note ? `<span>${option.note}</span>` : ""}
                     ${option.menu ? `<span class="option-menu">메뉴: ${option.menu}</span>` : ""}
-                    ${option.where ? `<span class="option-where">위치: ${option.where}</span>` : ""}
+                    ${locationLine}
+                    ${ratingLine}
                     ${option.desc ? `<span class="option-desc">${option.desc}</span>` : ""}
                     ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
