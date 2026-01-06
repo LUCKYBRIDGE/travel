@@ -61,6 +61,125 @@
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   }
 
+  const CATEGORY_DEFS = [
+    {
+      id: "meal",
+      label: "식사",
+      className: "tag-meal",
+      keywords: [
+        "식사",
+        "맛집",
+        "스시",
+        "초밥",
+        "우동",
+        "라멘",
+        "스키야키",
+        "야키니쿠",
+        "돈카츠",
+        "덮밥",
+        "규동",
+        "장어",
+        "스테이크",
+        "정식",
+        "restaurant",
+        "food",
+        "sushi",
+        "ramen",
+        "udon",
+        "yakiniku",
+        "sukiyaki",
+        "tonkatsu",
+        "donburi",
+        "steak"
+      ]
+    },
+    {
+      id: "cafe",
+      label: "카페",
+      className: "tag-cafe",
+      keywords: [
+        "카페",
+        "커피",
+        "카페인",
+        "디저트",
+        "말차",
+        "라떼",
+        "베이커리",
+        "빵",
+        "coffee",
+        "cafe",
+        "dessert",
+        "tea"
+      ]
+    },
+    {
+      id: "shopping",
+      label: "쇼핑",
+      className: "tag-shopping",
+      keywords: ["쇼핑", "아울렛", "몰", "상점", "백화점", "포르타", "outlet", "mall", "shop", "store"]
+    },
+    {
+      id: "market",
+      label: "시장",
+      className: "tag-market",
+      keywords: ["시장", "장날", "상점가", "market"]
+    },
+    {
+      id: "sight",
+      label: "관광",
+      className: "tag-sight",
+      keywords: [
+        "사찰",
+        "신사",
+        "성",
+        "정원",
+        "타워",
+        "전망",
+        "야경",
+        "강",
+        "산책",
+        "골목",
+        "거리",
+        "temple",
+        "shrine",
+        "castle",
+        "garden",
+        "tower",
+        "river",
+        "street",
+        "alley",
+        "beach",
+        "park"
+      ]
+    },
+    {
+      id: "transport",
+      label: "교통",
+      className: "tag-transport",
+      keywords: [
+        "역",
+        "공항",
+        "하루카",
+        "지하철",
+        "버스",
+        "택시",
+        "은행",
+        "atm",
+        "ticket",
+        "station",
+        "airport",
+        "jr",
+        "교통"
+      ]
+    },
+    {
+      id: "stay",
+      label: "숙소",
+      className: "tag-stay",
+      keywords: ["호텔", "숙소", "hotel", "stay", "inn"]
+    }
+  ];
+
   function getPlaceDetails(mapQuery) {
     if (!mapQuery) {
       return null;
@@ -91,6 +210,70 @@
         ? `, 리뷰 ${detail.ratingCount.toLocaleString("ko-KR")}개`
         : "";
     return `${detail.rating} (${source}${count})`;
+  }
+
+  function sanitizeTag(text) {
+    if (!text) {
+      return "";
+    }
+    return String(text).replace(/[\\s·•・/()（）.,:]/g, "");
+  }
+
+  function resolveCategory(detail, fallbackText, fallbackType) {
+    if (detail && detail.category) {
+      const match = CATEGORY_DEFS.find((item) => item.id === detail.category);
+      if (match) {
+        return match;
+      }
+    }
+    const source = `${fallbackText || ""} ${fallbackType || ""} ${
+      detail?.summary || ""
+    } ${(detail?.features || []).join(" ")}`.toLowerCase();
+    for (const category of CATEGORY_DEFS) {
+      if (category.keywords.some((keyword) => source.includes(keyword.toLowerCase()))) {
+        return category;
+      }
+    }
+    return null;
+  }
+
+  function buildHashtags(detail, category) {
+    const tags = [];
+    if (Array.isArray(detail?.tags)) {
+      tags.push(...detail.tags);
+    }
+    if (Array.isArray(detail?.features)) {
+      tags.push(...detail.features);
+    }
+    const normalized = tags
+      .map((tag) => sanitizeTag(tag))
+      .filter(Boolean)
+      .filter((tag) => tag.length > 1);
+    const unique = [];
+    normalized.forEach((tag) => {
+      if (!unique.includes(tag)) {
+        unique.push(tag);
+      }
+    });
+    const limited = unique.slice(0, 4);
+    if (category?.label) {
+      const categoryTag = sanitizeTag(category.label);
+      return limited.filter((tag) => tag !== categoryTag);
+    }
+    return limited;
+  }
+
+  function renderTagRow(category, tags) {
+    if (!category && (!tags || tags.length === 0)) {
+      return "";
+    }
+    const categoryChip = category
+      ? `<span class="tag-chip ${category.className}">#${category.label}</span>`
+      : "";
+    const otherChips = (tags || [])
+      .map((tag) => `<span class="tag-chip neutral">#${tag}</span>`)
+      .join("");
+    return `<div class="tag-row">${categoryChip}${otherChips}</div>`;
   }
 
   function formatDate(value) {
@@ -174,6 +357,8 @@
         ${nearby
           .map((item) => {
             const detail = getPlaceDetails(item.mapQuery) || item;
+            const category = resolveCategory(detail, item.name, item.type);
+            const tags = buildHashtags(detail, category);
             const locationLines = [
               detail.building || item.building
                 ? renderDetailLine("건물", detail.building || item.building)
@@ -192,6 +377,7 @@
                   ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
                 </div>
                 <div class="muted">평점: ${formatRating(detail)}</div>
+                ${renderTagRow(category, tags)}
                 ${locationLines}
                 ${renderDetailLine("특징", detail.features, "정보 준비중")}
                 ${renderDetailLine("장점", detail.pros, "정보 준비중")}
@@ -215,6 +401,8 @@
       return "";
     }
     const detail = getPlaceDetails(mapQuery) || {};
+    const category = resolveCategory(detail, title || mapQuery, detail.type);
+    const tags = buildHashtags(detail, category);
     const summary = detail.summary
       ? detail.summary
       : detail.features && detail.features.length
@@ -233,6 +421,7 @@
         <a href="${buildMapLink(mapQuery)}" target="_blank" rel="noreferrer">열기</a>
         <span class="rating">평점: ${formatRating(detail)}</span>
       </div>
+      ${renderTagRow(category, tags)}
       ${summary ? `<div class="place-summary">${summary}</div>` : ""}
       ${locationLines}
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
@@ -1004,6 +1193,9 @@
                 : "";
               const location = option.where || buildLocationSummary(detail);
               const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
+              const category = resolveCategory(detail, option.label, detail?.type);
+              const tags = buildHashtags(detail, category);
+              const tagRow = renderTagRow(category, tags);
               return `
                 <label class="option-item ${checked ? "selected" : ""}">
                   <input
@@ -1019,6 +1211,7 @@
                     ${option.summary ? `<span>${option.summary}</span>` : ""}
                     ${ratingLine}
                     ${locationLine}
+                    ${tagRow}
                     ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
                 </label>
@@ -1050,6 +1243,9 @@
               : "";
             const location = option.where || buildLocationSummary(detail);
             const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
+            const category = resolveCategory(detail, option.label, detail?.type);
+            const tags = buildHashtags(detail, category);
+            const tagRow = renderTagRow(category, tags);
             const placeInfo = option.mapQuery
               ? renderPlaceCard(option.mapQuery, option.label, { collapsible: true, showNearby: false })
               : "";
@@ -1071,6 +1267,7 @@
                     ${option.menu ? `<span class="option-menu">메뉴: ${option.menu}</span>` : ""}
                     ${locationLine}
                     ${ratingLine}
+                    ${tagRow}
                     ${option.desc ? `<span class="option-desc">${option.desc}</span>` : ""}
                     ${checked ? `<span class="option-selected">선택됨</span>` : ""}
                   </div>
@@ -1396,26 +1593,33 @@
               <div class="map-list">
                 ${list
                   .map(
-                    (item) => `
-                      <div class="map-item">
-                        <div>
-                          <strong>${item.title}</strong>
-                          ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
-                          <div class="muted">${item.note}</div>
-                          <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
-                          ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
-                          ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
-                          ${item.ratingUpdatedAt ? `<div class="muted">업데이트: ${formatDate(item.ratingUpdatedAt)}</div>` : ""}
-                          ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
+                    (item) => {
+                      const detail = getPlaceDetails(item.query) || {};
+                      const category = resolveCategory(detail, item.title, detail?.type);
+                      const tags = buildHashtags(detail, category);
+                      const tagRow = renderTagRow(category, tags);
+                      return `
+                        <div class="map-item">
+                          <div>
+                            <strong>${item.title}</strong>
+                            ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
+                            <div class="muted">${item.note}</div>
+                            <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
+                            ${tagRow}
+                            ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
+                            ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
+                            ${item.ratingUpdatedAt ? `<div class="muted">업데이트: ${formatDate(item.ratingUpdatedAt)}</div>` : ""}
+                            ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
+                          </div>
+                          <div class="map-actions">
+                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
+                            ${canManualRatings() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
+                            <button type="button" data-copy="${item.query}">검색어 복사</button>
+                          </div>
                         </div>
-                        <div class="map-actions">
-                          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
-                          <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
-                          ${canManualRatings() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
-                          <button type="button" data-copy="${item.query}">검색어 복사</button>
-                        </div>
-                      </div>
-                    `
+                      `;
+                    }
                   )
                   .join("")}
               </div>

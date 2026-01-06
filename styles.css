@@ -358,6 +358,64 @@ a {
   color: var(--muted);
 }
 
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(31, 42, 42, 0.08);
+  color: var(--muted);
+}
+
+.tag-chip.neutral {
+  background: rgba(31, 42, 42, 0.08);
+  color: var(--muted);
+}
+
+.tag-meal {
+  background: rgba(217, 108, 77, 0.18);
+  color: #9e3f2c;
+}
+
+.tag-cafe {
+  background: rgba(47, 139, 134, 0.18);
+  color: #1f6f6a;
+}
+
+.tag-shopping {
+  background: rgba(202, 145, 40, 0.2);
+  color: #8a5a12;
+}
+
+.tag-market {
+  background: rgba(164, 110, 70, 0.2);
+  color: #7a4a1d;
+}
+
+.tag-sight {
+  background: rgba(104, 138, 74, 0.2);
+  color: #446528;
+}
+
+.tag-transport {
+  background: rgba(68, 120, 190, 0.2);
+  color: #2f5d9b;
+}
+
+.tag-stay {
+  background: rgba(92, 104, 140, 0.2);
+  color: #3b4a7a;
+}
+
 .option-group {
   display: grid;
   gap: 14px;
