@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-2",
+    version: "2026-01-06-3",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-2",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-3",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -1118,9 +1118,9 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "asics",
-                  label: "아식스 교토 가와라마치 (ASICS Kyoto Kawaramachi)",
-                  note: "최신 모델/사이즈",
-                  desc: "린쿠에서 못 구한 모델과 사이즈를 찾기 좋은 공식 스토어입니다.",
+                  label: "아식스 스토어 교토 (ASICS Store Kyoto)",
+                  note: "지점명 확인 필요",
+                  desc: "린쿠에서 못 구한 모델과 사이즈를 찾기 좋은 공식 스토어입니다. 정확한 지점은 지도에서 확인해 주세요.",
                   mapQuery: "ASICS Store Kyoto"
                 },
                 {
@@ -1824,6 +1824,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토 최대 쇼핑/식사 거리로 하루 종일 돌아다니기 좋은 도보 중심 상권입니다.",
+      area: "교토 시내 중심",
       features: ["쇼핑/카페 밀집", "도보 이동 중심"],
       pros: ["하루 종일 동선 가능"],
       cons: ["혼잡", "대기 발생"],
@@ -1890,6 +1891,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 둘러보기 좋습니다.",
+      area: "가와라마치 도보권",
       features: ["잡화/기념품", "아케이드 산책"],
       pros: ["짧은 동선", "날씨 영향 적음"],
       cons: ["인파 많음"]
@@ -1898,6 +1900,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "교토 대표 먹거리 시장으로 간식과 반찬을 가볍게 즐길 수 있습니다.",
+      area: "가와라마치 도보권",
       features: ["먹거리/기념품", "아케이드 골목"],
       pros: ["현지 분위기", "짧은 동선"],
       cons: ["혼잡", "현금 필요"]
@@ -1906,6 +1909,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "비가 와도 둘러보기 좋은 실내형 상점가입니다.",
+      area: "가와라마치 도보권",
       features: ["실내 상점가", "간식/잡화 밀집"],
       pros: ["날씨 영향 적음", "쇼핑 동선 짧음"],
       cons: ["인파 많음"]
@@ -1914,6 +1918,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "저녁 시간 산책에 좋은 골목길로 분위기 좋은 식당이 많습니다.",
+      area: "가와라마치 · 기온 사이",
       features: ["저녁 산책", "전통 골목 분위기"],
       pros: ["분위기 좋음", "사진 포인트"],
       cons: ["저녁 혼잡", "골목이 좁음"]
@@ -2163,9 +2168,10 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "최신 러닝화 라인업을 확인할 수 있는 공식 스토어입니다.",
-      features: ["신상/사이즈 다양"],
-      pros: ["피팅 편리"],
-      cons: ["할인 적음"]
+      area: "교토 시내",
+      features: ["신상/사이즈 다양", "공식 스토어"],
+      pros: ["피팅 편리", "라인업 확인 용이"],
+      cons: ["할인 적음", "지점명 확인 필요"]
     },
     "smart coffee kyoto": {
       rating: null,
