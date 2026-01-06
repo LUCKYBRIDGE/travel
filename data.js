@@ -1151,7 +1151,7 @@ window.TRIP_DATA = {
                   label: "신쿄고쿠 상점가 (Shinkyogoku)",
                   note: "실내 상점가",
                   desc: "날씨 영향을 덜 받는 실내 상점가로 가볍게 둘러보기 좋습니다.",
-                  mapQuery: "Shinkyogoku Shopping Street"
+                  mapQuery: "新京極商店街"
                 }
               ]
             }
@@ -1467,7 +1467,7 @@ window.TRIP_DATA = {
       nearby: [
         {
           name: "세븐은행 ATM (Seven Bank)",
-          mapQuery: "Seven Bank Kansai Airport Terminal 1",
+          mapQuery: "Seven Bank Kansai International Airport",
           type: "ATM",
           features: ["트래블로그 출금", "24시간 이용"],
           pros: ["가족 단위 출금에 편리"],
@@ -1475,7 +1475,7 @@ window.TRIP_DATA = {
         },
         {
           name: "이온은행/우체국 ATM",
-          mapQuery: "AEON Bank Kansai Airport Terminal 1",
+          mapQuery: "AEON Bank Kansai International Airport",
           type: "ATM",
           features: ["트래블월렛 출금", "현금 확보"],
           pros: ["대체 출금처 확보"],
@@ -1770,7 +1770,7 @@ window.TRIP_DATA = {
       pros: ["시간 절약"],
       cons: ["좌석 제한"]
     },
-    "seven bank kansai airport terminal 1": {
+    "seven bank kansai international airport": {
       rating: null,
       ratingSource: "Google",
       summary: "트래블로그 등 해외카드 출금이 가능한 대표 ATM입니다.",
@@ -1780,7 +1780,7 @@ window.TRIP_DATA = {
       pros: ["가족 단위 출금에 편리"],
       cons: ["피크 시간 혼잡"]
     },
-    "aeon bank kansai airport terminal 1": {
+    "aeon bank kansai international airport": {
       rating: null,
       ratingSource: "Google",
       summary: "트래블월렛 등 선불카드 출금에 유용한 ATM입니다.",
@@ -1852,7 +1852,7 @@ window.TRIP_DATA = {
         },
         {
           name: "신쿄고쿠 상점가 (Shinkyogoku Shopping Street)",
-          mapQuery: "Shinkyogoku Shopping Street",
+          mapQuery: "新京極商店街",
           type: "쇼핑",
           features: ["실내 상점가"],
           pros: ["날씨 영향 적음"],
@@ -1900,7 +1900,7 @@ window.TRIP_DATA = {
       pros: ["현지 분위기"],
       cons: ["혼잡", "현금 필요"]
     },
-    "shinkyogoku shopping street": {
+    "新京極商店街": {
       rating: null,
       ratingSource: "Google",
       summary: "비가 와도 둘러보기 좋은 실내형 상점가입니다.",

@@ -1,6 +1,6 @@
 export const PLACE_QUERIES = [
   "551 Horai Kansai Airport",
-  "AEON Bank Kansai Airport Terminal 1",
+  "AEON Bank Kansai International Airport",
   "ASICS Factory Outlet Rinku",
   "ASICS Store Kyoto",
   "Aeon Mall Kyoto",
@@ -54,8 +54,8 @@ export const PLACE_QUERIES = [
   "Rinku Pleasure Town Seacle",
   "Rinku Premium Outlets",
   "Sanjusangendo",
-  "Seven Bank Kansai Airport Terminal 1",
-  "Shinkyogoku Shopping Street",
+  "Seven Bank Kansai International Airport",
+  "新京極商店街",
   "Sizuya Kyoto Station",
   "Smart Coffee Kyoto",
   "Starbucks Kansai Airport Terminal 1",

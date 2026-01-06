@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-06T04:54:29.234Z",
+  "updatedAt": "2026-01-06T08:26:52.365Z",
   "items": {
     "551 horai kansai airport": {
       "query": "551 Horai Kansai Airport",
@@ -391,6 +391,16 @@
       "source": "Google",
       "updatedAt": "2026-01-06T03:00:09.658Z"
     },
+    "aeon bank kansai international airport": {
+      "query": "AEON Bank Kansai International Airport",
+      "placeId": "ChIJc-2F00i5AGARZX8mBIDjOxg",
+      "name": "イオン銀行 関西国際空港第1旅客ターミナルビル税関検査場内出張所",
+      "rating": 4.5,
+      "ratingCount": 2,
+      "popularity": "관광객 적은 편",
+      "source": "Google",
+      "updatedAt": "2026-01-06T08:25:21.516Z"
+    },
     "godiva kansai airport": {
       "query": "Godiva Kansai Airport",
       "placeId": "ChIJJ9Tyyv63AGARTcsyudaMl8I",
@@ -541,15 +551,25 @@
       "source": "Google",
       "updatedAt": "2026-01-06T04:54:23.567Z"
     },
-    "shinkyogoku shopping street": {
-      "query": "Shinkyogoku Shopping Street",
-      "placeId": "ChIJq5ZudJQIAWAR2GtLSaqsKYY",
-      "name": "Kyoto Shinkyogoku Shopping Street",
-      "rating": null,
-      "ratingCount": null,
-      "popularity": "정보 없음",
+    "seven bank kansai international airport": {
+      "query": "Seven Bank Kansai International Airport",
+      "placeId": "ChIJFb_eJxO5AGAR6wYsYrS86Tg",
+      "name": "Seven Bank ATM",
+      "rating": 5,
+      "ratingCount": 1,
+      "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:24.885Z"
+      "updatedAt": "2026-01-06T08:25:16.684Z"
+    },
+    "新京極商店街": {
+      "query": "新京極商店街",
+      "placeId": "ChIJ6fUyMZQIAWAR4tOOD7AkWJw",
+      "name": "신쿄고쿠상점가",
+      "rating": 4.3,
+      "ratingCount": 1148,
+      "popularity": "보통",
+      "source": "Google",
+      "updatedAt": "2026-01-06T08:25:25.328Z"
     },
     "sizuya kyoto station": {
       "query": "Sizuya Kyoto Station",
