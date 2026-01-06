@@ -179,6 +179,43 @@
       keywords: ["호텔", "숙소", "hotel", "stay", "inn"]
     }
   ];
+  const CATEGORY_DEFAULTS = {
+    meal: {
+      features: ["대표 메뉴 중심", "좌석 식사/테이크아웃 병행"],
+      pros: ["가족 단위 이용 무난"],
+      cons: ["피크 시간 대기", "가격대 편차"]
+    },
+    cafe: {
+      features: ["음료/디저트 중심", "짧은 휴식에 적합"],
+      pros: ["잠깐 쉬기 좋음"],
+      cons: ["좌석 제한 가능"]
+    },
+    shopping: {
+      features: ["매장 구성 다양", "이동 동선 길 수 있음"],
+      pros: ["쇼핑 선택 폭 넓음"],
+      cons: ["혼잡 가능"]
+    },
+    market: {
+      features: ["먹거리/잡화 혼합", "현장 분위기 체험"],
+      pros: ["로컬 분위기 체험"],
+      cons: ["현금 필요 가능", "혼잡"]
+    },
+    sight: {
+      features: ["야외 관람 중심", "사진 포인트 존재"],
+      pros: ["관광 만족도 높음"],
+      cons: ["날씨 영향", "도보 이동"]
+    },
+    transport: {
+      features: ["이동 동선 중심", "안내 표지 확인 필요"],
+      pros: ["시간 절약에 도움"],
+      cons: ["혼잡 가능"]
+    },
+    stay: {
+      features: ["체크인/조식 동선", "짐 보관 편의"],
+      pros: ["동선 안정적"],
+      cons: ["체크인 시간 혼잡"]
+    }
+  };
 
   function getPlaceDetails(mapQuery) {
     if (!mapQuery) {
@@ -217,6 +254,36 @@
       return "";
     }
     return String(text).replace(/[\\s·•・/()（）.,:]/g, "");
+  }
+
+  function fillList(base, extras, minCount) {
+    const result = Array.isArray(base) ? [...base] : [];
+    const pool = Array.isArray(extras) ? extras : [];
+    for (const item of pool) {
+      if (result.length >= minCount) {
+        break;
+      }
+      if (item && !result.includes(item)) {
+        result.push(item);
+      }
+    }
+    return result;
+  }
+
+  function enhanceDetail(detail, category) {
+    if (!detail) {
+      return detail;
+    }
+    const defaults = category ? CATEGORY_DEFAULTS[category.id] : null;
+    if (!defaults) {
+      return detail;
+    }
+    return {
+      ...detail,
+      features: fillList(detail.features, defaults.features, 3),
+      pros: fillList(detail.pros, defaults.pros, 2),
+      cons: fillList(detail.cons, defaults.cons, 2)
+    };
   }
 
   function resolveCategory(detail, fallbackText, fallbackType) {
@@ -356,8 +423,9 @@
       <div class="nearby-list">
         ${nearby
           .map((item) => {
-            const detail = getPlaceDetails(item.mapQuery) || item;
-            const category = resolveCategory(detail, item.name, item.type);
+            const rawDetail = getPlaceDetails(item.mapQuery) || item;
+            const category = resolveCategory(rawDetail, item.name, item.type);
+            const detail = enhanceDetail(rawDetail, category);
             const tags = buildHashtags(detail, category);
             const locationLines = [
               detail.building || item.building
@@ -400,8 +468,9 @@
     if (!mapQuery) {
       return "";
     }
-    const detail = getPlaceDetails(mapQuery) || {};
-    const category = resolveCategory(detail, title || mapQuery, detail.type);
+    const rawDetail = getPlaceDetails(mapQuery) || {};
+    const category = resolveCategory(rawDetail, title || mapQuery, rawDetail.type);
+    const detail = enhanceDetail(rawDetail, category);
     const tags = buildHashtags(detail, category);
     const summary = detail.summary
       ? detail.summary
@@ -1187,13 +1256,14 @@
           ${group.options
             .map((option) => {
               const checked = selectedIds.includes(option.id);
-              const detail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+              const rawDetail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+              const category = resolveCategory(rawDetail, option.label, rawDetail?.type);
+              const detail = enhanceDetail(rawDetail, category);
               const ratingLine = detail
                 ? `<span class="option-rating">평점: ${formatRating(detail)}</span>`
                 : "";
               const location = option.where || buildLocationSummary(detail);
               const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
-              const category = resolveCategory(detail, option.label, detail?.type);
               const tags = buildHashtags(detail, category);
               const tagRow = renderTagRow(category, tags);
               return `
@@ -1237,13 +1307,14 @@
         ${group.options
           .map((option) => {
             const checked = selectedIds.includes(option.id);
-            const detail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+            const rawDetail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+            const category = resolveCategory(rawDetail, option.label, rawDetail?.type);
+            const detail = enhanceDetail(rawDetail, category);
             const ratingLine = detail
               ? `<span class="option-rating">평점: ${formatRating(detail)}</span>`
               : "";
             const location = option.where || buildLocationSummary(detail);
             const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
-            const category = resolveCategory(detail, option.label, detail?.type);
             const tags = buildHashtags(detail, category);
             const tagRow = renderTagRow(category, tags);
             const placeInfo = option.mapQuery
@@ -1594,8 +1665,9 @@
                 ${list
                   .map(
                     (item) => {
-                      const detail = getPlaceDetails(item.query) || {};
-                      const category = resolveCategory(detail, item.title, detail?.type);
+                      const rawDetail = getPlaceDetails(item.query) || {};
+                      const category = resolveCategory(rawDetail, item.title, rawDetail?.type);
+                      const detail = enhanceDetail(rawDetail, category);
                       const tags = buildHashtags(detail, category);
                       const tagRow = renderTagRow(category, tags);
                       return `
