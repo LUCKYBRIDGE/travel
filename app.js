@@ -2639,6 +2639,68 @@
       .catch(() => showToast("복사 실패"));
   });
 
+  function setupNavHighlight() {
+    const navLinks = Array.from(document.querySelectorAll(".tabs a[href^=\"#\"]"));
+    const navSummaries = Array.from(document.querySelectorAll(".tabs summary"));
+    const sectionsList = navLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const setActive = (activeId) => {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      navSummaries.forEach((summary) => summary.classList.remove("active"));
+      if (!activeId) {
+        return;
+      }
+      const activeLink = navLinks.find(
+        (link) => link.getAttribute("href") === `#${activeId}`
+      );
+      if (activeLink) {
+        activeLink.classList.add("active");
+        const group = activeLink.closest(".tab-group");
+        if (group) {
+          group.open = true;
+          const summary = group.querySelector("summary");
+          if (summary) {
+            summary.classList.add("active");
+          }
+        }
+      }
+    };
+
+    const updateActive = () => {
+      if (!sectionsList.length) {
+        return;
+      }
+      const offset = 140;
+      let activeId = sectionsList[0]?.id || "";
+      sectionsList.forEach((section) => {
+        const top = section.getBoundingClientRect().top;
+        if (top - offset <= 0) {
+          activeId = section.id;
+        }
+      });
+      setActive(activeId);
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateActive);
+    window.addEventListener("hashchange", updateActive);
+    updateActive();
+  }
+
   const tabGroups = Array.from(document.querySelectorAll(".tab-group"));
   tabGroups.forEach((group) => {
     group.addEventListener("toggle", () => {
@@ -2659,6 +2721,7 @@
     });
   }
 
+  setupNavHighlight();
   render();
   loadRatingsData();
 })();
