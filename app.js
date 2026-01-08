@@ -1864,7 +1864,7 @@
     return points;
   }
 
-  function buildDirectionsLink(points, mode = "transit") {
+  function buildDirectionsLinkFromPoints(points, mode = "transit") {
     if (!points || points.length < 2) {
       return "";
     }
@@ -2029,7 +2029,7 @@
           const routePoints = collectDayRoutePoints(entry.day);
           const maxPoints = 10;
           const usedPoints = routePoints.slice(0, maxPoints);
-          const routeUrl = buildDirectionsLink(usedPoints, "transit");
+          const routeUrl = buildDirectionsLinkFromPoints(usedPoints, "transit");
           const routeNote = routeUrl
             ? `선택된 일정 기준 ${usedPoints.length}곳 연결${routePoints.length > maxPoints ? " (최대 10곳 표시)" : ""}`
             : "장소 2곳 이상 선택 시 동선 지도가 생성됩니다.";
