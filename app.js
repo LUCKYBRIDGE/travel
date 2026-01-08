@@ -5,6 +5,9 @@
     day1: document.getElementById("day1"),
     day2: document.getElementById("day2"),
     day3: document.getElementById("day3"),
+    confirmedDay1: document.getElementById("confirmed-day1"),
+    confirmedDay2: document.getElementById("confirmed-day2"),
+    confirmedDay3: document.getElementById("confirmed-day3"),
     map: document.getElementById("map"),
     budget: document.getElementById("budget"),
     checklist: document.getElementById("checklist")
@@ -20,6 +23,7 @@
     routes: "travel:routes",
     ratings: "travel:ratings",
     ratingsMeta: "travel:ratings-meta",
+    mapFilters: "travel:map-filters",
     syncCode: "travel:sync-code",
     syncMeta: "travel:sync-meta"
   };
@@ -33,6 +37,7 @@
     routes: loadStorage(STORAGE.routes, {}),
     ratings: loadStorage(STORAGE.ratings, {}),
     ratingsMeta: loadStorage(STORAGE.ratingsMeta, {}),
+    mapFilters: loadStorage(STORAGE.mapFilters, {}),
     syncCode: loadStorage(STORAGE.syncCode, ""),
     syncMeta: loadStorage(STORAGE.syncMeta, {})
   };
@@ -224,6 +229,11 @@
       tips: ["체크인 전 짐 보관 확인", "조식 시간 피크 피하기"]
     }
   };
+  const DEFAULT_MAP_FILTERS = {
+    showOptions: false,
+    showNearby: false,
+    categories: []
+  };
 
   function getPlaceDetails(mapQuery) {
     if (!mapQuery) {
@@ -367,6 +377,29 @@
 
   function isPlainObject(value) {
     return value && typeof value === "object" && !Array.isArray(value);
+  }
+
+  function normalizeMapFilters(raw) {
+    const base = isPlainObject(raw) ? raw : {};
+    const categories = Array.isArray(base.categories)
+      ? base.categories.filter((id) => CATEGORY_DEFS.some((category) => category.id === id))
+      : [];
+    return {
+      showOptions: Boolean(base.showOptions),
+      showNearby: Boolean(base.showNearby),
+      categories
+    };
+  }
+
+  function getMapFilters() {
+    return normalizeMapFilters(state.mapFilters || DEFAULT_MAP_FILTERS);
+  }
+
+  function setMapFilters(next) {
+    const normalized = normalizeMapFilters(next);
+    state.mapFilters = normalized;
+    saveStorage(STORAGE.mapFilters, normalized);
+    return normalized;
   }
 
   function renderDetailLine(label, items, fallback) {
@@ -1416,15 +1449,18 @@
     }
     const min = cost.min ?? cost.amount ?? 0;
     const max = cost.max ?? cost.amount ?? min;
-    const formattedMin = min.toLocaleString("ja-JP");
-    const formattedMax = max.toLocaleString("ja-JP");
+    const divisor = cost.unit && cost.unit !== "per_person" ? data.travelers.count : 1;
+    const perMin = Math.round(min / divisor);
+    const perMax = Math.round(max / divisor);
+    const formattedMin = perMin.toLocaleString("ja-JP");
+    const formattedMax = perMax.toLocaleString("ja-JP");
     if (min === 0 && max === 0) {
-      return "무료";
+      return "1인당 무료";
     }
-    if (min === max) {
-      return `${formattedMin}엔`;
+    if (perMin === perMax) {
+      return `1인당 ${formattedMin}엔`;
     }
-    return `${formattedMin}~${formattedMax}엔`;
+    return `1인당 ${formattedMin}~${formattedMax}엔`;
   }
 
   function renderCosts(costs) {
@@ -1433,7 +1469,7 @@
     }
     return `
       <div class="block-row">
-        <span class="label">예상 비용</span>
+        <span class="label">예상 비용 (1인당)</span>
         <span>
           ${costs
             .map((cost) => `${cost.label}: ${formatCost(cost)}`)
@@ -1457,7 +1493,9 @@
       if (showNearby && context.nearbySet) {
         context.nearbySet.add(key);
       }
-      const nearbyCategories = getBlockCategoryIds(block);
+      const nearbyCategories = Array.isArray(block.nearbyCategories)
+        ? block.nearbyCategories
+        : getBlockCategoryIds(block);
       placeInfo = renderPlaceCard(block.location.mapQuery, block.location.name, {
         showNearby,
         nearbyCategories
@@ -1554,6 +1592,106 @@
     `;
   }
 
+  function renderConfirmedBlock(block, index) {
+    const timeLabel = block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "-";
+    const locationDetail = block.location?.mapQuery ? getPlaceDetails(block.location.mapQuery) : null;
+    const locationSummary = buildLocationSummary(locationDetail);
+    const locationParts = [block.location?.name, locationSummary].filter(Boolean);
+    const locationLinks = block.location?.mapQuery
+      ? renderLinks(locationDetail || {}, block.location.mapQuery)
+      : "";
+    const selectedWheres = [];
+    const selectionLines = [];
+    const selectionDetails = [];
+    (block.choices || []).forEach((group) => {
+      const selection = getChoiceSelection(block.id, group);
+      const selectedIds = group.mode === "multi" ? selection : [selection];
+      const selectedOptions = group.options.filter((option) => selectedIds.includes(option.id));
+      const selectedLabels = selectedOptions.map((option) => {
+        if (option.where) {
+          selectedWheres.push(option.where);
+        }
+        return option.label;
+      });
+      if (selectedLabels.length) {
+        selectionLines.push(
+          `<div class="block-row"><span class="label">${group.title}</span><span>${selectedLabels.join(", ")}</span></div>`
+        );
+      }
+      selectedOptions.forEach((option) => {
+        const info = [];
+        if (option.menu) {
+          info.push(`메뉴: ${option.menu}`);
+        }
+        if (option.note) {
+          info.push(`포인트: ${option.note}`);
+        }
+        if (option.desc) {
+          info.push(`이용 팁: ${option.desc}`);
+        }
+        if (option.where) {
+          info.push(`위치: ${option.where}`);
+        }
+        const optionDetail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+        const optionLinks = option.mapQuery ? renderLinks(optionDetail || {}, option.mapQuery) : "";
+        if (!info.length) {
+          return;
+        }
+        selectionDetails.push(`
+          <div class="confirmed-option">
+            <strong>${option.label}</strong>
+            ${info.map((item) => `<div class="muted">${item}</div>`).join("")}
+            ${optionLinks}
+          </div>
+        `);
+      });
+    });
+    const selectionLineHtml = selectionLines.join("");
+    const selectionDetailHtml = selectionDetails.length
+      ? `<div class="confirmed-options">${selectionDetails.join("")}</div>`
+      : "";
+    const fallbackWhere = locationParts.length ? "" : selectedWheres.filter(Boolean).join(" · ");
+    const locationLine = locationParts.length
+      ? `<div class="block-row"><span class="label">장소</span><span>${locationParts.join(" · ")}</span></div>`
+      : fallbackWhere
+      ? `<div class="block-row"><span class="label">장소</span><span>${fallbackWhere}</span></div>`
+      : "";
+    const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
+    return `
+      <div class="block" style="--delay: ${index * 0.05}s">
+        <div class="block-time">${timeLabel}</div>
+        <div class="block-body">
+          <div class="block-title">
+            <h4>${block.title}</h4>
+            ${block.variant ? `<span>${block.variant}</span>` : ""}
+          </div>
+          ${block.summary ? `<div class="block-summary">${block.summary}</div>` : ""}
+          ${locationLine}
+          ${locationLinks}
+          ${selectionLineHtml}
+          ${selectionDetailHtml}
+          ${details}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderConfirmedDay(day, section) {
+    const blocks = buildDayBlocks(day);
+    const timeline = blocks.map((block, index) => renderConfirmedBlock(block, index)).join("");
+    section.innerHTML = `
+      <div class="section-head">
+        <div>
+          <h2>${day.label} · 확정 코스</h2>
+          <p class="section-sub">${day.title} · 선택된 옵션 반영</p>
+        </div>
+      </div>
+      <div class="timeline">
+        ${timeline}
+      </div>
+    `;
+  }
+
   function collectMapItems() {
     const items = new Map();
 
@@ -1563,6 +1701,11 @@
         if (block.location && block.location.mapQuery) {
           const key = block.location.mapQuery.toLowerCase();
           const detail = getPlaceDetails(block.location.mapQuery);
+          const category = resolveCategory(
+            detail,
+            block.location.name || block.title,
+            detail?.type
+          );
           const summary = detail?.summary
             ? detail.summary
             : detail?.features?.length
@@ -1574,6 +1717,8 @@
             query: block.location.mapQuery,
             note: block.title,
             optional: false,
+            source: "plan",
+            categoryId: category?.id || "",
             rating: formatRating(detail),
             summary,
             popularity: detail?.popularity || "",
@@ -1590,6 +1735,11 @@
               const nearbyKey = nearby.mapQuery.toLowerCase();
               if (!items.has(nearbyKey)) {
                 const nearbyDetail = getPlaceDetails(nearby.mapQuery) || nearby;
+                const nearbyCategory = resolveCategory(
+                  nearbyDetail,
+                  nearby.name,
+                  nearbyDetail?.type
+                );
                 const nearbySummary =
                   nearbyDetail?.summary ||
                   (nearbyDetail?.features?.length
@@ -1601,6 +1751,8 @@
                   query: nearby.mapQuery,
                   note: `근처 추천 · ${block.title}`,
                   optional: true,
+                  source: "nearby",
+                  categoryId: nearbyCategory?.id || "",
                   rating: formatRating(nearbyDetail),
                   summary: nearbySummary,
                   popularity: nearbyDetail?.popularity || "",
@@ -1624,6 +1776,7 @@
             const isSelected = selectedIds.includes(option.id);
             const existing = items.get(key);
             const detail = getPlaceDetails(option.mapQuery);
+            const category = resolveCategory(detail, option.label, detail?.type);
             const summary = detail?.summary
               ? detail.summary
               : detail?.features?.length
@@ -1636,6 +1789,8 @@
                 query: option.mapQuery,
                 note: block.title,
                 optional: !isSelected,
+                source: "option",
+                categoryId: category?.id || "",
                 rating: formatRating(detail),
                 summary,
                 popularity: detail?.popularity || "",
@@ -1653,9 +1808,83 @@
     return Array.from(items.values());
   }
 
+  function applyMapFilters(items, filters) {
+    const activeCategories =
+      filters.categories && filters.categories.length ? new Set(filters.categories) : null;
+    return items.filter((item) => {
+      if (item.optional) {
+        if (item.source === "nearby" && !filters.showNearby) {
+          return false;
+        }
+        if (item.source === "option" && !filters.showOptions) {
+          return false;
+        }
+      }
+      if (activeCategories) {
+        if (!item.categoryId || !activeCategories.has(item.categoryId)) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  function collectDayRoutePoints(day) {
+    const blocks = buildDayBlocks(day);
+    const points = [];
+    const seen = new Set();
+    const pushPoint = (query, label) => {
+      if (!query) {
+        return;
+      }
+      const key = query.trim().toLowerCase();
+      if (seen.has(key)) {
+        return;
+      }
+      seen.add(key);
+      points.push({ query, label: label || query });
+    };
+    blocks.forEach((block) => {
+      const choiceQueries = [];
+      (block.choices || []).forEach((group) => {
+        const selection = getChoiceSelection(block.id, group);
+        const selectedIds = group.mode === "multi" ? selection : [selection];
+        group.options.forEach((option) => {
+          if (selectedIds.includes(option.id) && option.mapQuery) {
+            choiceQueries.push({ query: option.mapQuery, label: option.label });
+          }
+        });
+      });
+      if (choiceQueries.length) {
+        choiceQueries.forEach((choice) => pushPoint(choice.query, choice.label));
+      } else if (block.location?.mapQuery) {
+        pushPoint(block.location.mapQuery, block.location.name || block.title);
+      }
+    });
+    return points;
+  }
+
+  function buildDirectionsLink(points, mode = "transit") {
+    if (!points || points.length < 2) {
+      return "";
+    }
+    const origin = encodeURIComponent(points[0].query);
+    const destination = encodeURIComponent(points[points.length - 1].query);
+    const waypoints = points
+      .slice(1, -1)
+      .map((point) => point.query)
+      .join("|");
+    const base = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+    const waypointParam = waypoints ? `&waypoints=${encodeURIComponent(waypoints)}` : "";
+    const modeParam = mode ? `&travelmode=${encodeURIComponent(mode)}` : "";
+    return `${base}${waypointParam}${modeParam}`;
+  }
+
   function renderMap() {
     const items = collectMapItems();
-    const grouped = items.reduce((acc, item) => {
+    const filters = getMapFilters();
+    const filteredItems = applyMapFilters(items, filters);
+    const grouped = filteredItems.reduce((acc, item) => {
       if (!acc[item.day]) {
         acc[item.day] = [];
       }
@@ -1693,6 +1922,26 @@
       }
     ];
 
+    const categoryButtons = CATEGORY_DEFS.map((category) => {
+      const isActive = filters.categories.length
+        ? filters.categories.includes(category.id)
+        : false;
+      return `
+        <button
+          type="button"
+          class="filter-chip ${isActive ? "active" : ""}"
+          data-map-category="${category.id}"
+          aria-pressed="${isActive ? "true" : "false"}"
+        >
+          ${category.label}
+        </button>
+      `;
+    }).join("");
+    const dayEntries = data.days.map((day) => ({
+      day,
+      list: grouped[day.label] || []
+    }));
+
     sections.map.innerHTML = `
       <div class="section-head">
         <div>
@@ -1725,6 +1974,42 @@
             .join("")}
         </div>
       </div>
+      <div class="card map-filters">
+        <h3>장소 필터</h3>
+        <p class="muted">기본은 현재 일정만 표시합니다. 필요한 경우 선택지/주변 장소를 켜세요.</p>
+        <div class="filter-group">
+          <span class="filter-label">추가 항목</span>
+          <button
+            type="button"
+            class="filter-chip ${filters.showOptions ? "active" : ""}"
+            data-map-filter="options"
+            aria-pressed="${filters.showOptions ? "true" : "false"}"
+          >
+            선택지
+          </button>
+          <button
+            type="button"
+            class="filter-chip ${filters.showNearby ? "active" : ""}"
+            data-map-filter="nearby"
+            aria-pressed="${filters.showNearby ? "true" : "false"}"
+          >
+            주변 장소
+          </button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">카테고리</span>
+          <button
+            type="button"
+            class="filter-chip ${filters.categories.length ? "" : "active"}"
+            data-map-category="all"
+            aria-pressed="${filters.categories.length ? "false" : "true"}"
+          >
+            전체
+          </button>
+          ${categoryButtons}
+        </div>
+        <div class="filter-meta muted">표시: ${filteredItems.length}곳</div>
+      </div>
       ${
         canManualRatings()
           ? `
@@ -1739,49 +2024,68 @@
           `
           : ""
       }
-      ${Object.entries(grouped)
-        .map(
-          ([day, list], index) => `
+      ${dayEntries
+        .map((entry, index) => {
+          const routePoints = collectDayRoutePoints(entry.day);
+          const maxPoints = 10;
+          const usedPoints = routePoints.slice(0, maxPoints);
+          const routeUrl = buildDirectionsLink(usedPoints, "transit");
+          const routeNote = routeUrl
+            ? `선택된 일정 기준 ${usedPoints.length}곳 연결${routePoints.length > maxPoints ? " (최대 10곳 표시)" : ""}`
+            : "장소 2곳 이상 선택 시 동선 지도가 생성됩니다.";
+          return `
             <div class="card" style="--delay: ${index * 0.05}s">
-              <h3>${day}</h3>
+              <div class="map-day-header">
+                <div>
+                  <h3>${entry.day.label}</h3>
+                  <div class="muted">${routeNote}</div>
+                </div>
+                ${
+                  routeUrl
+                    ? `<a class="map-route" href="${routeUrl}" target="_blank" rel="noreferrer">동선 지도 보기</a>`
+                    : `<span class="muted">동선 지도 준비 중</span>`
+                }
+              </div>
               <div class="map-list">
-                ${list
-                  .map(
-                    (item) => {
-                      const rawDetail = getPlaceDetails(item.query) || {};
-                      const category = resolveCategory(rawDetail, item.title, rawDetail?.type);
-                      const detail = enhanceDetail(rawDetail, category);
-                      const tags = buildHashtags(detail, category);
-                      const tagRow = renderTagRow(category, tags);
-                      return `
-                        <div class="map-item">
-                          <div>
-                            <strong>${item.title}</strong>
-                            ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
-                            <div class="muted">${item.note}</div>
-                            <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
-                            ${detail.placeName ? `<div class="muted">지도 표기: ${detail.placeName}</div>` : ""}
-                            ${tagRow}
-                            ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
-                            ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
-                            ${item.ratingUpdatedAt ? `<div class="muted">업데이트: ${formatDate(item.ratingUpdatedAt)}</div>` : ""}
-                            ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
-                          </div>
-                          <div class="map-actions">
-                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
-                            <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
-                            ${canManualRatings() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
-                            <button type="button" data-copy="${item.query}">검색어 복사</button>
-                          </div>
-                        </div>
-                      `;
-                    }
-                  )
-                  .join("")}
+                ${
+                  entry.list.length
+                    ? entry.list
+                        .map((item) => {
+                          const rawDetail = getPlaceDetails(item.query) || {};
+                          const category = resolveCategory(rawDetail, item.title, rawDetail?.type);
+                          const detail = enhanceDetail(rawDetail, category);
+                          const tags = buildHashtags(detail, category);
+                          const tagRow = renderTagRow(category, tags);
+                          return `
+                            <div class="map-item">
+                              <div>
+                                <strong>${item.title}</strong>
+                                ${item.optional ? `<span class="tag neutral">선택지</span>` : ""}
+                                <div class="muted">${item.note}</div>
+                                <div class="muted">평점: ${item.rating || "평점 입력 필요"}</div>
+                                ${detail.placeName ? `<div class="muted">지도 표기: ${detail.placeName}</div>` : ""}
+                                ${tagRow}
+                                ${buildLocationText(item) ? `<div class="muted">위치: ${buildLocationText(item)}</div>` : ""}
+                                ${item.popularity ? `<div class="muted">관광객: ${item.popularity}</div>` : ""}
+                                ${item.ratingUpdatedAt ? `<div class="muted">업데이트: ${formatDate(item.ratingUpdatedAt)}</div>` : ""}
+                                ${item.summary ? `<div class="muted">${item.summary}</div>` : ""}
+                              </div>
+                              <div class="map-actions">
+                                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.query)}" target="_blank" rel="noreferrer">지도 열기</a>
+                                <a href="https://www.google.com/search?q=${encodeURIComponent(`${item.query} 공식 사이트`)}" target="_blank" rel="noreferrer">공식 사이트 검색</a>
+                                ${canManualRatings() ? `<button type="button" data-rating-update="${item.query}">평점 업데이트</button>` : ""}
+                                <button type="button" data-copy="${item.query}">검색어 복사</button>
+                              </div>
+                            </div>
+                          `;
+                        })
+                        .join("")
+                    : `<div class="muted">필터 조건에 맞는 장소가 없습니다.</div>`
+                }
               </div>
             </div>
-          `
-        )
+          `;
+        })
         .join("")}
     `;
   }
@@ -1830,9 +2134,9 @@
       if (!normalized) {
         return;
       }
-      const multiplier = normalized.unit === "per_person" ? data.travelers.count : 1;
-      const min = normalized.min * multiplier;
-      const max = normalized.max * multiplier;
+      const divisor = normalized.unit && normalized.unit !== "per_person" ? data.travelers.count : 1;
+      const min = Math.round(normalized.min / divisor);
+      const max = Math.round(normalized.max / divisor);
       summary.total.min += min;
       summary.total.max += max;
       if (normalized.payment === "cash") {
@@ -1857,9 +2161,9 @@
     const formattedMin = min.toLocaleString("ja-JP");
     const formattedMax = max.toLocaleString("ja-JP");
     if (min === max) {
-      return `${formattedMin}엔`;
+      return `1인당 ${formattedMin}엔`;
     }
-    return `${formattedMin}~${formattedMax}엔`;
+    return `1인당 ${formattedMin}~${formattedMax}엔`;
   }
 
   function renderBudget() {
@@ -1869,7 +2173,7 @@
     sections.budget.innerHTML = `
       <div class="section-head">
         <div>
-          <h2>예산 요약 (5인 기준)</h2>
+          <h2>예산 요약 (1인 기준)</h2>
           <p class="section-sub">선택된 옵션/식당 기준 예상 범위입니다.</p>
         </div>
       </div>
@@ -1943,7 +2247,14 @@
                             data-checklist="${item.id}"
                             ${state.checklist[item.id] ? "checked" : ""}
                           />
-                          <span>${item.label}</span>
+                          <span class="checklist-text">
+                            <span class="checklist-label">${item.label}</span>
+                            ${
+                              item.time || item.place
+                                ? `<span class="checklist-meta">${[item.time, item.place].filter(Boolean).join(" · ")}</span>`
+                                : ""
+                            }
+                          </span>
                         </label>
                       `
                     )
@@ -1962,6 +2273,15 @@
     renderDay(data.days[0], sections.day1);
     renderDay(data.days[1], sections.day2);
     renderDay(data.days[2], sections.day3);
+    if (sections.confirmedDay1) {
+      renderConfirmedDay(data.days[0], sections.confirmedDay1);
+    }
+    if (sections.confirmedDay2) {
+      renderConfirmedDay(data.days[1], sections.confirmedDay2);
+    }
+    if (sections.confirmedDay3) {
+      renderConfirmedDay(data.days[2], sections.confirmedDay3);
+    }
     renderMap();
     renderBudget();
     renderChecklist();
@@ -2025,6 +2345,38 @@
   });
 
   document.addEventListener("click", (event) => {
+    const mapFilterButton = event.target.closest("[data-map-filter]");
+    if (mapFilterButton) {
+      const filterId = mapFilterButton.dataset.mapFilter;
+      const filters = getMapFilters();
+      if (filterId === "options") {
+        setMapFilters({ ...filters, showOptions: !filters.showOptions });
+      } else if (filterId === "nearby") {
+        setMapFilters({ ...filters, showNearby: !filters.showNearby });
+      }
+      renderMap();
+      return;
+    }
+
+    const mapCategoryButton = event.target.closest("[data-map-category]");
+    if (mapCategoryButton) {
+      const categoryId = mapCategoryButton.dataset.mapCategory;
+      const filters = getMapFilters();
+      if (categoryId === "all") {
+        setMapFilters({ ...filters, categories: [] });
+      } else {
+        const next = new Set(filters.categories);
+        if (next.has(categoryId)) {
+          next.delete(categoryId);
+        } else {
+          next.add(categoryId);
+        }
+        setMapFilters({ ...filters, categories: Array.from(next) });
+      }
+      renderMap();
+      return;
+    }
+
     const syncCreate = event.target.closest("[data-sync-create]");
     if (syncCreate) {
       if (!getSyncApiBase()) {
@@ -2285,6 +2637,20 @@
       .writeText(text)
       .then(() => showToast("검색어 복사 완료"))
       .catch(() => showToast("복사 실패"));
+  });
+
+  const tabGroups = Array.from(document.querySelectorAll(".tab-group"));
+  tabGroups.forEach((group) => {
+    group.addEventListener("toggle", () => {
+      if (!group.open) {
+        return;
+      }
+      tabGroups.forEach((other) => {
+        if (other !== group) {
+          other.open = false;
+        }
+      });
+    });
   });
 
   if ("serviceWorker" in navigator) {

@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-9",
+    version: "2026-01-06-13",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-9",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-13",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -188,6 +188,7 @@ window.TRIP_DATA = {
             name: "간사이 공항 T1 (KIX T1)",
             mapQuery: "Kansai International Airport Terminal 1"
           },
+          nearbyCategories: ["transport"],
           tags: ["공항", "현금필수", "교통"],
           costs: [
             {
@@ -528,8 +529,8 @@ window.TRIP_DATA = {
                   summary: "아울렛 내 아식스 매장을 집중 방문합니다.",
                   details: ["린쿠 아울렛 아식스 팩토리"],
                   location: {
-                    name: "아식스 아울렛 (ASICS Rinku Premium Outlets)",
-                    mapQuery: "ASICS Rinku Premium Outlets"
+                    name: "아식스 팩토리 아울렛 (린쿠)",
+                    mapQuery: "アシックスファクトリーアウトレット りんくう"
                   },
                   tags: ["쇼핑"]
                 },
@@ -1418,16 +1419,16 @@ window.TRIP_DATA = {
     }
   ],
   checklist: [
-    { "id": "c1", "label": "현금 인출 완료", "day": "day1", "category": "공항" },
-    { "id": "c2", "label": "ICOCA 발급 및 충전", "day": "day1", "category": "공항" },
-    { "id": "c3", "label": "하루카 티켓 수령", "day": "day1", "category": "공항" },
-    { "id": "c4", "label": "호텔 체크인", "day": "day1", "category": "숙소" },
-    { "id": "c5", "label": "2일차 1일권 구매", "day": "day2", "category": "교통" },
-    { "id": "c6", "label": "현금 5,000엔 이상 확보", "day": "day2", "category": "현금" },
-    { "id": "c7", "label": "동양정 대기번호표 확인", "day": "day2", "category": "식사" },
-    { "id": "c8", "label": "짐 보관 완료", "day": "day3", "category": "숙소" },
-    { "id": "c9", "label": "16:00 짐 수령", "day": "day3", "category": "숙소" },
-    { "id": "c10", "label": "하루카 43호 탑승", "day": "day3", "category": "교통" }
+    { "id": "c1", "label": "현금 인출 완료", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "KIX T1 1F/2F ATM 존" },
+    { "id": "c2", "label": "ICOCA 발급 및 충전", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "간사이 공항역 JR 발매기" },
+    { "id": "c3", "label": "하루카 티켓 수령", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "공항역 무인 발권기" },
+    { "id": "c4", "label": "호텔 체크인", "day": "day1", "category": "숙소", "time": "17:04~17:20", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c5", "label": "2일차 1일권 구매", "day": "day2", "category": "교통", "time": "09:00~09:30", "place": "교토역 지하철 매표기" },
+    { "id": "c6", "label": "현금 5,000엔 이상 확보", "day": "day2", "category": "현금", "time": "09:00~09:30", "place": "교토역 주변 ATM" },
+    { "id": "c7", "label": "동양정 대기번호표 확인", "day": "day2", "category": "식사", "time": "18:30~19:00", "place": "동양정 키타야마 본점" },
+    { "id": "c8", "label": "짐 보관 완료", "day": "day3", "category": "숙소", "time": "09:30", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c9", "label": "16:00 짐 수령", "day": "day3", "category": "숙소", "time": "16:00", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c10", "label": "하루카 43호 탑승", "day": "day3", "category": "교통", "time": "16:30", "place": "교토역 30번 승강장" }
   ],
   globalTips: [
     "교통카드 충전과 사찰 입장료는 현금 필수",
@@ -1560,7 +1561,10 @@ window.TRIP_DATA = {
       features: ["대형 아울렛", "야외 쇼핑 동선", "식사/카페 선택지"],
       pros: ["브랜드 다양", "할인율 높음"],
       cons: ["바람/추위 영향", "식사 대기 발생"],
-      tips: ["우선순위 매장 먼저 방문", "바람 대비 외투 준비"],
+      tips: ["우선순위 매장 먼저 방문", "바람 대비 외투 준비", "(공식 사이트) 매장 찾기/안내도 참고"],
+      links: [
+        { label: "린쿠 아울렛 공식 사이트", url: "https://www.premiumoutlets.co.jp/rinku/" }
+      ],
       nearby: [
         {
           name: "린쿠 마블 비치 (Rinku Marble Beach)",
@@ -1965,16 +1969,24 @@ window.TRIP_DATA = {
       cons: ["식사 시간 대기", "혼잡 가능"],
       tips: ["피크 전후로 이동", "대기 줄 짧은 매장부터 확인"]
     },
-    "asics rinku premium outlets": {
+    "アシックスファクトリーアウトレット りんくう": {
       rating: null,
       ratingSource: "Google",
-      summary: "린쿠 아울렛 내 아식스 매장으로 이월 모델을 할인된 가격에 구매하기 좋습니다.",
+      summary:
+        "린쿠 아울렛 내 아식스 팩토리 아울렛으로 이월 모델을 할인된 가격에 구매하기 좋습니다. (공식 표기: アシックスファクトリーアウトレット りんくう)",
       building: "린쿠 프리미엄 아울렛",
+      area: "3-28 Rinkuoraiminami, Izumisano",
       tags: ["아울렛", "러닝화", "세일"],
       features: ["아울렛 이월 모델", "러닝화/트레이닝 중심", "사이즈 비교 가능"],
       pros: ["할인 폭 큼", "인기 모델 득템"],
       cons: ["사이즈 품절 가능", "재고 편차"],
-      tips: ["필요 사이즈/모델 메모", "입점 위치 먼저 확인"]
+      tips: [
+        "필요 사이즈/모델 메모",
+        "(공식 사이트) 매장 찾기에서 ASICS 검색 후 안내도 확인"
+      ],
+      links: [
+        { label: "린쿠 아울렛 공식 사이트", url: "https://www.premiumoutlets.co.jp/rinku/" }
+      ]
     },
     "rinku coffee": {
       rating: null,

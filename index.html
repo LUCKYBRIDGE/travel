@@ -41,9 +41,22 @@
 
   <nav class="tabs" aria-label="Section navigation">
     <a href="#overview">개요</a>
-    <a href="#day1">1일차</a>
-    <a href="#day2">2일차</a>
-    <a href="#day3">3일차</a>
+    <details class="tab-group" open>
+      <summary>탐색</summary>
+      <div class="tab-sub">
+        <a href="#day1">1일차</a>
+        <a href="#day2">2일차</a>
+        <a href="#day3">3일차</a>
+      </div>
+    </details>
+    <details class="tab-group">
+      <summary>코스확정</summary>
+      <div class="tab-sub">
+        <a href="#confirmed-day1">1일차</a>
+        <a href="#confirmed-day2">2일차</a>
+        <a href="#confirmed-day3">3일차</a>
+      </div>
+    </details>
     <a href="#map">지도</a>
     <a href="#budget">예산</a>
     <a href="#checklist">체크리스트</a>
@@ -54,6 +67,9 @@
     <section id="day1" class="section day-section"></section>
     <section id="day2" class="section day-section"></section>
     <section id="day3" class="section day-section"></section>
+    <section id="confirmed-day1" class="section day-section"></section>
+    <section id="confirmed-day2" class="section day-section"></section>
+    <section id="confirmed-day3" class="section day-section"></section>
     <section id="map" class="section"></section>
     <section id="budget" class="section"></section>
     <section id="checklist" class="section"></section>
