@@ -2786,6 +2786,7 @@
 
   function setupCompactToggle() {
     const toggleButton = document.querySelector("[data-compact-toggle]");
+    const badge = document.getElementById("viewModeBadge");
     if (!toggleButton) {
       return;
     }
@@ -2793,6 +2794,9 @@
       document.body.classList.toggle("compact-view", compact);
       toggleButton.textContent = compact ? "자세히 보기" : "간략 보기";
       toggleButton.setAttribute("aria-pressed", compact ? "true" : "false");
+      if (badge) {
+        badge.textContent = compact ? "모드: 간략" : "모드: 자세히";
+      }
     };
     apply(Boolean(state.compactView));
     toggleButton.addEventListener("click", () => {
