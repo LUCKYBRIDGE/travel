@@ -157,7 +157,8 @@ a {
 }
 
 .tabs a,
-.tabs summary {
+.tabs summary,
+.tabs .tab-toggle {
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.9rem;
@@ -169,7 +170,8 @@ a {
 }
 
 .tabs a:hover,
-.tabs summary:hover {
+.tabs summary:hover,
+.tabs .tab-toggle:hover {
   border-color: rgba(31, 42, 42, 0.12);
   color: var(--ink);
 }
@@ -179,6 +181,11 @@ a {
   background: rgba(31, 111, 120, 0.14);
   border-color: rgba(31, 111, 120, 0.35);
   color: var(--ink);
+}
+
+.tabs .tab-toggle {
+  background: transparent;
+  cursor: pointer;
 }
 
 .tab-group {
@@ -213,6 +220,60 @@ a {
 .tab-sub a {
   font-size: 0.82rem;
   padding: 4px 10px;
+}
+
+.tab-controls {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tab-current {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(31, 111, 120, 0.12);
+  color: var(--accent-2);
+  border: 1px solid rgba(31, 111, 120, 0.35);
+  white-space: nowrap;
+}
+
+.tabs.collapsed > *:not(.tab-controls) {
+  display: none;
+}
+
+.tabs.collapsed .tab-controls {
+  display: flex;
+}
+
+@media (max-width: 760px) {
+  .tab-controls {
+    flex-basis: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+  }
+
+  body.compact-view .day-summary,
+  body.compact-view .day-section .block-summary,
+  body.compact-view .day-section .block-body ul,
+  body.compact-view .day-section .place-info,
+  body.compact-view .confirmed-options,
+  body.compact-view .route-card .route-options,
+  body.compact-view .route-card .route-online,
+  body.compact-view .section-sub {
+    display: none;
+  }
+
+  body.compact-view .block {
+    padding: 14px 16px;
+  }
+
+  body.compact-view .block-title h4 {
+    font-size: 1rem;
+  }
 }
 
 .section {

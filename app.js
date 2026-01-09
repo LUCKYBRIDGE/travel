@@ -24,6 +24,9 @@
     ratings: "travel:ratings",
     ratingsMeta: "travel:ratings-meta",
     mapFilters: "travel:map-filters",
+    navCollapsed: "travel:nav-collapsed",
+    showAllSections: "travel:show-all-sections",
+    compactView: "travel:compact-view",
     syncCode: "travel:sync-code",
     syncMeta: "travel:sync-meta"
   };
@@ -38,6 +41,9 @@
     ratings: loadStorage(STORAGE.ratings, {}),
     ratingsMeta: loadStorage(STORAGE.ratingsMeta, {}),
     mapFilters: loadStorage(STORAGE.mapFilters, {}),
+    navCollapsed: loadStorage(STORAGE.navCollapsed, false),
+    showAllSections: loadStorage(STORAGE.showAllSections, false),
+    compactView: loadStorage(STORAGE.compactView, false),
     syncCode: loadStorage(STORAGE.syncCode, ""),
     syncMeta: loadStorage(STORAGE.syncMeta, {})
   };
@@ -2639,16 +2645,37 @@
       .catch(() => showToast("복사 실패"));
   });
 
+  let navUpdateActive = null;
+
   function setupNavHighlight() {
     const navLinks = Array.from(document.querySelectorAll(".tabs a[href^=\"#\"]"));
     const navSummaries = Array.from(document.querySelectorAll(".tabs summary"));
+    const currentLabel = document.getElementById("tabCurrent");
     const sectionsList = navLinks
       .map((link) => document.querySelector(link.getAttribute("href")))
       .filter(Boolean);
 
+    const setSectionVisibility = (activeId) => {
+      if (state.showAllSections) {
+        sectionsList.forEach((section) => {
+          section.hidden = false;
+          section.dataset.active = "false";
+        });
+        return;
+      }
+      sectionsList.forEach((section) => {
+        const isActive = section.id === activeId;
+        section.hidden = !isActive;
+        section.dataset.active = isActive ? "true" : "false";
+      });
+    };
+
     const setActive = (activeId) => {
       navLinks.forEach((link) => link.classList.remove("active"));
       navSummaries.forEach((summary) => summary.classList.remove("active"));
+      if (currentLabel) {
+        currentLabel.textContent = "현재 위치: -";
+      }
       if (!activeId) {
         return;
       }
@@ -2665,22 +2692,38 @@
             summary.classList.add("active");
           }
         }
+        if (currentLabel) {
+          const groupLabel = group ? group.querySelector("summary")?.textContent.trim() : "";
+          const linkLabel = activeLink.textContent.trim();
+          const composed = groupLabel ? `${groupLabel} · ${linkLabel}` : linkLabel;
+          currentLabel.textContent = `현재 위치: ${composed}`;
+        }
       }
     };
 
-    const updateActive = () => {
+    const updateActive = (forceScroll = false) => {
       if (!sectionsList.length) {
         return;
       }
-      const offset = 140;
-      let activeId = sectionsList[0]?.id || "";
-      sectionsList.forEach((section) => {
-        const top = section.getBoundingClientRect().top;
-        if (top - offset <= 0) {
-          activeId = section.id;
-        }
-      });
+      const hashId = window.location.hash ? window.location.hash.slice(1) : "";
+      let activeId = "";
+      if (!state.showAllSections && hashId && sectionsList.some((section) => section.id === hashId)) {
+        activeId = hashId;
+      } else {
+        const offset = 140;
+        activeId = sectionsList[0]?.id || "";
+        sectionsList.forEach((section) => {
+          const top = section.getBoundingClientRect().top;
+          if (top - offset <= 0) {
+            activeId = section.id;
+          }
+        });
+      }
       setActive(activeId);
+      setSectionVisibility(activeId);
+      if (!state.showAllSections && forceScroll && activeId) {
+        document.getElementById(activeId)?.scrollIntoView({ block: "start" });
+      }
     };
 
     let ticking = false;
@@ -2697,8 +2740,66 @@
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", updateActive);
-    window.addEventListener("hashchange", updateActive);
+    window.addEventListener("hashchange", () => updateActive(true));
     updateActive();
+    navUpdateActive = updateActive;
+  }
+
+  function setupNavToggle() {
+    const nav = document.querySelector(".tabs");
+    const toggleButton = document.querySelector("[data-nav-toggle]");
+    if (!nav || !toggleButton) {
+      return;
+    }
+    const apply = (collapsed) => {
+      nav.classList.toggle("collapsed", collapsed);
+      toggleButton.textContent = collapsed ? "탭 펼치기" : "탭 접기";
+      toggleButton.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    };
+    apply(Boolean(state.navCollapsed));
+    toggleButton.addEventListener("click", () => {
+      state.navCollapsed = !state.navCollapsed;
+      saveStorage(STORAGE.navCollapsed, state.navCollapsed);
+      apply(state.navCollapsed);
+    });
+  }
+
+  function setupSectionViewToggle() {
+    const toggleButton = document.querySelector("[data-view-toggle]");
+    if (!toggleButton) {
+      return;
+    }
+    const apply = (showAll) => {
+      toggleButton.textContent = showAll ? "현재 탭만 보기" : "페이지 전부 펼치기";
+      toggleButton.setAttribute("aria-pressed", showAll ? "true" : "false");
+      if (navUpdateActive) {
+        navUpdateActive(true);
+      }
+    };
+    apply(Boolean(state.showAllSections));
+    toggleButton.addEventListener("click", () => {
+      state.showAllSections = !state.showAllSections;
+      saveStorage(STORAGE.showAllSections, state.showAllSections);
+      apply(state.showAllSections);
+    });
+  }
+
+  function setupCompactToggle() {
+    const toggleButton = document.querySelector("[data-compact-toggle]");
+    if (!toggleButton) {
+      return;
+    }
+    const apply = (compact) => {
+      document.body.classList.toggle("compact-view", compact);
+      toggleButton.textContent = compact ? "자세히 보기" : "간략 보기";
+      toggleButton.setAttribute("aria-pressed", compact ? "true" : "false");
+    };
+    apply(Boolean(state.compactView));
+    toggleButton.addEventListener("click", () => {
+      state.compactView = !state.compactView;
+      saveStorage(STORAGE.compactView, state.compactView);
+      apply(state.compactView);
+    });
   }
 
   const tabGroups = Array.from(document.querySelectorAll(".tab-group"));
@@ -2721,6 +2822,9 @@
     });
   }
 
+  setupNavToggle();
+  setupSectionViewToggle();
+  setupCompactToggle();
   setupNavHighlight();
   render();
   loadRatingsData();
