@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-06T19:46:47.094Z",
+  "updatedAt": "2026-01-06T21:32:02.165Z",
   "items": {
     "551 horai kansai airport": {
       "query": "551 Horai Kansai Airport",
@@ -21,15 +21,15 @@
       "source": "Google",
       "updatedAt": "2026-01-06T08:25:21.516Z"
     },
-    "asics rinku premium outlets": {
-      "query": "ASICS Rinku Premium Outlets",
+    "アシックスファクトリーアウトレット りんくう": {
+      "query": "アシックスファクトリーアウトレット りんくう",
       "placeId": "ChIJvbKCcvy3AGARpy89-YYHgas",
       "name": "Asics",
       "rating": 3.9,
       "ratingCount": 185,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T09:50:10.248Z"
+      "updatedAt": "2026-01-06T21:31:55.884Z"
     },
     "aeon mall kyoto": {
       "query": "Aeon Mall Kyoto",
