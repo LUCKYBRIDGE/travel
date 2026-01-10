@@ -171,6 +171,7 @@ export default function App() {
         <section id="checklist" className="section" />
       </main>
 
+      <div id="modal-root" />
       <div id="toast" className="toast" role="status" aria-live="polite" />
     </div>
   );

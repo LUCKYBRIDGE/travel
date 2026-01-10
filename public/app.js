@@ -19,6 +19,8 @@
     choices: "travel:choices",
     extras: "travel:extras",
     timeOverrides: "travel:time-overrides",
+    customStops: "travel:custom-stops",
+    orderOverrides: "travel:order-overrides",
     checklist: "travel:checklist",
     routeMode: "travel:route-mode",
     coords: "travel:coords",
@@ -38,6 +40,8 @@
     choices: loadStorage(STORAGE.choices, {}),
     extras: loadStorage(STORAGE.extras, {}),
     timeOverrides: loadStorage(STORAGE.timeOverrides, {}),
+    customStops: loadStorage(STORAGE.customStops, {}),
+    orderOverrides: loadStorage(STORAGE.orderOverrides, {}),
     checklist: loadStorage(STORAGE.checklist, {}),
     routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
     coords: loadStorage(STORAGE.coords, {}),
@@ -761,6 +765,200 @@
     };
   }
 
+  function getCustomStops(dayId) {
+    return Array.isArray(state.customStops?.[dayId]) ? state.customStops[dayId] : [];
+  }
+
+  function setCustomStops(dayId, stops) {
+    if (!state.customStops || typeof state.customStops !== "object") {
+      state.customStops = {};
+    }
+    state.customStops[dayId] = stops;
+    saveStorage(STORAGE.customStops, state.customStops);
+  }
+
+  function getOrderOverrides(dayId) {
+    return state.orderOverrides?.[dayId] || {};
+  }
+
+  function setOrderOverrides(dayId, overrides) {
+    if (!state.orderOverrides || typeof state.orderOverrides !== "object") {
+      state.orderOverrides = {};
+    }
+    state.orderOverrides[dayId] = overrides;
+    saveStorage(STORAGE.orderOverrides, state.orderOverrides);
+  }
+
+  function buildConfirmedItems(day) {
+    const blocks = buildDayBlocks(day);
+    const orderOverrides = getOrderOverrides(day.id);
+    const baseOrder = new Map();
+    blocks.forEach((block, index) => {
+      baseOrder.set(`block:${block.id}`, index + 1);
+    });
+    const customStops = getCustomStops(day.id);
+    const insertCount = new Map();
+    const items = blocks.map((block) => ({
+      key: `block:${block.id}`,
+      type: "block",
+      block,
+      order: baseOrder.get(`block:${block.id}`)
+    }));
+    customStops.forEach((stop) => {
+      const afterKey = stop.afterKey && baseOrder.has(stop.afterKey) ? stop.afterKey : null;
+      const base = afterKey ? baseOrder.get(afterKey) : blocks.length + 1;
+      const count = insertCount.get(base) || 0;
+      insertCount.set(base, count + 1);
+      items.push({
+        key: `custom:${stop.id}`,
+        type: "custom",
+        stop,
+        order: base + 0.1 + count * 0.1
+      });
+    });
+    items.forEach((item) => {
+      const override = orderOverrides[item.key];
+      if (typeof override === "number") {
+        item.order = override;
+      }
+    });
+    return items.sort((a, b) => a.order - b.order);
+  }
+
+  function applyOrderFromKeys(dayId, keys) {
+    const overrides = {};
+    keys.forEach((key, index) => {
+      overrides[key] = index + 1;
+    });
+    setOrderOverrides(dayId, overrides);
+  }
+
+  function moveItemToIndex(dayId, key, index) {
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return;
+    }
+    const items = buildConfirmedItems(day);
+    const keys = items.map((item) => item.key);
+    const currentIndex = keys.indexOf(key);
+    if (currentIndex === -1) {
+      return;
+    }
+    const next = keys.filter((itemKey) => itemKey !== key);
+    const clamped = Math.max(0, Math.min(index, next.length));
+    next.splice(clamped, 0, key);
+    applyOrderFromKeys(dayId, next);
+  }
+
+  function addCustomStop(dayId, afterKey, payload) {
+    if (!dayId || !payload?.mapQuery) {
+      return;
+    }
+    const stop = {
+      id: `${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
+      label: payload.label || payload.mapQuery,
+      mapQuery: payload.mapQuery,
+      source: payload.source || "",
+      afterKey: afterKey || ""
+    };
+    const stops = getCustomStops(dayId);
+    stops.push(stop);
+    setCustomStops(dayId, stops);
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return;
+    }
+    const items = buildConfirmedItems(day);
+    const keys = items.map((item) => item.key);
+    const insertIndex = afterKey ? keys.indexOf(afterKey) + 1 : keys.length;
+    const customKey = `custom:${stop.id}`;
+    const next = keys.filter((itemKey) => itemKey !== customKey);
+    const clamped = Math.max(0, Math.min(insertIndex, next.length));
+    next.splice(clamped, 0, customKey);
+    applyOrderFromKeys(dayId, next);
+  }
+
+  function removeCustomStop(dayId, stopId) {
+    const stops = getCustomStops(dayId);
+    const nextStops = stops.filter((stop) => stop.id !== stopId);
+    setCustomStops(dayId, nextStops);
+    const overrides = getOrderOverrides(dayId);
+    delete overrides[`custom:${stopId}`];
+    setOrderOverrides(dayId, overrides);
+  }
+
+  function isPlaceInConfirmed(dayId, mapQuery) {
+    const key = normalizeKey(mapQuery);
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return false;
+    }
+    const blocks = buildDayBlocks(day);
+    for (const block of blocks) {
+      if (normalizeKey(block.location?.mapQuery) === key) {
+        return true;
+      }
+      for (const group of block.choices || []) {
+        const selection = getChoiceSelection(block.id, group);
+        const selectedIds = group.mode === "multi" ? selection : [selection];
+        for (const option of group.options || []) {
+          if (selectedIds.includes(option.id) && normalizeKey(option.mapQuery) === key) {
+            return true;
+          }
+        }
+      }
+    }
+    const stops = getCustomStops(dayId);
+    return stops.some((stop) => normalizeKey(stop.mapQuery) === key);
+  }
+
+  function buildAddablePlaces(dayId, blockId) {
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return [];
+    }
+    const block = buildDayBlocks(day).find((item) => item.id === blockId);
+    if (!block) {
+      return [];
+    }
+    const entries = [];
+    (block.choices || []).forEach((group) => {
+      group.options.forEach((option) => {
+        if (!option.mapQuery) {
+          return;
+        }
+        entries.push({
+          label: option.label,
+          mapQuery: option.mapQuery,
+          source: "선택지"
+        });
+      });
+    });
+    if (block.location?.mapQuery) {
+      const detail = getPlaceDetails(block.location.mapQuery) || {};
+      if (Array.isArray(detail.nearby)) {
+        detail.nearby.forEach((nearby) => {
+          if (!nearby.mapQuery) {
+            return;
+          }
+          entries.push({
+            label: nearby.name,
+            mapQuery: nearby.mapQuery,
+            source: "주변 장소"
+          });
+        });
+      }
+    }
+    const unique = new Map();
+    entries.forEach((entry) => {
+      const entryKey = normalizeKey(entry.mapQuery);
+      if (!unique.has(entryKey)) {
+        unique.set(entryKey, entry);
+      }
+    });
+    return Array.from(unique.values());
+  }
+
   function buildSharePayload() {
     return {
       schemaVersion: 1,
@@ -771,6 +969,8 @@
         choices: state.choices,
         extras: state.extras,
         timeOverrides: state.timeOverrides,
+        customStops: state.customStops,
+        orderOverrides: state.orderOverrides,
         checklist: state.checklist,
         routeMode: state.routeMode,
         routes: state.routes,
@@ -787,6 +987,8 @@
       choices: isPlainObject(base.choices) ? base.choices : {},
       extras: isPlainObject(base.extras) ? base.extras : {},
       timeOverrides: isPlainObject(base.timeOverrides) ? base.timeOverrides : {},
+      customStops: isPlainObject(base.customStops) ? base.customStops : {},
+      orderOverrides: isPlainObject(base.orderOverrides) ? base.orderOverrides : {},
       checklist: isPlainObject(base.checklist) ? base.checklist : {},
       routeMode: typeof base.routeMode === "string" ? base.routeMode : state.routeMode,
       routes: isPlainObject(base.routes) ? base.routes : {},
@@ -805,6 +1007,8 @@
     state.choices = next.choices;
     state.extras = next.extras;
     state.timeOverrides = next.timeOverrides;
+    state.customStops = next.customStops;
+    state.orderOverrides = next.orderOverrides;
     state.checklist = next.checklist;
     state.routeMode = next.routeMode;
     state.routes = next.routes;
@@ -814,6 +1018,8 @@
     saveStorage(STORAGE.choices, state.choices);
     saveStorage(STORAGE.extras, state.extras);
     saveStorage(STORAGE.timeOverrides, state.timeOverrides);
+    saveStorage(STORAGE.customStops, state.customStops);
+    saveStorage(STORAGE.orderOverrides, state.orderOverrides);
     saveStorage(STORAGE.checklist, state.checklist);
     saveStorage(STORAGE.routeMode, state.routeMode);
     saveStorage(STORAGE.routes, state.routes);
@@ -1711,7 +1917,7 @@
     `;
   }
 
-  function renderConfirmedBlock(dayId, block, index) {
+  function renderConfirmedBlock(dayId, block, index, position, itemKey) {
     const timeLabel = block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "-";
     const baseLabel =
       block._baseStart && block._baseEnd ? `${block._baseStart}~${block._baseEnd}` : block._baseStart || block._baseEnd || "";
@@ -1831,8 +2037,27 @@
       </div>
       ${baseLabel ? `<div class="muted">기본 시간: ${baseLabel}</div>` : ""}
     `;
+    const orderEditor = `
+      <div class="block-row">
+        <span class="label">순서</span>
+        <span class="order-edit">
+          <span class="drag-handle" title="드래그로 순서 변경" aria-hidden="true">≡</span>
+          <input
+            type="number"
+            min="1"
+            value="${position}"
+            data-order-input
+            data-day-id="${dayId}"
+            data-item-key="${itemKey}"
+          />
+          <button type="button" data-open-place-modal data-day-id="${dayId}" data-block-id="${block.id}" data-after-key="${itemKey}">
+            장소 추가
+          </button>
+        </span>
+      </div>
+    `;
     return `
-      <div class="block" style="--delay: ${index * 0.05}s">
+      <div class="block confirmed-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
         <div class="block-time">${timeLabel}</div>
         <div class="block-body">
           <div class="block-title">
@@ -1842,6 +2067,7 @@
           ${block.summary ? `<div class="block-summary">${block.summary}</div>` : ""}
           ${locationLine}
           ${locationLinks}
+          ${orderEditor}
           ${timeEditor}
           ${selectionLineHtml}
           ${selectionDetailHtml}
@@ -1852,9 +2078,56 @@
     `;
   }
 
+  function renderConfirmedCustom(dayId, stop, index, position, itemKey) {
+    const detail = getPlaceDetails(stop.mapQuery) || {};
+    const location = buildLocationSummary(detail);
+    const summary = detail.summary
+      ? detail.summary
+      : detail.features?.length
+      ? `한눈에 보기: ${detail.features.join(", ")}`
+      : "";
+    return `
+      <div class="block confirmed-item custom-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
+        <div class="block-time">시간 유동</div>
+        <div class="block-body">
+          <div class="block-title">
+            <h4>${stop.label}</h4>
+            ${stop.source ? `<span>${stop.source}</span>` : ""}
+          </div>
+          <div class="block-row">
+            <span class="label">순서</span>
+            <span class="order-edit">
+              <span class="drag-handle" title="드래그로 순서 변경" aria-hidden="true">≡</span>
+              <input
+                type="number"
+                min="1"
+                value="${position}"
+                data-order-input
+                data-day-id="${dayId}"
+                data-item-key="${itemKey}"
+              />
+              <button type="button" data-custom-remove data-day-id="${dayId}" data-stop-id="${stop.id}">삭제</button>
+            </span>
+          </div>
+          ${summary ? `<div class="block-summary">${summary}</div>` : ""}
+          ${location ? `<div class="block-row"><span class="label">위치</span><span>${location}</span></div>` : ""}
+          ${renderLinks(detail, stop.mapQuery)}
+        </div>
+      </div>
+    `;
+  }
+
   function renderConfirmedDay(day, section) {
-    const blocks = buildDayBlocks(day);
-    const timeline = blocks.map((block, index) => renderConfirmedBlock(day.id, block, index)).join("");
+    const items = buildConfirmedItems(day);
+    const timeline = items
+      .map((item, index) => {
+        const position = index + 1;
+        if (item.type === "block") {
+          return renderConfirmedBlock(day.id, item.block, index, position, item.key);
+        }
+        return renderConfirmedCustom(day.id, item.stop, index, position, item.key);
+      })
+      .join("");
     section.innerHTML = `
       <div class="section-head">
         <div>
@@ -1866,6 +2139,63 @@
         ${timeline}
       </div>
     `;
+  }
+
+  function closePlaceModal() {
+    const root = document.getElementById("modal-root");
+    if (!root) {
+      return;
+    }
+    root.innerHTML = "";
+    document.body.classList.remove("modal-open");
+  }
+
+  function showPlaceModal(dayId, blockId, afterKey) {
+    const root = document.getElementById("modal-root");
+    if (!root) {
+      return;
+    }
+    const entries = buildAddablePlaces(dayId, blockId);
+    const list = entries
+      .map((entry) => {
+        const disabled = isPlaceInConfirmed(dayId, entry.mapQuery);
+        const detail = getPlaceDetails(entry.mapQuery) || {};
+        const rating = formatRating(detail);
+        return `
+          <button
+            type="button"
+            class="modal-item ${disabled ? "disabled" : ""}"
+            data-place-add
+            data-day-id="${dayId}"
+            data-after-key="${afterKey || ""}"
+            data-map-query="${entry.mapQuery}"
+            data-label="${entry.label}"
+            data-source="${entry.source}"
+            ${disabled ? "disabled" : ""}
+          >
+            <div class="modal-item-title">${entry.label}</div>
+            <div class="modal-item-meta">${entry.source} · 평점 ${rating}</div>
+          </button>
+        `;
+      })
+      .join("");
+    root.innerHTML = `
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-sheet" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <div>
+            <h3>장소 추가</h3>
+            <p class="muted">현재 블록에 맞는 장소만 표시됩니다.</p>
+          </div>
+          <button type="button" class="modal-close" data-modal-close>닫기</button>
+        </div>
+        <input type="search" class="modal-search" placeholder="장소 검색" data-modal-search />
+        <div class="modal-list">
+          ${list || `<div class="muted">추가 가능한 장소가 없습니다.</div>`}
+        </div>
+      </div>
+    `;
+    document.body.classList.add("modal-open");
   }
 
   function collectMapItems() {
@@ -2014,6 +2344,42 @@
           });
         });
       });
+
+      const customStops = getCustomStops(day.id);
+      customStops.forEach((stop) => {
+        if (!stop.mapQuery) {
+          return;
+        }
+        const stopKey = stop.mapQuery.toLowerCase();
+        if (items.has(stopKey)) {
+          return;
+        }
+        const stopDetail = getPlaceDetails(stop.mapQuery) || {};
+        const stopCategory = resolveCategory(
+          stopDetail,
+          stop.label || stop.mapQuery,
+          stopDetail?.type
+        );
+        const stopSummary =
+          stopDetail?.summary ||
+          (stopDetail?.features?.length ? `한눈에 보기: ${stopDetail.features.join(", ")}` : "");
+        items.set(stopKey, {
+          day: day.label,
+          title: stop.label || stop.mapQuery,
+          query: stop.mapQuery,
+          note: "추가 일정",
+          optional: false,
+          source: "custom",
+          categoryId: stopCategory?.id || "",
+          rating: formatRating(stopDetail),
+          summary: stopSummary,
+          popularity: stopDetail?.popularity || "",
+          ratingUpdatedAt: stopDetail?.ratingUpdatedAt || "",
+          building: stopDetail?.building || "",
+          floor: stopDetail?.floor || "",
+          area: stopDetail?.area || ""
+        });
+      });
     });
 
     return Array.from(items.values());
@@ -2041,7 +2407,6 @@
   }
 
   function collectDayRoutePoints(day) {
-    const blocks = buildDayBlocks(day);
     const points = [];
     const seen = new Set();
     const pushPoint = (query, label) => {
@@ -2055,6 +2420,41 @@
       seen.add(key);
       points.push({ query, label: label || query });
     };
+    const hasCustom = getCustomStops(day.id).length > 0;
+    const hasOrderOverrides = Object.keys(getOrderOverrides(day.id)).length > 0;
+    if (hasCustom || hasOrderOverrides) {
+      const items = buildConfirmedItems(day);
+      items.forEach((item) => {
+        if (item.type === "block") {
+          const block = item.block;
+          const choiceQueries = [];
+          (block.choices || []).forEach((group) => {
+            const selection = getChoiceSelection(block.id, group);
+            const selectedIds = group.mode === "multi" ? selection : [selection];
+            group.options.forEach((option) => {
+              if (selectedIds.includes(option.id) && option.mapQuery) {
+                choiceQueries.push({ query: option.mapQuery, label: option.label });
+              }
+            });
+          });
+          if (choiceQueries.length) {
+            choiceQueries.forEach((choice) => pushPoint(choice.query, choice.label));
+          } else if (block.location?.mapQuery) {
+            pushPoint(block.location.mapQuery, block.location.name || block.title);
+          }
+          const extras = getExtrasForBlock(day.id, block.id);
+          if (extras.length) {
+            extras.forEach((extra) => pushPoint(extra.mapQuery, extra.label));
+          }
+          return;
+        }
+        if (item.type === "custom") {
+          pushPoint(item.stop.mapQuery, item.stop.label);
+        }
+      });
+      return points;
+    }
+    const blocks = buildDayBlocks(day);
     blocks.forEach((block) => {
       const choiceQueries = [];
       (block.choices || []).forEach((group) => {
@@ -2537,6 +2937,28 @@
       showToast("경로 모드가 변경됐어요");
     }
 
+    if (target.matches("[data-order-input]")) {
+      const dayId = target.dataset.dayId;
+      const itemKey = target.dataset.itemKey;
+      const desired = Number(target.value);
+      const index = Number.isFinite(desired) ? desired - 1 : 0;
+      moveItemToIndex(dayId, itemKey, index);
+      render();
+      showToast("순서가 변경됐어요");
+    }
+
+  });
+
+  document.addEventListener("input", (event) => {
+    const target = event.target;
+    if (!target.matches("[data-modal-search]")) {
+      return;
+    }
+    const value = target.value.trim().toLowerCase();
+    document.querySelectorAll(".modal-item").forEach((item) => {
+      const text = item.textContent ? item.textContent.toLowerCase() : "";
+      item.style.display = !value || text.includes(value) ? "" : "none";
+    });
   });
 
   document.addEventListener("click", (event) => {
@@ -2610,6 +3032,45 @@
       setTimeOverride(dayId, blockId, start, end);
       render();
       showToast("시간이 저장됐어요");
+      return;
+    }
+
+    const openPlaceModal = event.target.closest("[data-open-place-modal]");
+    if (openPlaceModal) {
+      const dayId = openPlaceModal.dataset.dayId;
+      const blockId = openPlaceModal.dataset.blockId;
+      const afterKey = openPlaceModal.dataset.afterKey;
+      showPlaceModal(dayId, blockId, afterKey);
+      return;
+    }
+
+    const modalClose = event.target.closest("[data-modal-close]");
+    if (modalClose) {
+      closePlaceModal();
+      return;
+    }
+
+    const placeAdd = event.target.closest("[data-place-add]");
+    if (placeAdd) {
+      const dayId = placeAdd.dataset.dayId;
+      const afterKey = placeAdd.dataset.afterKey;
+      const mapQuery = placeAdd.dataset.mapQuery;
+      const label = placeAdd.dataset.label;
+      const source = placeAdd.dataset.source;
+      addCustomStop(dayId, afterKey, { mapQuery, label, source });
+      render();
+      closePlaceModal();
+      showToast("일정에 추가됐어요");
+      return;
+    }
+
+    const customRemove = event.target.closest("[data-custom-remove]");
+    if (customRemove) {
+      const dayId = customRemove.dataset.dayId;
+      const stopId = customRemove.dataset.stopId;
+      removeCustomStop(dayId, stopId);
+      render();
+      showToast("추가 일정이 삭제됐어요");
       return;
     }
 
@@ -2820,6 +3281,73 @@
       .writeText(text)
       .then(() => showToast("검색어 복사 완료"))
       .catch(() => showToast("복사 실패"));
+  });
+
+  document.addEventListener("dragstart", (event) => {
+    const target = event.target.closest("[data-item-key]");
+    if (!target) {
+      return;
+    }
+    const dayId = target.dataset.dayId;
+    const itemKey = target.dataset.itemKey;
+    event.dataTransfer?.setData("text/plain", `${dayId}::${itemKey}`);
+    target.classList.add("dragging");
+  });
+
+  document.addEventListener("dragend", (event) => {
+    const target = event.target.closest("[data-item-key]");
+    if (!target) {
+      return;
+    }
+    target.classList.remove("dragging");
+  });
+
+  document.addEventListener("dragover", (event) => {
+    const target = event.target.closest("[data-item-key]");
+    if (!target) {
+      return;
+    }
+    event.preventDefault();
+    target.classList.add("drag-over");
+  });
+
+  document.addEventListener("dragleave", (event) => {
+    const target = event.target.closest("[data-item-key]");
+    if (!target) {
+      return;
+    }
+    target.classList.remove("drag-over");
+  });
+
+  document.addEventListener("drop", (event) => {
+    const target = event.target.closest("[data-item-key]");
+    if (!target) {
+      return;
+    }
+    event.preventDefault();
+    target.classList.remove("drag-over");
+    const payload = event.dataTransfer?.getData("text/plain") || "";
+    const [dayId, itemKey] = payload.split("::");
+    const targetDayId = target.dataset.dayId;
+    const targetKey = target.dataset.itemKey;
+    if (!dayId || !itemKey || dayId !== targetDayId || !targetKey) {
+      return;
+    }
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return;
+    }
+    const keys = buildConfirmedItems(day).map((item) => item.key);
+    const fromIndex = keys.indexOf(itemKey);
+    const toIndex = keys.indexOf(targetKey);
+    if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) {
+      return;
+    }
+    keys.splice(fromIndex, 1);
+    keys.splice(toIndex, 0, itemKey);
+    applyOrderFromKeys(dayId, keys);
+    render();
+    showToast("드래그 순서가 적용됐어요");
   });
 
   let navUpdateActive = null;
