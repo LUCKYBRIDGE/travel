@@ -1,3 +1,5 @@
 .cache/
 .home/
 .wrangler/
+node_modules/
+dist/

@@ -1890,7 +1890,7 @@
   }
 
   function buildDirectionsLinkFromPoints(points, mode = "transit") {
-    if (!points || points.length < 2) {
+    if (!Array.isArray(points) || points.length < 2) {
       return "";
     }
     const origin = encodeURIComponent(points[0].query);

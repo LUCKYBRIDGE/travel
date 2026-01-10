@@ -1,95 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="간사이 공항에서 교토로 이어지는 옵션 분기형 가족 여행 일정 웹앱">
-  <meta name="theme-color" content="#f6f2e8">
-  <title>교토 가족 여행 플래너</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="assets/maskable.svg">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header class="hero" id="top">
-    <div class="hero-content">
-      <p class="eyebrow">간사이 공항 → 교토 · 성인 5인 · 옵션 분기 (KIX → Kyoto)</p>
-      <h1>교토 가족 여행 플래너</h1>
-      <p class="hero-lead">옵션 분기형 일정표와 오프라인 저장을 결합한 실전형 여행 웹앱.</p>
-      <div class="hero-actions">
-        <a class="button" href="#day1">1일차 보기</a>
-        <a class="button ghost" href="#map">지도 검색어</a>
-      </div>
-    </div>
-    <div class="hero-panel">
-      <div class="hero-card">
-        <h3>핵심 키워드</h3>
-        <ul>
-          <li>옵션 분기 · 식사 선택 · 일정 자동 재구성</li>
-          <li>현금/카드 구분 · 대기시간 표기</li>
-          <li>모바일 최적화 · 오프라인 대응(PWA)</li>
-        </ul>
-      </div>
-      <div class="hero-card">
-        <h3>여행 요약</h3>
-        <p>성인 5인 가족 / 3일 코스 / 간사이 공항 → 교토</p>
-        <p class="muted">Day 1은 3가지 버전 중 선택</p>
-      </div>
-    </div>
-  </header>
-
-  <nav class="tabs" aria-label="Section navigation">
-    <a href="#overview">개요</a>
-    <details class="tab-group" open>
-      <summary>탐색</summary>
-      <div class="tab-sub">
-        <a href="#day1">1일차</a>
-        <a href="#day2">2일차</a>
-        <a href="#day3">3일차</a>
-      </div>
-    </details>
-    <details class="tab-group">
-      <summary>코스확정</summary>
-      <div class="tab-sub">
-        <a href="#confirmed-day1">1일차</a>
-        <a href="#confirmed-day2">2일차</a>
-        <a href="#confirmed-day3">3일차</a>
-      </div>
-    </details>
-    <a href="#map">지도</a>
-    <a href="#budget">예산</a>
-    <a href="#checklist">체크리스트</a>
-    <div class="tab-controls">
-      <button type="button" class="tab-toggle" data-compact-toggle aria-pressed="false">간략 보기</button>
-      <span id="viewModeBadge" class="view-badge" aria-live="polite">모드: 자세히</span>
-      <button type="button" class="tab-toggle" data-view-toggle aria-pressed="false">페이지 전부 펼치기</button>
-      <button type="button" class="tab-toggle" data-nav-toggle aria-expanded="true">탭 접기</button>
-      <div id="tabCurrent" class="tab-current" aria-live="polite">현재 위치: 개요</div>
-    </div>
-  </nav>
-
-  <main id="app">
-    <section id="overview" class="section"></section>
-    <section id="day1" class="section day-section"></section>
-    <section id="day2" class="section day-section"></section>
-    <section id="day3" class="section day-section"></section>
-    <section id="confirmed-day1" class="section day-section"></section>
-    <section id="confirmed-day2" class="section day-section"></section>
-    <section id="confirmed-day3" class="section day-section"></section>
-    <section id="map" class="section"></section>
-    <section id="budget" class="section"></section>
-    <section id="checklist" class="section"></section>
-  </main>
-
-  <div id="toast" class="toast" aria-live="polite" role="status"></div>
-
-  <footer class="footer">
-    <p>옵션을 바꾸면 일정과 예산 요약이 자동 갱신됩니다.</p>
-    <a href="#top">맨 위로</a>
-  </footer>
-
-  <script src="data.js"></script>
-  <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="간사이 공항에서 교토로 이어지는 옵션 분기형 가족 여행 일정 웹앱" />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>교토 가족 여행 플래너</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/maskable.svg" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

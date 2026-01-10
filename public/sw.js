@@ -1,8 +1,9 @@
-const CACHE_NAME = "travel-cache-v46";
+const CACHE_NAME = "travel-cache-v48";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
+  "./assets/app.css",
+  "./assets/app.js",
   "./data.js",
   "./app.js",
   "./ratings.json",
