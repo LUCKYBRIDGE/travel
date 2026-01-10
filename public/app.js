@@ -18,6 +18,7 @@
     options: "travel:options",
     choices: "travel:choices",
     extras: "travel:extras",
+    timeOverrides: "travel:time-overrides",
     checklist: "travel:checklist",
     routeMode: "travel:route-mode",
     coords: "travel:coords",
@@ -36,6 +37,7 @@
     options: loadStorage(STORAGE.options, {}),
     choices: loadStorage(STORAGE.choices, {}),
     extras: loadStorage(STORAGE.extras, {}),
+    timeOverrides: loadStorage(STORAGE.timeOverrides, {}),
     checklist: loadStorage(STORAGE.checklist, {}),
     routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
     coords: loadStorage(STORAGE.coords, {}),
@@ -713,6 +715,52 @@
     return !exists;
   }
 
+  function getTimeOverride(dayId, blockId) {
+    if (!dayId || !blockId) {
+      return null;
+    }
+    return state.timeOverrides?.[dayId]?.[blockId] || null;
+  }
+
+  function setTimeOverride(dayId, blockId, start, end) {
+    if (!dayId || !blockId) {
+      return;
+    }
+    if (!state.timeOverrides || typeof state.timeOverrides !== "object") {
+      state.timeOverrides = {};
+    }
+    if (!state.timeOverrides[dayId] || typeof state.timeOverrides[dayId] !== "object") {
+      state.timeOverrides[dayId] = {};
+    }
+    const normalizedStart = start || "";
+    const normalizedEnd = end || "";
+    if (!normalizedStart && !normalizedEnd) {
+      delete state.timeOverrides[dayId][blockId];
+    } else {
+      state.timeOverrides[dayId][blockId] = {
+        start: normalizedStart,
+        end: normalizedEnd
+      };
+    }
+    saveStorage(STORAGE.timeOverrides, state.timeOverrides);
+  }
+
+  function applyTimeOverride(dayId, block) {
+    const override = getTimeOverride(dayId, block.id);
+    const baseStart = block.start || "";
+    const baseEnd = block.end || "";
+    if (!override) {
+      return { ...block, _baseStart: baseStart, _baseEnd: baseEnd };
+    }
+    return {
+      ...block,
+      _baseStart: baseStart,
+      _baseEnd: baseEnd,
+      start: override.start || baseStart,
+      end: override.end || baseEnd
+    };
+  }
+
   function buildSharePayload() {
     return {
       schemaVersion: 1,
@@ -722,6 +770,7 @@
         options: state.options,
         choices: state.choices,
         extras: state.extras,
+        timeOverrides: state.timeOverrides,
         checklist: state.checklist,
         routeMode: state.routeMode,
         routes: state.routes,
@@ -737,6 +786,7 @@
       options: isPlainObject(base.options) ? base.options : {},
       choices: isPlainObject(base.choices) ? base.choices : {},
       extras: isPlainObject(base.extras) ? base.extras : {},
+      timeOverrides: isPlainObject(base.timeOverrides) ? base.timeOverrides : {},
       checklist: isPlainObject(base.checklist) ? base.checklist : {},
       routeMode: typeof base.routeMode === "string" ? base.routeMode : state.routeMode,
       routes: isPlainObject(base.routes) ? base.routes : {},
@@ -754,6 +804,7 @@
     state.options = next.options;
     state.choices = next.choices;
     state.extras = next.extras;
+    state.timeOverrides = next.timeOverrides;
     state.checklist = next.checklist;
     state.routeMode = next.routeMode;
     state.routes = next.routes;
@@ -762,6 +813,7 @@
     saveStorage(STORAGE.options, state.options);
     saveStorage(STORAGE.choices, state.choices);
     saveStorage(STORAGE.extras, state.extras);
+    saveStorage(STORAGE.timeOverrides, state.timeOverrides);
     saveStorage(STORAGE.checklist, state.checklist);
     saveStorage(STORAGE.routeMode, state.routeMode);
     saveStorage(STORAGE.routes, state.routes);
@@ -1291,7 +1343,7 @@
     });
 
     return blocks
-      .map((block, index) => ({ ...block, _order: index }))
+      .map((block, index) => ({ ...applyTimeOverride(day.id, block), _order: index }))
       .sort((a, b) => {
         const ta = timeToMinutes(a.start);
         const tb = timeToMinutes(b.start);
@@ -1661,6 +1713,8 @@
 
   function renderConfirmedBlock(dayId, block, index) {
     const timeLabel = block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "-";
+    const baseLabel =
+      block._baseStart && block._baseEnd ? `${block._baseStart}~${block._baseEnd}` : block._baseStart || block._baseEnd || "";
     const locationDetail = block.location?.mapQuery ? getPlaceDetails(block.location.mapQuery) : null;
     const locationSummary = buildLocationSummary(locationDetail);
     const locationParts = [block.location?.name, locationSummary].filter(Boolean);
@@ -1750,6 +1804,32 @@
       ? `<div class="block-row"><span class="label">장소</span><span>${fallbackWhere}</span></div>`
       : "";
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
+    const timeEditor = `
+      <div class="block-row">
+        <span class="label">시간 조정</span>
+        <span class="time-edit">
+          <input
+            type="time"
+            step="300"
+            value="${block.start || ""}"
+            data-time-start
+            data-day-id="${dayId}"
+            data-block-id="${block.id}"
+          />
+          <span>~</span>
+          <input
+            type="time"
+            step="300"
+            value="${block.end || ""}"
+            data-time-end
+            data-day-id="${dayId}"
+            data-block-id="${block.id}"
+          />
+          <button type="button" data-time-reset data-day-id="${dayId}" data-block-id="${block.id}">초기화</button>
+        </span>
+      </div>
+      ${baseLabel ? `<div class="muted">기본 시간: ${baseLabel}</div>` : ""}
+    `;
     return `
       <div class="block" style="--delay: ${index * 0.05}s">
         <div class="block-time">${timeLabel}</div>
@@ -1761,6 +1841,7 @@
           ${block.summary ? `<div class="block-summary">${block.summary}</div>` : ""}
           ${locationLine}
           ${locationLinks}
+          ${timeEditor}
           ${selectionLineHtml}
           ${selectionDetailHtml}
           ${extraHtml}
@@ -2454,6 +2535,22 @@
       render();
       showToast("경로 모드가 변경됐어요");
     }
+
+    if (target.matches("[data-time-start], [data-time-end]")) {
+      const dayId = target.dataset.dayId;
+      const blockId = target.dataset.blockId;
+      const startInput = document.querySelector(
+        `[data-time-start][data-day-id="${dayId}"][data-block-id="${blockId}"]`
+      );
+      const endInput = document.querySelector(
+        `[data-time-end][data-day-id="${dayId}"][data-block-id="${blockId}"]`
+      );
+      const start = startInput ? startInput.value : "";
+      const end = endInput ? endInput.value : "";
+      setTimeOverride(dayId, blockId, start, end);
+      render();
+      showToast("시간이 조정됐어요");
+    }
   });
 
   document.addEventListener("click", (event) => {
@@ -2499,6 +2596,16 @@
       const selected = toggleExtraSelection(dayId, blockId, { mapQuery, label, source });
       render();
       showToast(selected ? "코스확정에 추가됨" : "코스확정에서 제거됨");
+      return;
+    }
+
+    const timeReset = event.target.closest("[data-time-reset]");
+    if (timeReset) {
+      const dayId = timeReset.dataset.dayId;
+      const blockId = timeReset.dataset.blockId;
+      setTimeOverride(dayId, blockId, "", "");
+      render();
+      showToast("시간 조정을 초기화했어요");
       return;
     }
 

@@ -486,6 +486,30 @@ body.compact-view .map-actions button {
   color: var(--ink);
 }
 
+.time-edit {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.time-edit input {
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 42, 42, 0.18);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+}
+
+.time-edit button {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
 .confirmed-options {
   display: grid;
   gap: 10px;
