@@ -1825,6 +1825,7 @@
             data-day-id="${dayId}"
             data-block-id="${block.id}"
           />
+          <button type="button" class="primary" data-time-save data-day-id="${dayId}" data-block-id="${block.id}">저장</button>
           <button type="button" data-time-reset data-day-id="${dayId}" data-block-id="${block.id}">초기화</button>
         </span>
       </div>
@@ -2536,21 +2537,6 @@
       showToast("경로 모드가 변경됐어요");
     }
 
-    if (target.matches("[data-time-start], [data-time-end]")) {
-      const dayId = target.dataset.dayId;
-      const blockId = target.dataset.blockId;
-      const startInput = document.querySelector(
-        `[data-time-start][data-day-id="${dayId}"][data-block-id="${blockId}"]`
-      );
-      const endInput = document.querySelector(
-        `[data-time-end][data-day-id="${dayId}"][data-block-id="${blockId}"]`
-      );
-      const start = startInput ? startInput.value : "";
-      const end = endInput ? endInput.value : "";
-      setTimeOverride(dayId, blockId, start, end);
-      render();
-      showToast("시간이 조정됐어요");
-    }
   });
 
   document.addEventListener("click", (event) => {
@@ -2606,6 +2592,24 @@
       setTimeOverride(dayId, blockId, "", "");
       render();
       showToast("시간 조정을 초기화했어요");
+      return;
+    }
+
+    const timeSave = event.target.closest("[data-time-save]");
+    if (timeSave) {
+      const dayId = timeSave.dataset.dayId;
+      const blockId = timeSave.dataset.blockId;
+      const startInput = document.querySelector(
+        `[data-time-start][data-day-id="${dayId}"][data-block-id="${blockId}"]`
+      );
+      const endInput = document.querySelector(
+        `[data-time-end][data-day-id="${dayId}"][data-block-id="${blockId}"]`
+      );
+      const start = startInput ? startInput.value : "";
+      const end = endInput ? endInput.value : "";
+      setTimeOverride(dayId, blockId, start, end);
+      render();
+      showToast("시간이 저장됐어요");
       return;
     }
 
