@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-06-13",
+    version: "2026-01-10-01",
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +44,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-06-13",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-01",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -208,6 +208,7 @@ window.TRIP_DATA = {
           id: "d1-route",
           title: "1일차 코스 선택",
           help: "옵션을 바꾸면 시간표가 자동 변경됩니다.",
+          collapsed: true,
           mode: "single",
           default: "airport-meal",
           options: [
@@ -267,6 +268,16 @@ window.TRIP_DATA = {
                           cost: { "min": 600, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         },
                         {
+                          id: "ganko",
+                          label: "간코 스시 (Ganko Sushi)",
+                          note: "정갈한 초밥 정식",
+                          menu: "초밥 정식 2,500~3,500엔",
+                          where: "간사이 공항 T1 3층",
+                          desc: "공항에서도 정갈한 초밥 정식을 즐길 수 있는 스시 매장입니다.",
+                          mapQuery: "Ganko Sushi Kansai International Airport",
+                          cost: { "min": 2500, "max": 3500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
+                        },
+                        {
                           id: "nakau-airport",
                           label: "나카우 공항점 (Nakau)",
                           note: "간단·빠른 덮밥",
@@ -285,6 +296,26 @@ window.TRIP_DATA = {
                           desc: "오사카 스타일 철판요리를 공항에서 간단히 즐길 수 있어요. (보안 후 구역)",
                           mapQuery: "Botejyu 1946 Kansai International Airport",
                           cost: { "min": 1200, "max": 1800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "sukiya",
+                          label: "스키야 공항점 (Sukiya)",
+                          note: "가성비 규동",
+                          menu: "규동/카레 500~800엔",
+                          where: "간사이 공항 T1 2층",
+                          desc: "24시간 운영으로 시간 제약 없이 빠르게 먹기 좋은 선택지입니다.",
+                          mapQuery: "Sukiya Kansai International Airport T1",
+                          cost: { "min": 500, "max": 800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
+                        },
+                        {
+                          id: "kamukura",
+                          label: "도톤보리 카무쿠라 (Kamukura)",
+                          note: "오사카 라멘",
+                          menu: "라멘 900~1,200엔",
+                          where: "간사이 공항 T1 2층",
+                          desc: "배추의 단맛이 살아 있는 오사카 라멘으로 따뜻하게 한 끼 해결하기 좋아요.",
+                          mapQuery: "Dotonbori Kamukura Kansai International Airport",
+                          cost: { "min": 900, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
                         }
                       ]
                     }
@@ -399,6 +430,46 @@ window.TRIP_DATA = {
                           desc: "늦은 시간에도 빠르게 먹을 수 있는 가성비 선택지입니다.",
                           mapQuery: "Nakau Kyoto Station",
                           cost: { "min": 490, "max": 490, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "daiichi-asahi",
+                          label: "혼케 다이이치아사히 (Honke Daiichi-Asahi)",
+                          note: "교토 라멘",
+                          menu: "라멘 900~1,200엔",
+                          where: "교토역 인근",
+                          desc: "줄 서서 먹는 교토 대표 라멘집으로 진한 국물이 특징입니다.",
+                          mapQuery: "Honke Daiichi-Asahi",
+                          cost: { "min": 900, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
+                        },
+                        {
+                          id: "kyoto-ramen-koji",
+                          label: "교토 라멘 코지 (Kyoto Ramen Koji)",
+                          note: "라멘 몰",
+                          menu: "라멘 900~1,400엔",
+                          where: "교토역 10층",
+                          desc: "유명 라멘집이 모여 있는 층으로 취향에 맞게 고르기 좋아요.",
+                          mapQuery: "Kyoto Ramen Koji",
+                          cost: { "min": 900, "max": 1400, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "kura-sushi-kyoto",
+                          label: "쿠라스시 교토역 주변 (Kura Sushi)",
+                          note: "회전초밥",
+                          menu: "1접시 150엔~",
+                          where: "교토역 주변",
+                          desc: "가성비 좋은 회전초밥 체인으로 부담 없이 즐기기 좋습니다.",
+                          mapQuery: "Kura Sushi - Kyoto Station Area",
+                          cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "donguri-kyoto",
+                          label: "교토 동구리 (Donguri)",
+                          note: "오코노미야키",
+                          menu: "오코노미야키 900~1,500엔",
+                          where: "교토역 인근",
+                          desc: "교토풍 오코노미야키를 부담 없이 맛볼 수 있는 곳입니다.",
+                          mapQuery: "Donguri Kyoto Station",
+                          cost: { "min": 900, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         }
                       ]
                     },
@@ -516,6 +587,42 @@ window.TRIP_DATA = {
                           desc: "해산물과 덮밥을 가볍게 즐기기 좋고 가격대도 무난합니다.",
                           mapQuery: "Komeraku Chazuke & Karaage Restaurant",
                           cost: { "min": 1500, "max": 1900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "shake-shack",
+                          label: "쉐이크쉑 (Shake Shack)",
+                          note: "수제버거",
+                          menu: "버거/프라이 1,200~1,800엔",
+                          desc: "바다를 보며 먹는 버거로 린쿠 아울렛 대표 인기 메뉴입니다.",
+                          mapQuery: "Shake Shack Rinku Premium Outlets",
+                          cost: { "min": 1200, "max": 1800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "panda-express",
+                          label: "판다 익스프레스 (Panda Express)",
+                          note: "미국식 중식",
+                          menu: "플레이트 1,200~1,600엔",
+                          desc: "푸드코트에서 빠르게 식사하기 좋은 중식 옵션입니다.",
+                          mapQuery: "Panda Express Rinku Premium Outlets",
+                          cost: { "min": 1200, "max": 1600, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "sandaya",
+                          label: "산다야 스테이크 (Sandaya)",
+                          note: "스테이크",
+                          menu: "스테이크 2,500~4,000엔",
+                          desc: "고급스러운 스테이크를 여유 있게 즐기고 싶을 때 추천합니다.",
+                          mapQuery: "Sandayahonten Steak House - Rinku",
+                          cost: { "min": 2500, "max": 4000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                        },
+                        {
+                          id: "sumo-ochi",
+                          label: "스모 레스토랑 오치이즈미베야",
+                          note: "스모 쇼 + 짱코나베",
+                          menu: "체험 세트 3,000~4,500엔",
+                          desc: "쇼와 함께 즐기는 체험형 식사로 일정에 특별함을 더할 수 있어요.",
+                          mapQuery: "Sumo Restaurant Ochiizumibeya",
+                          cost: { "min": 3000, "max": 4500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                         },
                       ]
                     }
@@ -1066,6 +1173,51 @@ window.TRIP_DATA = {
                   desc: "신선한 야채를 곁들여 가볍고 건강하게 먹기 좋은 곳입니다.",
                   mapQuery: "Omen Shijo",
                   cost: { "min": 1800, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "chaochao",
+                  label: "교자 차오차오 (Chao Chao Gyoza)",
+                  note: "교자 전문점",
+                  menu: "교자 세트 1,000~1,500엔",
+                  desc: "바삭한 교자를 다양하게 맛볼 수 있어 가볍게 한 끼 해결하기 좋아요.",
+                  mapQuery: "Chao Chao Gyoza Sanjo Kawaramachi",
+                  cost: { "min": 1000, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "red-rock",
+                  label: "레드락 (Red Rock)",
+                  note: "스테이크 덮밥",
+                  menu: "스테이크 덮밥 1,300~1,800엔",
+                  desc: "산더미 스테이크 덮밥으로 유명한 곳. 사진 찍기 좋은 비주얼입니다.",
+                  mapQuery: "Red Rock Kyoto Rokkaku",
+                  cost: { "min": 1300, "max": 1800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "katsukura-sanjo",
+                  label: "카츠쿠라 산조 본점 (Katsukura)",
+                  note: "돈카츠",
+                  menu: "돈카츠 세트 1,800~2,500엔",
+                  desc: "분위기 좋은 본점에서 돈카츠를 즐길 수 있는 안정적인 선택지입니다.",
+                  mapQuery: "Katsukura Sanjo Main Store",
+                  cost: { "min": 1800, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "sen-no-kaze",
+                  label: "라멘 센노카제 (Ramen Sen-no-Kaze)",
+                  note: "교토 라멘",
+                  menu: "라멘 900~1,200엔",
+                  desc: "진한 육수와 친절한 서비스로 평이 좋은 라멘집입니다.",
+                  mapQuery: "Ramen Sen-no-Kaze Kyoto",
+                  cost: { "min": 900, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "musashi-sushi",
+                  label: "스시노무사시 (Musashi Sushi)",
+                  note: "회전초밥",
+                  menu: "1접시 150엔~",
+                  desc: "가성비 좋은 노포 회전초밥으로 여러 접시 골라 먹기 좋아요.",
+                  mapQuery: "Musashi Sushi",
+                  cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                 }
               ]
             }
@@ -1184,6 +1336,66 @@ window.TRIP_DATA = {
               currency: "JPY",
               category: "meal",
               payment: "card"
+            }
+          ],
+          choices: [
+            {
+              id: "d2-dinner-choice",
+              title: "저녁 식당 선택",
+              mode: "multi",
+              note: "1곳 선택 추천",
+              options: [
+                {
+                  id: "touyoutei",
+                  label: "동양정 키타야마 (Touyoutei)",
+                  note: "함박스테이크",
+                  menu: "함박스테이크 세트 1,800~2,500엔",
+                  where: "키타야마 본점",
+                  desc: "호일에 싸인 뜨거운 함박스테이크가 대표 메뉴입니다.",
+                  mapQuery: "Grill Capital Touyoutei",
+                  cost: { "min": 1800, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "tougou",
+                  label: "토우고 키타야마 (Tougou)",
+                  note: "이탈리안",
+                  menu: "파스타/코스 1,500~3,000엔",
+                  where: "키타야마 거리",
+                  desc: "분위기 있는 이탈리안으로 조용하게 식사하기 좋아요.",
+                  mapQuery: "Tougou Kitayama",
+                  cost: { "min": 1500, "max": 3000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "inthegreen",
+                  label: "인 더 그린 (IN THE GREEN)",
+                  note: "식물원 뷰 레스토랑",
+                  menu: "피자/파스타 1,800~2,800엔",
+                  where: "식물원 옆",
+                  desc: "식물원 뷰를 보며 여유롭게 식사할 수 있는 인기 레스토랑입니다.",
+                  mapQuery: "In the Green",
+                  cost: { "min": 1800, "max": 2800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "katsukura-kitayama",
+                  label: "카츠쿠라 키타야마 (Katsukura)",
+                  note: "돈카츠",
+                  menu: "돈카츠 세트 1,800~2,500엔",
+                  where: "키타야마 거리",
+                  desc: "모던한 분위기의 돈카츠 전문점으로 가족 식사에 무난합니다.",
+                  mapQuery: "Katsukura Kitayama",
+                  cost: { "min": 1800, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "briant",
+                  label: "브리앙 키타야마 (Briant)",
+                  note: "베이커리 레스토랑",
+                  menu: "샌드/파스타 1,200~2,000엔",
+                  where: "키타야마 거리",
+                  desc: "빵이 맛있는 베이커리 식당으로 가볍게 먹기 좋아요.",
+                  mapQuery: "Briant Kitayama",
+                  cost: { "min": 1200, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                }
+              ]
             }
           ]
         },
@@ -1334,6 +1546,46 @@ window.TRIP_DATA = {
                   desc: "각자 취향에 맞는 식당을 바로 고를 수 있어 선택 스트레스가 적습니다.",
                   mapQuery: "Kyoto Porta",
                   cost: { "min": 1000, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "daiichi-asahi-lunch",
+                  label: "혼케 다이이치아사히 (Honke Daiichi-Asahi)",
+                  note: "교토 라멘",
+                  menu: "라멘 900~1,200엔",
+                  where: "교토역 인근",
+                  desc: "줄 서서 먹는 교토 대표 라멘집으로 빠르게 한 끼 해결하기 좋습니다.",
+                  mapQuery: "Honke Daiichi-Asahi",
+                  cost: { "min": 900, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
+                },
+                {
+                  id: "kyoto-ramen-koji-lunch",
+                  label: "교토 라멘 코지 (Kyoto Ramen Koji)",
+                  note: "라멘 몰",
+                  menu: "라멘 900~1,400엔",
+                  where: "교토역 10층",
+                  desc: "유명 라멘집이 모여 있는 층으로 선택 폭이 넓습니다.",
+                  mapQuery: "Kyoto Ramen Koji",
+                  cost: { "min": 900, "max": 1400, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "kura-sushi-lunch",
+                  label: "쿠라스시 교토역 (Kura Sushi)",
+                  note: "회전초밥",
+                  menu: "1접시 150엔~",
+                  where: "교토역 주변",
+                  desc: "가성비 좋은 회전초밥 체인으로 부담 없이 즐기기 좋습니다.",
+                  mapQuery: "Kura Sushi - Kyoto Station Area",
+                  cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                {
+                  id: "donguri-lunch",
+                  label: "교토 동구리 (Donguri)",
+                  note: "오코노미야키",
+                  menu: "오코노미야키 900~1,500엔",
+                  where: "교토역 인근",
+                  desc: "교토풍 오코노미야키를 부담 없이 즐길 수 있는 선택지입니다.",
+                  mapQuery: "Donguri Kyoto Station",
+                  cost: { "min": 900, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                 }
               ]
             }
@@ -1369,12 +1621,32 @@ window.TRIP_DATA = {
                 },
                         {
                           id: "inoda",
-                          label: "이노다 커피 (Inoda Coffee)",
+                          label: "이노다 커피 포르타점 (Inoda Coffee)",
                           note: "클래식 카페",
                           menu: "커피/디저트 800~1,200엔",
                           where: "교토 포르타 지하",
-                          desc: "레트로한 분위기에서 천천히 쉬기 좋은 공간입니다.",
-                  mapQuery: "Inoda Coffee Kyoto",
+                          desc: "레트로한 분위기에서 천천히 쉬기 좋은 포르타 지점입니다.",
+                  mapQuery: "Inoda Coffee Kyoto Station Porta",
+                  cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                        {
+                          id: "tsujiri",
+                          label: "츠지리 교토 타워 산도 (Tsujiri)",
+                          note: "말차 디저트",
+                          menu: "말차 디저트 800~1,200엔",
+                          where: "교토 타워 산도 1층",
+                          desc: "진한 말차 디저트를 즐기기 좋은 유명 디저트 카페입니다.",
+                  mapQuery: "Tsujiri Kyoto Tower Sando",
+                  cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
+                },
+                        {
+                          id: "ogawa",
+                          label: "오가와 커피 (Ogawa Coffee)",
+                          note: "로컬 커피",
+                          menu: "커피/디저트 800~1,200엔",
+                          where: "교토역 B1",
+                          desc: "교토 로컬 커피를 즐기기 좋은 매장으로 이동 동선이 편합니다.",
+                  mapQuery: "Ogawa Coffee Kyoto Station",
                   cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
                 },
                         {
@@ -1517,6 +1789,14 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
+          name: "간코 스시 (Ganko Sushi)",
+          mapQuery: "Ganko Sushi Kansai International Airport",
+          type: "식사",
+          features: ["초밥 정식", "정갈한 일식"],
+          pros: ["가족 식사에 적합"],
+          cons: ["가격대 있음"]
+        },
+        {
           name: "나카우 공항점 (Nakau)",
           mapQuery: "Nakau Kansai Airport Shop",
           type: "식사",
@@ -1540,6 +1820,38 @@ window.TRIP_DATA = {
           pros: ["카페인 충전"],
           cons: ["혼잡 가능"]
         },
+        {
+          name: "스키야 공항점 (Sukiya)",
+          mapQuery: "Sukiya Kansai International Airport T1",
+          type: "식사",
+          features: ["가성비 규동", "24시간 운영"],
+          pros: ["빠른 식사"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "도톤보리 카무쿠라 (Kamukura)",
+          mapQuery: "Dotonbori Kamukura Kansai International Airport",
+          type: "식사",
+          features: ["오사카 라멘", "따뜻한 국물"],
+          pros: ["든든한 한 끼"],
+          cons: ["식사 시간 대기"]
+        },
+        {
+          name: "에스프레소&베이커리",
+          mapQuery: "Espresso & Bakery Kansai International Airport",
+          type: "카페",
+          features: ["베이커리", "출국 전 간단 식사"],
+          pros: ["간단한 테이크아웃"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "KIX DUTY FREE",
+          mapQuery: "KIX DUTY FREE",
+          type: "쇼핑",
+          features: ["면세 쇼핑", "화장품/주류"],
+          pros: ["출국 전 쇼핑"],
+          cons: ["혼잡 가능"]
+        }
       ]
     },
     "kansai international airport": {
@@ -1575,6 +1887,14 @@ window.TRIP_DATA = {
           cons: ["날씨 영향"]
         },
         {
+          name: "린쿠 공원 (Rinku Park)",
+          mapQuery: "Rinku Park",
+          type: "산책",
+          features: ["대형 공원", "해변 산책"],
+          pros: ["여유로운 산책"],
+          cons: ["날씨 영향"]
+        },
+        {
           name: "린쿠노유 (Rinku no Yu)",
           mapQuery: "Rinku no Yu",
           type: "휴식",
@@ -1591,12 +1911,52 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
+          name: "이온몰 린쿠 센난 (Aeon Mall)",
+          mapQuery: "Aeon Mall Rinku Sennan",
+          type: "쇼핑",
+          features: ["대형 몰", "실내 동선"],
+          pros: ["우천 시 대안"],
+          cons: ["이동 필요"]
+        },
+        {
           name: "린쿠 커피 (RINKU COFFEE)",
           mapQuery: "RINKU COFFEE",
           type: "카페",
           features: ["카페 휴식", "가벼운 음료"],
           pros: ["짧은 휴식에 적합"],
           cons: ["좌석 한정"]
+        },
+        {
+          name: "쉐이크쉑 (Shake Shack)",
+          mapQuery: "Shake Shack Rinku Premium Outlets",
+          type: "식사",
+          features: ["수제버거", "바다 전망"],
+          pros: ["인기 메뉴"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "판다 익스프레스 (Panda Express)",
+          mapQuery: "Panda Express Rinku Premium Outlets",
+          type: "식사",
+          features: ["미국식 중식", "푸드코트"],
+          pros: ["빠른 식사"],
+          cons: ["피크 시간 혼잡"]
+        },
+        {
+          name: "산다야 스테이크 (Sandaya)",
+          mapQuery: "Sandayahonten Steak House - Rinku",
+          type: "식사",
+          features: ["스테이크 전문"],
+          pros: ["특별한 한 끼"],
+          cons: ["가격대 높음"]
+        },
+        {
+          name: "스모 레스토랑 오치이즈미베야",
+          mapQuery: "Sumo Restaurant Ochiizumibeya",
+          type: "체험식사",
+          features: ["스모 쇼", "짱코나베"],
+          pros: ["체험형 식사"],
+          cons: ["예약 확인 필요"]
         },
         {
           name: "마메토라 (Mametora)",
@@ -1613,6 +1973,30 @@ window.TRIP_DATA = {
           features: ["오차즈케/덮밥"],
           pros: ["가성비"],
           cons: ["점심 혼잡"]
+        },
+        {
+          name: "스타벅스 린쿠 아울렛",
+          mapQuery: "Starbucks Coffee - Rinku Premium Outlets",
+          type: "카페",
+          features: ["커피/음료", "휴식"],
+          pros: ["동선 내 휴식"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "스노우피크 카페 (Snow Peak Cafe)",
+          mapQuery: "Snow Peak Cafe & Dining",
+          type: "카페",
+          features: ["캠핑 감성", "바다 뷰"],
+          pros: ["분위기 좋음"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "스타벅스 이온몰 린쿠 센난",
+          mapQuery: "Starbucks Coffee - Aeon Mall Rinku Sennan",
+          type: "카페",
+          features: ["넓은 좌석", "실내"],
+          pros: ["편한 휴식"],
+          cons: ["이동 필요"]
         },
         {
           name: "고디바 (GODIVA)",
@@ -1643,12 +2027,44 @@ window.TRIP_DATA = {
           cons: ["대기 발생"]
         },
         {
-          name: "교토 라멘 스트리트 (Kyoto Ramen Street)",
-          mapQuery: "Kyoto Ramen Street",
+          name: "교토 라멘 코지 (Kyoto Ramen Koji)",
+          mapQuery: "Kyoto Ramen Koji",
           type: "식사",
-          features: ["라멘 전문 존"],
+          features: ["라멘 전문 존", "테마형 식당가"],
           pros: ["취향 선택 폭 넓음"],
           cons: ["식사 시간 대기"]
+        },
+        {
+          name: "혼케 다이이치아사히 (Honke Daiichi-Asahi)",
+          mapQuery: "Honke Daiichi-Asahi",
+          type: "식사",
+          features: ["교토 라멘", "줄 서는 맛집"],
+          pros: ["라멘 명가 경험"],
+          cons: ["대기 길 수 있음"]
+        },
+        {
+          name: "가츠쿠라 교토역 빌딩점",
+          mapQuery: "Katsukura Kyoto Station Building",
+          type: "식사",
+          features: ["프리미엄 돈카츠", "정식 구성"],
+          pros: ["가족 식사 적합"],
+          cons: ["피크 시간 대기"]
+        },
+        {
+          name: "쿠라 스시 교토역 인근",
+          mapQuery: "Kura Sushi - Kyoto Station Area",
+          type: "식사",
+          features: ["회전초밥", "가성비"],
+          pros: ["메뉴 선택 폭 넓음"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "교토 동구리 (Donguri)",
+          mapQuery: "Donguri Kyoto Station",
+          type: "식사",
+          features: ["오코노미야키", "철판 요리"],
+          pros: ["든든한 한 끼"],
+          cons: ["점심/저녁 혼잡"]
         },
         {
           name: "이온몰 교토 (Aeon Mall Kyoto)",
@@ -1667,6 +2083,30 @@ window.TRIP_DATA = {
           cons: ["혼잡 가능"]
         },
         {
+          name: "츠지리 교토 타워 산도",
+          mapQuery: "Tsujiri Kyoto Tower Sando",
+          type: "카페",
+          features: ["말차 디저트", "간단 휴식"],
+          pros: ["디저트 만족도"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "오가와 커피 교토역",
+          mapQuery: "Ogawa Coffee Kyoto Station",
+          type: "카페",
+          features: ["로컬 커피", "빠른 휴식"],
+          pros: ["동선 편리"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "이노다 커피 포르타점",
+          mapQuery: "Inoda Coffee Kyoto Station Porta",
+          type: "카페",
+          features: ["클래식 카페", "디저트"],
+          pros: ["레트로 분위기"],
+          cons: ["대기 가능"]
+        },
+        {
           name: "스타벅스 교토역 서쪽 출구",
           mapQuery: "Starbucks Coffee - JR Kyoto Station West Entrance",
           type: "카페",
@@ -1675,12 +2115,28 @@ window.TRIP_DATA = {
           cons: ["피크 시간 혼잡"]
         },
         {
+          name: "빅카메라 교토역",
+          mapQuery: "Bic Camera Kyoto Station",
+          type: "쇼핑",
+          features: ["가전/기념품", "대형 매장"],
+          pros: ["선물 구매"],
+          cons: ["체류 시간 길어짐"]
+        },
+        {
           name: "요도바시 카메라 교토",
           mapQuery: "Yodobashi Camera Kyoto",
           type: "쇼핑",
           features: ["전자기기/잡화", "대형 매장"],
           pros: ["선물/필요 물품 구매"],
           cons: ["체류 시간 길어질 수 있음"]
+        },
+        {
+          name: "교토 아반티 (Kyoto Avanti)",
+          mapQuery: "Kyoto Avanti",
+          type: "쇼핑",
+          features: ["쇼핑몰", "돈키호테 입점"],
+          pros: ["쇼핑 동선 간단"],
+          cons: ["사람 많음"]
         },
         {
           name: "교토역 스카이웨이 (Kyoto Station Skyway)",
@@ -1957,18 +2413,6 @@ window.TRIP_DATA = {
       cons: ["피크 시간 혼잡"],
       tips: ["출발 10분 전 승강장 도착", "지정석 차량 번호 확인"]
     },
-    "kyoto ramen street": {
-      rating: null,
-      ratingSource: "Google",
-      summary: "교토역 빌딩 10층에 모인 라멘 전문 구역으로 다양한 스타일을 고를 수 있습니다.",
-      building: "교토역 빌딩",
-      floor: "10층 (라멘코지)",
-      tags: ["라멘", "식사", "역내"],
-      features: ["라멘 전문 존", "다양한 메뉴", "교토역 내부"],
-      pros: ["선택 폭 넓음", "이동 편리"],
-      cons: ["식사 시간 대기", "혼잡 가능"],
-      tips: ["피크 전후로 이동", "대기 줄 짧은 매장부터 확인"]
-    },
     "アシックスファクトリーアウトレット りんくう": {
       rating: null,
       ratingSource: "Google",
@@ -2052,12 +2496,92 @@ window.TRIP_DATA = {
           cons: ["혼잡", "현금 필요"]
         },
         {
+          name: "차오차오 교자 (Chao Chao Gyoza)",
+          mapQuery: "Chao Chao Gyoza Sanjo Kawaramachi",
+          type: "식사",
+          features: ["교자 전문", "빠른 회전"],
+          pros: ["가성비 좋음"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "레드락 로쿠카쿠 (Red Rock)",
+          mapQuery: "Red Rock Kyoto Rokkaku",
+          type: "식사",
+          features: ["스테이크 덮밥", "푸짐한 양"],
+          pros: ["가성비"],
+          cons: ["피크 시간 혼잡"]
+        },
+        {
+          name: "가츠쿠라 산조 본점",
+          mapQuery: "Katsukura Sanjo Main Store",
+          type: "식사",
+          features: ["프리미엄 돈카츠", "정식"],
+          pros: ["가족 식사 적합"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "라멘 센노카제",
+          mapQuery: "Ramen Sen-no-Kaze Kyoto",
+          type: "식사",
+          features: ["교토 라멘", "진한 육수"],
+          pros: ["만족도 높음"],
+          cons: ["줄이 길 수 있음"]
+        },
+        {
+          name: "무사시 스시",
+          mapQuery: "Musashi Sushi",
+          type: "식사",
+          features: ["회전초밥", "가성비"],
+          pros: ["메뉴 다양"],
+          cons: ["혼잡"]
+        },
+        {
+          name: "블루보틀 교토 로쿠카쿠",
+          mapQuery: "Blue Bottle Coffee Kyoto Rokkaku",
+          type: "카페",
+          features: ["전통 가옥", "스페셜티 커피"],
+          pros: ["분위기 좋음"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "위켄더스 커피",
+          mapQuery: "Weekenders Coffee Tominokoji",
+          type: "카페",
+          features: ["로스터리", "조용한 분위기"],
+          pros: ["커피 퀄리티"],
+          cons: ["좌석 적음"]
+        },
+        {
+          name: "스타벅스 산조오하시",
+          mapQuery: "Starbucks Coffee - Kyoto Sanjo Ohashi",
+          type: "카페",
+          features: ["가모강 뷰", "큰 매장"],
+          pros: ["뷰 좋음"],
+          cons: ["혼잡"]
+        },
+        {
           name: "테라마치 거리 (Teramachi Street)",
           mapQuery: "Teramachi Street Kyoto",
           type: "쇼핑",
           features: ["쇼핑 골목", "잡화/기념품"],
           pros: ["도보 이동 편리"],
           cons: ["인파 많음"]
+        },
+        {
+          name: "다카시마야 교토",
+          mapQuery: "Takashimaya Kyoto",
+          type: "쇼핑",
+          features: ["백화점", "명품/기프트"],
+          pros: ["선물 구매"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "다이마루 교토",
+          mapQuery: "Daimaru Kyoto",
+          type: "쇼핑",
+          features: ["백화점", "지하 식품관"],
+          pros: ["식품관 알차게 이용"],
+          cons: ["혼잡"]
         },
         {
           name: "폰토초 골목 (Pontocho Alley)",
@@ -2182,6 +2706,20 @@ window.TRIP_DATA = {
       pros: ["메뉴 선택 폭 넓음", "좌석 식사 가능"],
       cons: ["혼잡 시 대기"],
       tips: ["미니 덮밥 세트 활용", "피크 시간 피하기", "(공식 지도 표식) 2F 식음 No.13"]
+    },
+    "ganko sushi kansai international airport": {
+      rating: 3.8,
+      ratingCount: 610,
+      ratingSource: "Google",
+      summary: "정갈한 스시 정식을 공항에서 즐길 수 있는 초밥 전문점입니다.",
+      building: "간사이 공항 T1",
+      floor: "3층",
+      area: "3층 레스토랑 존",
+      tags: ["스시", "정식", "일식"],
+      features: ["초밥 정식", "차분한 분위기", "가족 식사"],
+      pros: ["정갈한 구성", "좌석 식사"],
+      cons: ["가격대 있음", "대기 가능"],
+      tips: ["정식 구성 확인 후 주문", "피크 시간은 여유 있게"]
     },
     "nakau kansai airport shop": {
       rating: null,
@@ -2403,7 +2941,105 @@ window.TRIP_DATA = {
       features: ["니노마루 궁전", "꾀꼬리 마루", "정원 산책"],
       pros: ["역사적 가치", "관람 동선 명확"],
       cons: ["실내 이동 많음", "혼잡 가능"],
-      tips: ["궁전 포함 티켓 확인", "실내 규정(신발) 안내 확인"]
+      tips: ["궁전 포함 티켓 확인", "실내 규정(신발) 안내 확인"],
+      nearby: [
+        {
+          name: "멘야 유코 (Menya Yuko)",
+          mapQuery: "Menya Yuko",
+          type: "식사",
+          features: ["조개 베이스 라멘"],
+          pros: ["깔끔한 맛"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "카라세미테이 (Karasemitei)",
+          mapQuery: "Karasemitei",
+          type: "식사",
+          features: ["카레/오므라이스"],
+          pros: ["가성비 좋음"],
+          cons: ["좌석 적음"]
+        },
+        {
+          name: "키분조초 (Kibunjocho)",
+          mapQuery: "Kibunjocho",
+          type: "식사",
+          features: ["교토 채소 정식"],
+          pros: ["정갈한 구성"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "세이케 니조조 (Seike Nijo-jo)",
+          mapQuery: "Seike Nijo-jo",
+          type: "식사",
+          features: ["두부/유바 요리"],
+          pros: ["건강식"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "포레스트 키친 (Forest Kitchen)",
+          mapQuery: "Forest Kitchen",
+          type: "식사",
+          features: ["유기농/비건"],
+          pros: ["가벼운 식사"],
+          cons: ["영업시간 확인"]
+        },
+        {
+          name: "사라사 커피 (Clamp Coffee Sarasa)",
+          mapQuery: "Clamp Coffee Sarasa",
+          type: "카페",
+          features: ["앤티크 카페", "로스터리"],
+          pros: ["분위기 좋음"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "히어 교토 (Here Kyoto)",
+          mapQuery: "Here Kyoto",
+          type: "카페",
+          features: ["카눌레", "스페셜티 커피"],
+          pros: ["디저트 인기"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "블루보틀 교토 카페",
+          mapQuery: "Blue Bottle Coffee Kyoto Cafe",
+          type: "카페",
+          features: ["브랜드 매장", "여유로운 좌석"],
+          pros: ["커피 퀄리티"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "교토 산조카이 상점가",
+          mapQuery: "Kyoto Sanjo Kai Shotengai",
+          type: "쇼핑",
+          features: ["아케이드 상점가"],
+          pros: ["날씨 영향 적음"],
+          cons: ["상점 구성 다양"]
+        },
+        {
+          name: "호리카와 상점가",
+          mapQuery: "Horikawa Shotengai",
+          type: "쇼핑",
+          features: ["로컬 상점"],
+          pros: ["현지 분위기"],
+          cons: ["영업시간 확인"]
+        },
+        {
+          name: "시키노아메 (Shiki-no-Ame)",
+          mapQuery: "Shiki-no-Ame",
+          type: "쇼핑",
+          features: ["전통 공예/부채"],
+          pros: ["기념품 구매"],
+          cons: ["소규모 매장"]
+        },
+        {
+          name: "교토 고쇼 (Kyoto Imperial Palace)",
+          mapQuery: "Kyoto Imperial Palace",
+          type: "볼거리",
+          features: ["궁정 정원", "대형 공원"],
+          pros: ["산책에 좋음"],
+          cons: ["이동 시간 필요"]
+        }
+      ]
     },
     "kinkaku-ji": {
       rating: null,
@@ -2413,7 +3049,105 @@ window.TRIP_DATA = {
       features: ["황금 누각", "정원 산책", "일몰 뷰 포인트"],
       pros: ["상징적 포인트", "사진 만족도 높음"],
       cons: ["혼잡", "현금 입장"],
-      tips: ["일몰 직전 방문 추천", "입구/출구 동선 미리 확인"]
+      tips: ["일몰 직전 방문 추천", "입구/출구 동선 미리 확인"],
+      nearby: [
+        {
+          name: "오멘 금각사점",
+          mapQuery: "Omen Kinkakuji",
+          type: "식사",
+          features: ["채소 우동", "담백한 맛"],
+          pros: ["가벼운 식사"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "쿠라 스시 금각사점",
+          mapQuery: "Kura Sushi Kinkakuji",
+          type: "식사",
+          features: ["회전초밥", "가성비"],
+          pros: ["메뉴 다양"],
+          cons: ["피크 시간 혼잡"]
+        },
+        {
+          name: "이타다키젠 교토",
+          mapQuery: "Itadakizen Kyoto",
+          type: "식사",
+          features: ["사찰풍 비건 요리"],
+          pros: ["건강식"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "금각사 미치",
+          mapQuery: "Kinkakuji Michi",
+          type: "식사",
+          features: ["소바/우동"],
+          pros: ["간단 식사"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "미타이아",
+          mapQuery: "Mitaia",
+          type: "식사",
+          features: ["가정식 백반"],
+          pros: ["담백한 구성"],
+          cons: ["좌석 적음"]
+        },
+        {
+          name: "요지야 카페 금각사",
+          mapQuery: "Yojiya Cafe Kinkakuji",
+          type: "카페",
+          features: ["라떼아트", "디저트"],
+          pros: ["사진 포인트"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "코우사기노사토",
+          mapQuery: "Kousagi-no-Sato",
+          type: "카페",
+          features: ["테마 디저트"],
+          pros: ["분위기 독특"],
+          cons: ["영업시간 확인"]
+        },
+        {
+          name: "스타벅스 료안지점",
+          mapQuery: "Starbucks Coffee - Kyoto Ryoanji",
+          type: "카페",
+          features: ["여유로운 좌석"],
+          pros: ["휴식에 적합"],
+          cons: ["이동 필요"]
+        },
+        {
+          name: "금각사 기념품 샵",
+          mapQuery: "Kinkaku-ji Temple Shop",
+          type: "쇼핑",
+          features: ["부적/기념품"],
+          pros: ["기념품 구매"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "츠루야 요시노부",
+          mapQuery: "Tsuruya Yoshinobu",
+          type: "쇼핑",
+          features: ["전통 과자"],
+          pros: ["선물용"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "교토 크래프트 마트",
+          mapQuery: "Kyoto Craft Mart",
+          type: "쇼핑",
+          features: ["공예품"],
+          pros: ["기념품 선택지"],
+          cons: ["소규모 매장"]
+        },
+        {
+          name: "료안지 (Ryoan-ji)",
+          mapQuery: "Ryoan-ji",
+          type: "볼거리",
+          features: ["석정", "세계 유산"],
+          pros: ["고요한 분위기"],
+          cons: ["이동 시간 필요"]
+        }
+      ]
     },
     "kyoto botanical garden": {
       rating: null,
@@ -2423,7 +3157,105 @@ window.TRIP_DATA = {
       features: ["실내 온실", "야간 전시", "미디어 아트"],
       pros: ["겨울 저녁 관람", "실내 관람 가능"],
       cons: ["티켓 비용"],
-      tips: ["QR 티켓 미리 준비", "온실 구역 중심으로 관람"]
+      tips: ["QR 티켓 미리 준비", "온실 구역 중심으로 관람"],
+      nearby: [
+        {
+          name: "동양정 키타야마 (Tougou)",
+          mapQuery: "Tougou Kitayama",
+          type: "식사",
+          features: ["이탈리안", "세련된 분위기"],
+          pros: ["가족 식사 적합"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "인 더 그린 (In the Green)",
+          mapQuery: "In the Green",
+          type: "식사",
+          features: ["테라스", "식물원 뷰"],
+          pros: ["분위기 좋음"],
+          cons: ["피크 시간 혼잡"]
+        },
+        {
+          name: "가츠쿠라 키타야마",
+          mapQuery: "Katsukura Kitayama",
+          type: "식사",
+          features: ["돈카츠 정식"],
+          pros: ["안정적인 맛"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "브리앙 키타야마",
+          mapQuery: "Briant Kitayama",
+          type: "식사",
+          features: ["베이커리 식당"],
+          pros: ["빵 메뉴 다양"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "말브랑슈 키타야마 본점",
+          mapQuery: "Malebranche Kitayama Main Store",
+          type: "식사/디저트",
+          features: ["디저트", "선물 구매"],
+          pros: ["기념품 구매"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "서커스 커피",
+          mapQuery: "Circus Coffee",
+          type: "카페",
+          features: ["로스터리", "스페셜티 커피"],
+          pros: ["커피 퀄리티"],
+          cons: ["좌석 적음"]
+        },
+        {
+          name: "카페 발리 가시",
+          mapQuery: "Cafe Bali Gasi",
+          type: "카페",
+          features: ["테라스 카페"],
+          pros: ["여유로운 분위기"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "키타야마 커피",
+          mapQuery: "Kyoto Kitayama Coffee",
+          type: "카페",
+          features: ["핸드드립", "로컬 카페"],
+          pros: ["잔잔한 분위기"],
+          cons: ["영업시간 확인"]
+        },
+        {
+          name: "키타야마도리",
+          mapQuery: "Kitayama-dori",
+          type: "쇼핑",
+          features: ["감각적인 거리"],
+          pros: ["산책/쇼핑"],
+          cons: ["이동 거리 있음"]
+        },
+        {
+          name: "알파 교토",
+          mapQuery: "Alpha Kyoto",
+          type: "쇼핑",
+          features: ["인테리어 소품"],
+          pros: ["기념품 선택지"],
+          cons: ["소규모 매장"]
+        },
+        {
+          name: "카나야 마사히로",
+          mapQuery: "Kanaya Masahiro",
+          type: "쇼핑",
+          features: ["전통 과자"],
+          pros: ["선물용"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "카미가모 신사",
+          mapQuery: "Kamigamo-jinja Shrine",
+          type: "볼거리",
+          features: ["유네스코 신사"],
+          pros: ["고즈넉한 분위기"],
+          cons: ["이동 필요"]
+        }
+      ]
     },
     "sanjusangendo": {
       rating: null,
@@ -2433,7 +3265,105 @@ window.TRIP_DATA = {
       features: ["1,001 관음상", "긴 본당", "평지 동선"],
       pros: ["부모님 동선 편함", "실내 관람"],
       cons: ["현금 입장"],
-      tips: ["실내 촬영 규정 확인", "조용히 관람"]
+      tips: ["실내 촬영 규정 확인", "조용히 관람"],
+      nearby: [
+        {
+          name: "시치조 신도 (Shichijo Shindo)",
+          mapQuery: "Shichijo Shindo",
+          type: "식사",
+          features: ["소바/덮밥"],
+          pros: ["조용한 분위기"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "소바노미 요시무라",
+          mapQuery: "Sobanomi Yoshimura",
+          type: "식사",
+          features: ["수제 소바"],
+          pros: ["메밀 향"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "베그아웃 (Veg Out)",
+          mapQuery: "Veg Out",
+          type: "식사",
+          features: ["비건 브런치", "강변 뷰"],
+          pros: ["뷰 좋음"],
+          cons: ["영업시간 확인"]
+        },
+        {
+          name: "애스크 미! (Ask Me!)",
+          mapQuery: "Ask Me!",
+          type: "식사",
+          features: ["수제 정식/도시락"],
+          pros: ["건강식"],
+          cons: ["좌석 적음"]
+        },
+        {
+          name: "산슈테이 (Sanshu-tei)",
+          mapQuery: "Sanshu-tei",
+          type: "식사",
+          features: ["일본 전통 정찬"],
+          pros: ["정갈한 구성"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "카이카도 카페",
+          mapQuery: "Kaikado Cafe",
+          type: "카페",
+          features: ["전통 공예+카페"],
+          pros: ["분위기 좋음"],
+          cons: ["대기 가능"]
+        },
+        {
+          name: "월든우즈 교토",
+          mapQuery: "Walden Woods Kyoto",
+          type: "카페",
+          features: ["화이트 인테리어"],
+          pros: ["사진 포인트"],
+          cons: ["혼잡"]
+        },
+        {
+          name: "쿠라스 교토 스탠드",
+          mapQuery: "Kurasu Kyoto Stand",
+          type: "카페",
+          features: ["로스터리 커피"],
+          pros: ["커피 퀄리티"],
+          cons: ["좌석 제한"]
+        },
+        {
+          name: "교토 도자기 협회",
+          mapQuery: "Kyoto Ceramic Art Association",
+          type: "쇼핑",
+          features: ["도자기 공예"],
+          pros: ["기념품 구매"],
+          cons: ["소규모 전시"]
+        },
+        {
+          name: "시치조도리",
+          mapQuery: "Shichijo-dori",
+          type: "쇼핑",
+          features: ["골동품/잡화"],
+          pros: ["로컬 분위기"],
+          cons: ["매장 분산"]
+        },
+        {
+          name: "교나마지",
+          mapQuery: "Kyonamaji",
+          type: "쇼핑",
+          features: ["교토 절임"],
+          pros: ["기념품 추천"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "히가시 혼간지",
+          mapQuery: "Higashi Honganji Temple",
+          type: "볼거리",
+          features: ["대형 목조 사찰"],
+          pros: ["무료 관람"],
+          cons: ["이동 필요"]
+        }
+      ]
     },
     "grill capital touyoutei": {
       rating: null,
@@ -2561,6 +3491,839 @@ window.TRIP_DATA = {
       pros: ["분위기 좋음", "노포 경험"],
       cons: ["대기 가능"],
       tips: ["오픈 직후 방문", "대표 커피/디저트 세트 추천"]
+    },
+    "inoda coffee kyoto station porta": {
+      rating: 3.9,
+      ratingCount: 740,
+      ratingSource: "Google",
+      summary: "교토역 포르타 지하에서 만나는 클래식 카페로 이동 동선이 편합니다.",
+      building: "교토 포르타",
+      floor: "B1층",
+      tags: ["카페", "클래식", "포르타"],
+      features: ["레트로 분위기", "커피/디저트", "역내 접근"],
+      pros: ["동선 편리", "분위기 좋음"],
+      cons: ["대기 가능"],
+      tips: ["피크 전후 방문", "커피+디저트 세트 추천"]
+    },
+    "sukiya kansai international airport t1": {
+      rating: 3.0,
+      ratingCount: 412,
+      ratingSource: "Google",
+      summary: "공항 2층에서 24시간 운영하는 가성비 규동 전문점입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
+      tags: ["공항", "식사", "규동", "가성비"],
+      features: ["24시간 운영", "빠른 식사", "규동/카레"],
+      links: [{ "label": "공식 사이트", "url": "https://www.sukiya.jp/" }]
+    },
+    "dotonbori kamukura kansai international airport": {
+      rating: 3.8,
+      ratingCount: 532,
+      ratingSource: "Google",
+      summary: "배추의 단맛이 특징인 오사카 라멘을 공항에서 즐길 수 있습니다.",
+      building: "간사이 공항 T1",
+      floor: "2층",
+      tags: ["공항", "식사", "라멘"],
+      features: ["오사카 라멘", "따뜻한 국물"],
+      links: [{ "label": "공식 사이트", "url": "https://kamukura.co.jp/" }]
+    },
+    "espresso & bakery kansai international airport": {
+      rating: 3.0,
+      ratingCount: 89,
+      ratingSource: "Google",
+      summary: "출국 전 간단히 베이커리와 커피를 즐길 수 있는 카페입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층(보안 후)",
+      tags: ["공항", "카페", "베이커리"],
+      features: ["베이커리", "테이크아웃"],
+      links: [{ "label": "공항 안내", "url": "https://www.kansai-airport.or.jp/" }]
+    },
+    "kix duty free": {
+      rating: 3.4,
+      ratingCount: 458,
+      ratingSource: "Google",
+      summary: "주류/담배/화장품을 한 번에 구매할 수 있는 공항 면세점입니다.",
+      building: "간사이 공항 T1",
+      floor: "2층(보안 후)",
+      tags: ["공항", "쇼핑", "면세"],
+      features: ["면세 쇼핑", "주류/화장품"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kixdutyfree.jp/" }]
+    },
+    "shake shack rinku premium outlets": {
+      rating: 3.8,
+      ratingCount: 1120,
+      ratingSource: "Google",
+      summary: "린쿠 아울렛에서 바다를 보며 즐기는 수제버거 매장입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["린쿠", "식사", "버거"],
+      features: ["수제버거", "바다 뷰"],
+      links: [{ "label": "공식 사이트", "url": "https://shakeshack.jp/" }]
+    },
+    "panda express rinku premium outlets": {
+      rating: 3.9,
+      ratingCount: 912,
+      ratingSource: "Google",
+      summary: "푸드코트에서 빠르게 먹기 좋은 미국식 중식 체인입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      area: "푸드코트",
+      tags: ["린쿠", "식사", "중식"],
+      features: ["푸드코트", "빠른 식사"],
+      links: [{ "label": "공식 사이트", "url": "https://www.pandaexpress.jp/" }]
+    },
+    "sandayahonten steak house - rinku": {
+      rating: 4.5,
+      ratingCount: 320,
+      ratingSource: "Google",
+      summary: "고베 소고기 스테이크를 즐길 수 있는 린쿠의 스테이크 하우스입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["린쿠", "식사", "스테이크"],
+      features: ["고베 소고기", "스테이크 전문"],
+      links: [{ "label": "공식 사이트", "url": "https://sandaya-honten.co.jp/" }]
+    },
+    "sumo restaurant ochiizumibeya": {
+      rating: 4.8,
+      ratingCount: 1281,
+      ratingSource: "Google",
+      summary: "스모 쇼와 함께 짱코나베를 체험할 수 있는 식당입니다.",
+      building: "린쿠 시클",
+      floor: "2층",
+      tags: ["린쿠", "식사", "체험"],
+      features: ["스모 쇼", "짱코나베"],
+      links: [{ "label": "공식 사이트", "url": "https://ochi-arena.jp/" }]
+    },
+    "starbucks coffee - rinku premium outlets": {
+      rating: 4.0,
+      ratingCount: 824,
+      ratingSource: "Google",
+      summary: "아울렛 중심에 위치한 대표 카페로 휴식하기 좋습니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "1층",
+      tags: ["린쿠", "카페", "휴식"],
+      features: ["커피/음료", "테이크아웃"],
+      links: [{ "label": "공식 사이트", "url": "https://www.starbucks.co.jp/" }]
+    },
+    "snow peak cafe & dining": {
+      rating: 3.8,
+      ratingCount: 218,
+      ratingSource: "Google",
+      summary: "캠핑 감성과 바다 뷰를 함께 즐길 수 있는 카페입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["린쿠", "카페", "바다뷰"],
+      features: ["캠핑 감성", "바다 뷰"],
+      links: [{ "label": "공식 사이트", "url": "https://www.snowpeak.co.jp/" }]
+    },
+    "starbucks coffee - aeon mall rinku sennan": {
+      rating: 3.8,
+      ratingCount: 365,
+      ratingSource: "Google",
+      summary: "이온몰 내 넓은 좌석이 있는 카페입니다.",
+      building: "이온몰 린쿠 센난",
+      floor: "1층",
+      tags: ["린쿠", "카페", "실내"],
+      features: ["넓은 좌석", "실내 휴식"],
+      links: [{ "label": "공식 사이트", "url": "https://www.starbucks.co.jp/" }]
+    },
+    "aeon mall rinku sennan": {
+      rating: 3.9,
+      ratingCount: 4210,
+      ratingSource: "Google",
+      summary: "린쿠 해변 인근 대형 쇼핑몰로 현지 쇼핑과 식사를 함께 즐길 수 있습니다.",
+      tags: ["린쿠", "쇼핑", "몰"],
+      features: ["대형 몰", "푸드코트/쇼핑"],
+      links: [{ "label": "공식 사이트", "url": "https://rinkusennan-aeonmall.com/" }]
+    },
+    "rinku park": {
+      rating: 4.5,
+      ratingCount: 127,
+      ratingSource: "Google",
+      summary: "산책하기 좋은 해변 공원으로 여유로운 시간을 보내기 좋습니다.",
+      tags: ["린쿠", "산책", "공원"],
+      features: ["해변 산책", "공원"],
+      links: [{ "label": "공식 사이트", "url": "https://rinku.osaka-park.or.jp/" }]
+    },
+    "honke daiichi-asahi": {
+      rating: 4.1,
+      ratingCount: 4820,
+      ratingSource: "Google",
+      summary: "줄 서서 먹는 교토 대표 라멘집으로 진한 국물이 특징입니다.",
+      area: "교토역 주변",
+      tags: ["교토역", "라멘", "식사"],
+      features: ["교토 라멘", "현지 인기"],
+      links: [{ "label": "공식 사이트", "url": "https://www.honke-daiichiasahi.com/" }]
+    },
+    "katsukura kyoto station building": {
+      rating: 4.3,
+      ratingCount: 1520,
+      ratingSource: "Google",
+      summary: "교토역 빌딩 내 돈카츠 전문점으로 안정적인 식사 선택지입니다.",
+      building: "교토역 빌딩",
+      floor: "11층",
+      tags: ["교토역", "돈카츠", "식사"],
+      features: ["돈카츠 전문", "역내 동선"],
+      links: [{ "label": "공식 사이트", "url": "https://www.katsukura.jp/" }]
+    },
+    "kyoto ramen koji": {
+      rating: 4.2,
+      ratingCount: 2140,
+      ratingSource: "Google",
+      summary: "교토역 10층 라멘 거리로 유명 라멘집이 모여 있습니다.",
+      building: "교토역 빌딩",
+      floor: "10층",
+      tags: ["교토역", "라멘", "식사"],
+      features: ["라멘 테마존", "선택 폭 넓음"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kyoto-ramen-koji.com/" }]
+    },
+    "kura sushi - kyoto station area": {
+      rating: 4.0,
+      ratingCount: 2850,
+      ratingSource: "Google",
+      summary: "합리적인 가격의 회전초밥 체인으로 부담 없이 즐길 수 있습니다.",
+      area: "교토역 주변",
+      tags: ["교토역", "회전초밥", "식사"],
+      features: ["회전초밥", "가성비"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kurasushi.co.jp/" }]
+    },
+    "donguri kyoto station": {
+      rating: 4.0,
+      ratingCount: 890,
+      ratingSource: "Google",
+      summary: "교토풍 오코노미야키 전문점으로 든든한 한 끼에 좋습니다.",
+      area: "교토역 주변",
+      tags: ["교토역", "오코노미야키", "식사"],
+      features: ["오코노미야키", "현지 맛집"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kyoto-donguri.co.jp/" }]
+    },
+    "tsujiri kyoto tower sando": {
+      rating: 4.1,
+      ratingCount: 560,
+      ratingSource: "Google",
+      summary: "교토 타워 산도에 위치한 말차 디저트 전문점입니다.",
+      building: "교토 타워 산도",
+      floor: "1층",
+      tags: ["교토역", "카페", "말차"],
+      features: ["말차 디저트", "테이크아웃"],
+      links: [{ "label": "공식 사이트", "url": "https://www.giontsujiri.co.jp/" }]
+    },
+    "ogawa coffee kyoto station": {
+      rating: 4.0,
+      ratingCount: 920,
+      ratingSource: "Google",
+      summary: "교토 로컬 커피를 즐길 수 있는 교토역 카페입니다.",
+      building: "교토역",
+      floor: "B1층",
+      tags: ["교토역", "카페", "커피"],
+      features: ["로컬 커피", "역내 동선"],
+      links: [{ "label": "공식 사이트", "url": "https://www.oc-ogawa.co.jp/" }]
+    },
+    "bic camera kyoto station": {
+      rating: 3.9,
+      ratingCount: 2840,
+      ratingSource: "Google",
+      summary: "교토역 근처 대형 가전 매장으로 기념품 쇼핑에도 좋습니다.",
+      area: "교토역 주변",
+      tags: ["교토역", "쇼핑", "전자"],
+      features: ["가전/잡화", "대형 매장"],
+      links: [{ "label": "공식 사이트", "url": "https://www.biccamera.com/" }]
+    },
+    "kyoto avanti": {
+      rating: 3.7,
+      ratingCount: 2450,
+      ratingSource: "Google",
+      summary: "남쪽 출구 인근 쇼핑몰로 돈키호테 등 매장이 입점해 있습니다.",
+      area: "교토역 남쪽 출구",
+      tags: ["교토역", "쇼핑", "몰"],
+      features: ["쇼핑몰", "생활 쇼핑"],
+      links: [{ "label": "공식 사이트", "url": "https://kyoto-avanti.com/" }]
+    },
+    "chao chao gyoza sanjo kawaramachi": {
+      rating: 4.4,
+      ratingCount: 3210,
+      ratingSource: "Google",
+      summary: "바삭한 교자가 인기인 가와라마치 교자 전문점입니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "교자", "식사"],
+      features: ["교자 전문", "가성비"],
+      links: [{ "label": "공식 사이트", "url": "https://gyozaya.com/" }]
+    },
+    "red rock kyoto rokkaku": {
+      rating: 4.2,
+      ratingCount: 2450,
+      ratingSource: "Google",
+      summary: "산더미 스테이크 덮밥으로 유명한 덮밥집입니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "덮밥", "식사"],
+      features: ["스테이크 덮밥", "사진 포인트"],
+      links: [{ "label": "공식 사이트", "url": "http://www.redrock-kobe.com/" }]
+    },
+    "katsukura sanjo main store": {
+      rating: 4.5,
+      ratingCount: 1840,
+      ratingSource: "Google",
+      summary: "가와라마치 근처 돈카츠 전문점으로 본점 분위기가 좋습니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "돈카츠", "식사"],
+      features: ["돈카츠 전문", "본점"],
+      links: [{ "label": "공식 사이트", "url": "https://www.katsukura.jp/" }]
+    },
+    "ramen sen-no-kaze kyoto": {
+      rating: 4.6,
+      ratingCount: 4120,
+      ratingSource: "Google",
+      summary: "친절한 서비스와 깊은 육수로 유명한 교토 라멘집입니다.",
+      area: "신쿄고쿠",
+      tags: ["가와라마치", "라멘", "식사"],
+      features: ["라멘", "현지 인기"],
+      links: [{ "label": "공식 사이트", "url": "https://ramensen-no-kaze.jp/" }]
+    },
+    "musashi sushi": {
+      rating: 4.2,
+      ratingCount: 3560,
+      ratingSource: "Google",
+      summary: "가성비 좋은 노포 회전초밥 체인입니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "회전초밥", "식사"],
+      features: ["회전초밥", "가성비"],
+      links: [{ "label": "공식 사이트", "url": "https://www.sushinomusashi.com/" }]
+    },
+    "blue bottle coffee kyoto rokkaku": {
+      rating: 4.3,
+      ratingCount: 890,
+      ratingSource: "Google",
+      summary: "전통 가옥을 개조한 블루보틀 교토 매장입니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "카페", "커피"],
+      features: ["블루보틀", "전통 가옥"],
+      links: [{ "label": "공식 사이트", "url": "https://store.bluebottlecoffee.jp/" }]
+    },
+    "weekenders coffee tominokoji": {
+      rating: 4.5,
+      ratingCount: 1120,
+      ratingSource: "Google",
+      summary: "숨은 로스터리 카페로 진한 핸드드립이 인기입니다.",
+      area: "니시키 시장 인근",
+      tags: ["가와라마치", "카페", "로스터리"],
+      features: ["로스터리", "핸드드립"],
+      links: [{ "label": "공식 사이트", "url": "https://www.weekenderscoffee.com/" }]
+    },
+    "starbucks coffee - kyoto sanjo ohashi": {
+      rating: 4.1,
+      ratingCount: 1540,
+      ratingSource: "Google",
+      summary: "가모강 뷰가 좋은 스타벅스 매장입니다.",
+      area: "산조대교",
+      tags: ["가와라마치", "카페", "가모강뷰"],
+      features: ["강변 뷰", "휴식"],
+      links: [{ "label": "공식 사이트", "url": "https://www.starbucks.co.jp/" }]
+    },
+    "takashimaya kyoto": {
+      rating: 4.1,
+      ratingCount: 4210,
+      ratingSource: "Google",
+      summary: "가와라마치 중심의 백화점으로 명품/식품관이 유명합니다.",
+      area: "가와라마치",
+      tags: ["가와라마치", "쇼핑", "백화점"],
+      features: ["백화점", "명품/식품관"],
+      links: [{ "label": "공식 사이트", "url": "https://www.takashimaya.co.jp/kyoto/" }]
+    },
+    "daimaru kyoto": {
+      rating: 4.0,
+      ratingCount: 3850,
+      ratingSource: "Google",
+      summary: "현지인이 많이 찾는 백화점으로 쇼핑 동선이 편합니다.",
+      area: "시조 거리",
+      tags: ["가와라마치", "쇼핑", "백화점"],
+      features: ["백화점", "현지 인기"],
+      links: [{ "label": "공식 사이트", "url": "https://www.daimaru.co.jp/kyoto/" }]
+    },
+    "pontocho alley": {
+      rating: 4.4,
+      ratingCount: 6850,
+      ratingSource: "Google",
+      summary: "교토의 분위기 있는 골목으로 저녁 산책에 좋습니다.",
+      area: "가모강 인근",
+      tags: ["가와라마치", "골목", "야간"],
+      features: ["전통 골목", "저녁 산책"],
+      links: [{ "label": "공식 사이트", "url": "https://www.ponto-chou.com/" }]
+    },
+    "kamo river": {
+      rating: 4.6,
+      ratingCount: 3420,
+      ratingSource: "Google",
+      summary: "가와라마치 인근 대표 산책로로 여유로운 강변 풍경을 즐길 수 있습니다.",
+      tags: ["가와라마치", "산책", "강변"],
+      features: ["강변 산책", "야경"],
+      links: [{ "label": "공식 사이트", "url": "https://www.pref.kyoto.jp/kamogawa/" }]
+    },
+    "menya yuko": {
+      rating: 4.4,
+      ratingCount: 1240,
+      ratingSource: "Google",
+      summary: "조개 베이스의 깔끔한 라멘을 맛볼 수 있는 니조성 근처 라멘집입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "라멘", "식사"],
+      features: ["조개 베이스 라멘", "깔끔한 맛"],
+      links: [{ "label": "공식 사이트", "url": "https://menyayuuko.com/" }]
+    },
+    "karasemitei": {
+      rating: 4.2,
+      ratingCount: 350,
+      ratingSource: "Google",
+      summary: "현지인들이 찾는 카레/오므라이스 맛집입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "카레", "식사"],
+      features: ["현지 맛집", "카레/오므라이스"],
+      links: [{ "label": "공식 사이트", "url": "https://karasemitei.com/" }]
+    },
+    "kibunjocho": {
+      rating: 4.1,
+      ratingCount: 180,
+      ratingSource: "Google",
+      summary: "교토 채소를 활용한 정갈한 정식을 즐길 수 있는 식당입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "정식", "식사"],
+      features: ["교토 채소 요리", "정갈한 분위기"],
+      links: [{ "label": "공식 사이트", "url": "https://kibunjocho.jp/" }]
+    },
+    "seike nijo-jo": {
+      rating: 4.3,
+      ratingCount: 290,
+      ratingSource: "Google",
+      summary: "두부/유바 요리로 유명한 니조성 주변 전문점입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "두부", "식사"],
+      features: ["두부/유바 요리", "전통 일식"],
+      links: [{ "label": "공식 사이트", "url": "https://seike-kyoto.com/" }]
+    },
+    "forest kitchen": {
+      rating: 4.5,
+      ratingCount: 140,
+      ratingSource: "Google",
+      summary: "건강한 유기농 비건 메뉴를 제공하는 니조성 인근 식당입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "비건", "식사"],
+      features: ["유기농", "비건"],
+      links: [{ "label": "공식 사이트", "url": "http://forestkitchen.info/" }]
+    },
+    "clamp coffee sarasa": {
+      rating: 4.4,
+      ratingCount: 810,
+      ratingSource: "Google",
+      summary: "앤티크 감성의 로스터리 카페로 커피 맛이 좋습니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "카페", "로스터리"],
+      features: ["로스터리 카페", "앤티크 분위기"],
+      links: [{ "label": "공식 사이트", "url": "https://www.sarasa.jp/" }]
+    },
+    "here kyoto": {
+      rating: 4.3,
+      ratingCount: 740,
+      ratingSource: "Google",
+      summary: "바리스타 챔피언이 운영하는 디저트 카페로 까눌레가 유명합니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "카페", "디저트"],
+      features: ["까눌레", "스페셜티 커피"],
+      links: [{ "label": "공식 사이트", "url": "https://coffeehere.world/" }]
+    },
+    "blue bottle coffee kyoto cafe": {
+      rating: 4.3,
+      ratingCount: 2850,
+      ratingSource: "Google",
+      summary: "세련된 디자인으로 유명한 교토 블루보틀 카페입니다.",
+      area: "교토 시내",
+      tags: ["카페", "블루보틀", "커피"],
+      features: ["세련된 공간", "스페셜티 커피"],
+      links: [{ "label": "공식 사이트", "url": "https://store.bluebottlecoffee.jp/" }]
+    },
+    "kyoto sanjo kai shotengai": {
+      rating: 4.0,
+      ratingCount: 1120,
+      ratingSource: "Google",
+      summary: "생활 밀착형 상점가로 소소한 쇼핑에 좋습니다.",
+      area: "산조 거리",
+      tags: ["니조성", "쇼핑", "상점가"],
+      features: ["아케이드 상점가", "로컬 쇼핑"],
+      links: [{ "label": "공식 사이트", "url": "https://kyoto-sanjo.or.jp/" }]
+    },
+    "horikawa shotengai": {
+      rating: 3.8,
+      ratingCount: 450,
+      ratingSource: "Google",
+      summary: "호리카와 거리의 전통 상점가로 산책하며 둘러보기 좋습니다.",
+      area: "호리카와 거리",
+      tags: ["니조성", "쇼핑", "상점가"],
+      features: ["전통 상점가", "산책 동선"],
+      links: [{ "label": "공식 사이트", "url": "http://www.horikawa-shotengai.com/" }]
+    },
+    "shiki-no-ame": {
+      rating: 4.4,
+      ratingCount: 65,
+      ratingSource: "Google",
+      summary: "전통 부채와 공예품을 살 수 있는 기념품점입니다.",
+      area: "니조성 주변",
+      tags: ["니조성", "쇼핑", "공예"],
+      features: ["전통 공예품", "기념품"],
+      links: [{ "label": "공식 사이트", "url": "http://shikinoame.com/" }]
+    },
+    "kyoto imperial palace": {
+      rating: 4.5,
+      ratingCount: 11240,
+      ratingSource: "Google",
+      summary: "교토 교엔 내 넓은 공원과 궁궐을 함께 볼 수 있는 명소입니다.",
+      area: "교토 교엔",
+      tags: ["니조성", "궁궐", "볼거리"],
+      features: ["궁궐", "대규모 공원"],
+      links: [{ "label": "공식 사이트", "url": "https://sankan.kunaicho.go.jp/" }]
+    },
+    "omen kinkakuji": {
+      rating: 4.1,
+      ratingCount: 840,
+      ratingSource: "Google",
+      summary: "금각사 인근에서 채소 우동을 즐길 수 있는 인기 식당입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "우동", "식사"],
+      features: ["채소 우동", "가벼운 한 끼"],
+      links: [{ "label": "공식 사이트", "url": "https://omen.co.jp/" }]
+    },
+    "kura sushi kinkakuji": {
+      rating: 4.0,
+      ratingCount: 1560,
+      ratingSource: "Google",
+      summary: "금각사 인근 회전초밥 체인으로 부담 없는 식사가 가능합니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "회전초밥", "식사"],
+      features: ["회전초밥", "가성비"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kurasushi.co.jp/" }]
+    },
+    "itadakizen kyoto": {
+      rating: 4.5,
+      ratingCount: 310,
+      ratingSource: "Google",
+      summary: "사찰 분위기의 건강식 비건 레스토랑입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "비건", "식사"],
+      features: ["비건 요리", "건강식"],
+      links: [{ "label": "공식 사이트", "url": "https://itadakizen-kyoto.com/" }]
+    },
+    "kinkakuji michi": {
+      rating: 3.9,
+      ratingCount: 180,
+      ratingSource: "Google",
+      summary: "소박한 소바와 일본식 식사를 즐길 수 있는 가게입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "소바", "식사"],
+      features: ["소바", "소박한 분위기"],
+      links: [{ "label": "공식 사이트", "url": "https://kinkakujimichi.com/" }]
+    },
+    "mitaia": {
+      rating: 4.0,
+      ratingCount: 75,
+      ratingSource: "Google",
+      summary: "교토산 재료를 사용하는 가정식 백반 스타일 식당입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "가정식", "식사"],
+      features: ["가정식", "현지 재료"],
+      links: [{ "label": "공식 사이트", "url": "http://mitaia.com/" }]
+    },
+    "yojiya cafe kinkakuji": {
+      rating: 4.0,
+      ratingCount: 420,
+      ratingSource: "Google",
+      summary: "로고 라떼 아트로 유명한 요지야 카페입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "카페", "디저트"],
+      features: ["라떼 아트", "디저트"],
+      links: [{ "label": "공식 사이트", "url": "https://yojiyacafe.com/" }]
+    },
+    "kousagi-no-sato": {
+      rating: 4.2,
+      ratingCount: 150,
+      ratingSource: "Google",
+      summary: "토끼 테마 디저트가 유명한 아기자기한 카페입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "카페", "디저트"],
+      features: ["테마 카페", "디저트"],
+      links: [{ "label": "공식 사이트", "url": "http://kousagi-no-sato.com/" }]
+    },
+    "starbucks coffee - kyoto ryoanji": {
+      rating: 4.1,
+      ratingCount: 320,
+      ratingSource: "Google",
+      summary: "료안지로 가는 길목에 있는 아늑한 스타벅스 매장입니다.",
+      area: "료안지 주변",
+      tags: ["금각사", "카페", "휴식"],
+      features: ["커피/음료", "휴식"],
+      links: [{ "label": "공식 사이트", "url": "https://www.starbucks.co.jp/" }]
+    },
+    "kinkaku-ji temple shop": {
+      rating: 4.4,
+      ratingCount: 120,
+      ratingSource: "Google",
+      summary: "금각사 공식 기념품과 부적을 구매할 수 있는 매장입니다.",
+      area: "금각사 내부",
+      tags: ["금각사", "쇼핑", "기념품"],
+      features: ["기념품", "부적"],
+      links: [{ "label": "공식 사이트", "url": "https://www.shokoku-ji.jp/" }]
+    },
+    "tsuruya yoshinobu": {
+      rating: 4.3,
+      ratingCount: 280,
+      ratingSource: "Google",
+      summary: "정교한 일본 전통 과자를 판매하는 노포입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "쇼핑", "전통과자"],
+      features: ["전통 과자", "선물"],
+      links: [{ "label": "공식 사이트", "url": "https://www.tsuruyayoshinobu.jp/" }]
+    },
+    "kyoto craft mart": {
+      rating: 4.1,
+      ratingCount: 45,
+      ratingSource: "Google",
+      summary: "교토 장인 공예품을 구입할 수 있는 공예품 샵입니다.",
+      area: "금각사 주변",
+      tags: ["금각사", "쇼핑", "공예"],
+      features: ["공예품", "기념품"],
+      links: [{ "label": "공식 사이트", "url": "http://kyotocraftmart.com/" }]
+    },
+    "ryoan-ji": {
+      rating: 4.5,
+      ratingCount: 9120,
+      ratingSource: "Google",
+      summary: "세계적인 선 정원으로 유명한 료안지 사찰입니다.",
+      tags: ["사찰", "정원", "볼거리"],
+      features: ["석정", "전통 사찰"],
+      links: [{ "label": "공식 사이트", "url": "http://www.ryoanji.jp/" }]
+    },
+    "tougou kitayama": {
+      rating: 4.2,
+      ratingCount: 140,
+      ratingSource: "Google",
+      summary: "키타야마 거리의 분위기 좋은 이탈리안 레스토랑입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "이탈리안", "식사"],
+      features: ["이탈리안", "분위기 좋은 식사"],
+      links: [{ "label": "공식 사이트", "url": "https://tougou.jp/" }]
+    },
+    "in the green": {
+      rating: 4.0,
+      ratingCount: 1120,
+      ratingSource: "Google",
+      summary: "식물원 옆 테라스 레스토랑으로 전망과 함께 식사 가능합니다.",
+      area: "키타야마",
+      tags: ["키타야마", "레스토랑", "식물원"],
+      features: ["테라스", "식물원 뷰"],
+      links: [{ "label": "공식 사이트", "url": "https://www.inthegreen.jp/" }]
+    },
+    "katsukura kitayama": {
+      rating: 4.1,
+      ratingCount: 420,
+      ratingSource: "Google",
+      summary: "키타야마의 모던한 돈카츠 전문점입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "돈카츠", "식사"],
+      features: ["돈카츠 전문", "모던 인테리어"],
+      links: [{ "label": "공식 사이트", "url": "https://www.katsukura.jp/" }]
+    },
+    "briant kitayama": {
+      rating: 4.2,
+      ratingCount: 580,
+      ratingSource: "Google",
+      summary: "빵이 유명한 베이커리 레스토랑입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "베이커리", "식사"],
+      features: ["베이커리", "가벼운 식사"],
+      links: [{ "label": "공식 사이트", "url": "https://www.briant.jp/" }]
+    },
+    "malebranche kitayama main store": {
+      rating: 4.4,
+      ratingCount: 1210,
+      ratingSource: "Google",
+      summary: "말차 디저트로 유명한 말브랑슈 키타야마 본점입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "디저트", "카페"],
+      features: ["차노카", "디저트"],
+      links: [{ "label": "공식 사이트", "url": "https://www.malebranche.co.jp/" }]
+    },
+    "circus coffee": {
+      rating: 4.6,
+      ratingCount: 210,
+      ratingSource: "Google",
+      summary: "키타야마의 감성 로스터리 카페로 커피 맛이 좋습니다.",
+      area: "키타야마",
+      tags: ["키타야마", "카페", "로스터리"],
+      features: ["로스터리", "핸드드립"],
+      links: [{ "label": "공식 사이트", "url": "https://www.circus-coffee.jp/" }]
+    },
+    "cafe bali gasi": {
+      rating: 4.0,
+      ratingCount: 180,
+      ratingSource: "Google",
+      summary: "휴양지 감성의 테라스 카페로 여유롭게 쉬기 좋습니다.",
+      area: "키타야마",
+      tags: ["키타야마", "카페", "테라스"],
+      features: ["테라스 카페", "휴양지 분위기"],
+      links: [{ "label": "공식 사이트", "url": "https://baligasi.com/" }]
+    },
+    "kyoto kitayama coffee": {
+      rating: 4.2,
+      ratingCount: 120,
+      ratingSource: "Google",
+      summary: "장인 정신의 핸드드립 커피를 즐길 수 있는 카페입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "카페", "커피"],
+      features: ["핸드드립", "조용한 분위기"],
+      links: [{ "label": "공식 사이트", "url": "http://kitayamacoffee.com/" }]
+    },
+    "kitayama-dori": {
+      rating: 3.9,
+      ratingCount: 320,
+      ratingSource: "Google",
+      summary: "키타야마 메인 거리로 감각적인 매장이 모여 있습니다.",
+      area: "키타야마",
+      tags: ["키타야마", "쇼핑", "거리"],
+      features: ["쇼핑 거리", "감각적인 매장"],
+      links: [{ "label": "공식 사이트", "url": "https://kitayama.or.jp/" }]
+    },
+    "alpha kyoto": {
+      rating: 4.3,
+      ratingCount: 45,
+      ratingSource: "Google",
+      summary: "인테리어 소품을 판매하는 감각적인 소품샵입니다.",
+      area: "키타야마",
+      tags: ["키타야마", "쇼핑", "소품"],
+      features: ["인테리어 소품", "감성 매장"],
+      links: [{ "label": "공식 사이트", "url": "http://alpha-kyoto.com/" }]
+    },
+    "kanaya masahiro": {
+      rating: 4.5,
+      ratingCount: 68,
+      ratingSource: "Google",
+      summary: "160년 전통의 과자점을 키타야마에서 만날 수 있습니다.",
+      area: "키타야마",
+      tags: ["키타야마", "전통과자", "쇼핑"],
+      features: ["전통 과자", "선물"],
+      links: [{ "label": "공식 사이트", "url": "https://kanayamasahiro.com/" }]
+    },
+    "kamigamo-jinja shrine": {
+      rating: 4.5,
+      ratingCount: 5840,
+      ratingSource: "Google",
+      summary: "유네스코 유산으로 알려진 오래된 신사입니다.",
+      tags: ["신사", "유네스코", "볼거리"],
+      features: ["전통 신사", "조용한 산책"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kamigamojinja.jp/" }]
+    },
+    "shichijo shindo": {
+      rating: 4.2,
+      ratingCount: 120,
+      ratingSource: "Google",
+      summary: "정갈한 소바와 덮밥을 즐길 수 있는 노포입니다.",
+      area: "산쥬산겐도 주변",
+      tags: ["산쥬산겐도", "소바", "식사"],
+      features: ["소바", "노포"],
+      links: [{ "label": "공식 사이트", "url": "https://shichijoshindo.com/" }]
+    },
+    "sobanomi yoshimura": {
+      rating: 4.4,
+      ratingCount: 1580,
+      ratingSource: "Google",
+      summary: "메밀 향이 진한 수제 소바 전문점입니다.",
+      area: "히가시혼간지 주변",
+      tags: ["교토역", "소바", "식사"],
+      features: ["수제 소바", "현지 인기"],
+      links: [{ "label": "공식 사이트", "url": "https://yoshimura-gr.com/" }]
+    },
+    "veg out": {
+      rating: 4.4,
+      ratingCount: 540,
+      ratingSource: "Google",
+      summary: "강변 뷰를 보며 즐기는 비건 브런치 카페입니다.",
+      area: "가모강 인근",
+      tags: ["산쥬산겐도", "비건", "식사"],
+      features: ["비건 브런치", "강변 뷰"],
+      links: [{ "label": "공식 사이트", "url": "https://vegout.jp/" }]
+    },
+    "ask me!": {
+      rating: 4.6,
+      ratingCount: 85,
+      ratingSource: "Google",
+      summary: "수제 정식과 도시락으로 평이 좋은 작은 식당입니다.",
+      area: "교토역 인근",
+      tags: ["교토역", "정식", "식사"],
+      features: ["수제 정식", "도시락"],
+      links: [{ "label": "공식 사이트", "url": "http://askme-kyoto.com/" }]
+    },
+    "sanshu-tei": {
+      rating: 4.1,
+      ratingCount: 110,
+      ratingSource: "Google",
+      summary: "조용한 분위기의 전통 정찬 식당입니다.",
+      area: "산쥬산겐도 주변",
+      tags: ["산쥬산겐도", "정식", "식사"],
+      features: ["전통 정찬", "조용한 분위기"],
+      links: [{ "label": "공식 사이트", "url": "http://sanshutei.jp/" }]
+    },
+    "kaikado cafe": {
+      rating: 4.4,
+      ratingCount: 810,
+      ratingSource: "Google",
+      summary: "전통 공예와 커피를 함께 즐길 수 있는 감성 카페입니다.",
+      area: "교토역 인근",
+      tags: ["카페", "공예", "커피"],
+      features: ["전통 공예", "로스터리"],
+      links: [{ "label": "공식 사이트", "url": "http://www.kaikado-cafe.jp/" }]
+    },
+    "walden woods kyoto": {
+      rating: 4.3,
+      ratingCount: 920,
+      ratingSource: "Google",
+      summary: "하얀 숲 같은 감성 인테리어로 유명한 카페입니다.",
+      area: "히가시혼간지 주변",
+      tags: ["카페", "감성", "디저트"],
+      features: ["화이트 인테리어", "디저트"],
+      links: [{ "label": "공식 사이트", "url": "https://www.walden-woods.com/" }]
+    },
+    "kurasu kyoto stand": {
+      rating: 4.6,
+      ratingCount: 1240,
+      ratingSource: "Google",
+      summary: "교토에서 유명한 로스터리 스탠드 카페입니다.",
+      area: "교토역 인근",
+      tags: ["카페", "로스터리", "커피"],
+      features: ["스페셜티 커피", "테이크아웃"],
+      links: [{ "label": "공식 사이트", "url": "https://kurasu.kyoto/" }]
+    },
+    "kyoto ceramic art association": {
+      rating: 4.2,
+      ratingCount: 55,
+      ratingSource: "Google",
+      summary: "교토 도자기 공예품을 둘러볼 수 있는 전시장입니다.",
+      area: "산쥬산겐도 주변",
+      tags: ["쇼핑", "공예", "전시"],
+      features: ["도자기 공예", "전시장"],
+      links: [{ "label": "공식 사이트", "url": "https://www.kyototougei.com/" }]
+    },
+    "shichijo-dori": {
+      rating: 3.8,
+      ratingCount: 150,
+      ratingSource: "Google",
+      summary: "골동품과 공예품 가게가 이어지는 거리입니다.",
+      area: "산쥬산겐도 주변",
+      tags: ["쇼핑", "거리", "공예"],
+      features: ["골동품", "공예품"],
+      links: [{ "label": "공식 사이트", "url": "https://shichijo-dori.com/" }]
+    },
+    "kyonamaji": {
+      rating: 4.3,
+      ratingCount: 42,
+      ratingSource: "Google",
+      summary: "교토 전통 절임 요리를 판매하는 전문점입니다.",
+      area: "히가시혼간지 주변",
+      tags: ["쇼핑", "전통", "먹거리"],
+      features: ["전통 절임", "기념품"],
+      links: [{ "label": "공식 사이트", "url": "https://kyonamaji.com/" }]
     }
   }
 };

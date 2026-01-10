@@ -1343,49 +1343,68 @@
   function renderOptionGroup(group) {
     const selection = getOptionSelection(group);
     const selectedIds = group.mode === "multi" ? selection : [selection];
+    const selectedLabels = group.options
+      .filter((option) => selectedIds.includes(option.id))
+      .map((option) => option.label);
+    const selectionSummary = selectedLabels.length ? selectedLabels.join(", ") : "선택 없음";
+    const optionItems = group.options
+      .map((option) => {
+        const checked = selectedIds.includes(option.id);
+        const rawDetail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
+        const category = resolveCategory(rawDetail, option.label, rawDetail?.type);
+        const detail = enhanceDetail(rawDetail, category);
+        const ratingLine = detail ? `<span class="option-rating">평점: ${formatRating(detail)}</span>` : "";
+        const location = option.where || buildLocationSummary(detail);
+        const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
+        const tags = buildHashtags(detail, category);
+        const tagRow = renderTagRow(category, tags);
+        return `
+          <label class="option-item ${checked ? "selected" : ""}">
+            <input
+              type="${group.mode === "multi" ? "checkbox" : "radio"}"
+              name="option-${group.id}"
+              value="${option.id}"
+              data-option-group="${group.id}"
+              data-option-mode="${group.mode}"
+              ${checked ? "checked" : ""}
+            />
+            <div class="option-meta">
+              <strong>${option.label}</strong>
+              ${option.summary ? `<span>${option.summary}</span>` : ""}
+              ${ratingLine}
+              ${locationLine}
+              ${tagRow}
+              ${checked ? `<span class="option-selected">선택됨</span>` : ""}
+            </div>
+          </label>
+        `;
+      })
+      .join("");
+    const content = `
+      <div>
+        <h3>${group.title}</h3>
+        ${group.help ? `<p class="muted">${group.help}</p>` : ""}
+      </div>
+      <div class="option-list">
+        ${optionItems}
+      </div>
+    `;
+    if (group.collapsed) {
+      return `
+        <details class="option-group-toggle card">
+          <summary>
+            <span class="option-group-title">${group.title}</span>
+            <span class="option-group-current">현재: ${selectionSummary}</span>
+          </summary>
+          <div class="option-group-body">
+            ${content}
+          </div>
+        </details>
+      `;
+    }
     return `
       <div class="card option-group">
-        <div>
-          <h3>${group.title}</h3>
-          ${group.help ? `<p class="muted">${group.help}</p>` : ""}
-        </div>
-        <div class="option-list">
-          ${group.options
-            .map((option) => {
-              const checked = selectedIds.includes(option.id);
-              const rawDetail = option.mapQuery ? getPlaceDetails(option.mapQuery) : null;
-              const category = resolveCategory(rawDetail, option.label, rawDetail?.type);
-              const detail = enhanceDetail(rawDetail, category);
-              const ratingLine = detail
-                ? `<span class="option-rating">평점: ${formatRating(detail)}</span>`
-                : "";
-              const location = option.where || buildLocationSummary(detail);
-              const locationLine = location ? `<span class="option-where">위치: ${location}</span>` : "";
-              const tags = buildHashtags(detail, category);
-              const tagRow = renderTagRow(category, tags);
-              return `
-                <label class="option-item ${checked ? "selected" : ""}">
-                  <input
-                    type="${group.mode === "multi" ? "checkbox" : "radio"}"
-                    name="option-${group.id}"
-                    value="${option.id}"
-                    data-option-group="${group.id}"
-                    data-option-mode="${group.mode}"
-                    ${checked ? "checked" : ""}
-                  />
-                  <div class="option-meta">
-                    <strong>${option.label}</strong>
-                    ${option.summary ? `<span>${option.summary}</span>` : ""}
-                    ${ratingLine}
-                    ${locationLine}
-                    ${tagRow}
-                    ${checked ? `<span class="option-selected">선택됨</span>` : ""}
-                  </div>
-                </label>
-              `;
-            })
-            .join("")}
-        </div>
+        ${content}
       </div>
     `;
   }
@@ -2706,18 +2725,22 @@
         return;
       }
       const hashId = window.location.hash ? window.location.hash.slice(1) : "";
+      const visibleSections = sectionsList.filter((section) => !section.hidden);
       let activeId = "";
-      if (!state.showAllSections && hashId && sectionsList.some((section) => section.id === hashId)) {
-        activeId = hashId;
-      } else {
+      if (state.showAllSections) {
         const offset = 140;
-        activeId = sectionsList[0]?.id || "";
-        sectionsList.forEach((section) => {
+        const scrollSections = visibleSections.length ? visibleSections : sectionsList;
+        activeId = scrollSections[0]?.id || "";
+        scrollSections.forEach((section) => {
           const top = section.getBoundingClientRect().top;
           if (top - offset <= 0) {
             activeId = section.id;
           }
         });
+      } else if (hashId && sectionsList.some((section) => section.id === hashId)) {
+        activeId = hashId;
+      } else {
+        activeId = visibleSections[0]?.id || sectionsList[0]?.id || "";
       }
       setActive(activeId);
       setSectionVisibility(activeId);

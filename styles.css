@@ -568,6 +568,40 @@ body.compact-view .map-actions button {
   gap: 14px;
 }
 
+.option-group-toggle {
+  display: grid;
+  gap: 12px;
+}
+
+.option-group-toggle summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+.option-group-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.option-group-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.option-group-current {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.option-group-body {
+  display: grid;
+  gap: 12px;
+}
+
 .option-group h3 {
   margin: 0;
   font-family: var(--font-display);

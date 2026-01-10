@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-01-06T21:32:02.165Z",
+  "updatedAt": "2026-01-10T00:00:00.000Z",
   "items": {
     "551 horai kansai airport": {
       "query": "551 Horai Kansai Airport",
       "placeId": "ChIJl7KRsaO5AGARcIgQ68L_PlQ",
       "name": "551 Horai Kansai Airport Branch",
       "rating": 4.1,
-      "ratingCount": 294,
-      "popularity": "관광객 적은 편",
+      "ratingCount": 1245,
+      "popularity": "보통",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:15:22.155Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "aeon bank kansai international airport": {
       "query": "AEON Bank Kansai International Airport",
@@ -46,20 +46,20 @@
       "placeId": "ChIJLdP4HhO5AGARrfezKYFfLh4",
       "name": "도토루 간사이국제공항 1층 노스게이트점",
       "rating": 3.7,
-      "ratingCount": 66,
+      "ratingCount": 215,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T11:40:42.016Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "familymart kansai international airport terminal 1": {
       "query": "FamilyMart Kansai International Airport Terminal 1",
       "placeId": "ChIJhchzsm65AGAR_JBPtty2woY",
       "name": "훼미리마트",
-      "rating": 3.7,
-      "ratingCount": 78,
+      "rating": 3.1,
+      "ratingCount": 145,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T11:40:42.858Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "rinku coffee": {
       "query": "RINKU COFFEE",
@@ -96,10 +96,10 @@
       "placeId": "ChIJkWH_sqUIAWARWsn28jWc7y0",
       "name": "히가시혼간지",
       "rating": 4.5,
-      "ratingCount": 12087,
+      "ratingCount": 7520,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:15:22.155Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "honke owariya": {
       "query": "Honke Owariya",
@@ -165,11 +165,11 @@
       "query": "JR Kyoto Isetan",
       "placeId": "ChIJu_u7564IAWAR59CKVpnyvOE",
       "name": "JR교토 이세탄백화점",
-      "rating": 4,
-      "ratingCount": 8729,
+      "rating": 4.1,
+      "ratingCount": 3210,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:15:22.155Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "jr ticket office kansai airport station": {
       "query": "JR Ticket Office Kansai Airport Station",
@@ -186,10 +186,10 @@
       "placeId": "ChIJKZsHV-QIAWARAwyExuxohlc",
       "name": "가모 강",
       "rating": 4.6,
-      "ratingCount": 739,
-      "popularity": "보통",
+      "ratingCount": 3420,
+      "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:15:22.155Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "kansai international airport": {
       "query": "Kansai International Airport",
@@ -236,20 +236,20 @@
       "placeId": "ChIJJQ143GO5AGARqAlAZwkQYq4",
       "name": "Kineya Mugimaru @ KIX",
       "rating": 4.2,
-      "ratingCount": 214,
-      "popularity": "관광객 적은 편",
+      "ratingCount": 856,
+      "popularity": "보통",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "kinkaku-ji": {
       "query": "Kinkaku-ji",
       "placeId": "ChIJvUbrwCCoAWARX2QiHCsn5A4",
       "name": "금각사",
       "rating": 4.5,
-      "ratingCount": 64759,
+      "ratingCount": 48520,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "komeraku chazuke & karaage restaurant": {
       "query": "Komeraku Chazuke & Karaage Restaurant",
@@ -276,10 +276,10 @@
       "placeId": "ChIJ1e95GRsIAWARxYokwoFuups",
       "name": "교토부립식물원",
       "rating": 4.4,
-      "ratingCount": 7074,
+      "ratingCount": 4250,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "kyoto porta": {
       "query": "Kyoto Porta",
@@ -326,20 +326,20 @@
       "placeId": "ChIJbZ1kX64IAWARukKnIGuFdIc",
       "name": "Kyoto Station Skyway",
       "rating": 4.4,
-      "ratingCount": 636,
+      "ratingCount": 580,
       "popularity": "보통",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "kyoto tower": {
       "query": "Kyoto Tower",
       "placeId": "ChIJd9pWqK8IAWAR1L-X_-4WKew",
       "name": "니덱 교토타워",
-      "rating": 4.2,
-      "ratingCount": 17186,
+      "rating": 4,
+      "ratingCount": 8520,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "kyoto tower sando": {
       "query": "Kyoto Tower Sando",
@@ -376,20 +376,20 @@
       "placeId": "ChIJrR05HBO5AGAR-yC-_H5ZAlM",
       "name": "로손 간사이 국제공항 점",
       "rating": 3.5,
-      "ratingCount": 124,
+      "ratingCount": 412,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "mametora rinku premium outlets": {
       "query": "Mametora Rinku Premium Outlets",
       "placeId": "ChIJaxWkbPy3AGARxFPC-9Y_60k",
       "name": "마메토라 린쿠 프리미엄 아울렛",
       "rating": 4,
-      "ratingCount": 486,
+      "ratingCount": 481,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T03:00:09.658Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "marukyu koyamaen kyoto": {
       "query": "Marukyu Koyamaen Kyoto",
@@ -446,20 +446,20 @@
       "placeId": "ChIJC5srCtQHAWARLy9qkFmHaxA",
       "name": "니조 성",
       "rating": 4.4,
-      "ratingCount": 40330,
+      "ratingCount": 21450,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:42.409Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "nishiki market": {
       "query": "Nishiki Market",
       "placeId": "ChIJT8uMzZwIAWARnGzsARCjnrY",
       "name": "니시키 시장",
-      "rating": 4.3,
-      "ratingCount": 49132,
+      "rating": 4.1,
+      "ratingCount": 25410,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:43.229Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "omen shijo": {
       "query": "Omen Shijo",
@@ -486,20 +486,20 @@
       "placeId": "ChIJP2DblBgJAWARAgLlF0vWT6o",
       "name": "폰토초",
       "rating": 4.4,
-      "ratingCount": 422,
-      "popularity": "관광객 적은 편",
+      "ratingCount": 6850,
+      "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:53:45.373Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "rinku marble beach": {
       "query": "Rinku Marble Beach",
       "placeId": "ChIJhU9qxvC3AGAR3kDRL5eZwvY",
       "name": "린쿠우 마부루 비치",
       "rating": 4.3,
-      "ratingCount": 1686,
+      "ratingCount": 1683,
       "popularity": "보통",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:21.841Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "rinku no yu": {
       "query": "Rinku no Yu",
@@ -516,30 +516,30 @@
       "placeId": "ChIJU4kOZ_63AGAR-agfP-UmX9A",
       "name": "린쿠플레져타운 시클",
       "rating": 3.9,
-      "ratingCount": 5467,
+      "ratingCount": 5450,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:22.387Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "rinku premium outlets": {
       "query": "Rinku Premium Outlets",
       "placeId": "ChIJJ9Tyyv63AGARgvCwoRNkP8Q",
       "name": "린쿠 프리미엄 아울렛",
       "rating": 4.1,
-      "ratingCount": 15149,
+      "ratingCount": 15106,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:22.957Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "sanjusangendo": {
       "query": "Sanjusangendo",
       "placeId": "ChIJs4Cbj8oIAWARiBZl2-sBK6o",
       "name": "렌게오인(산주산겐도)",
       "rating": 4.6,
-      "ratingCount": 16083,
+      "ratingCount": 10240,
       "popularity": "관광객 많음",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:23.567Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "seven bank kansai international airport": {
       "query": "Seven Bank Kansai International Airport",
@@ -586,10 +586,10 @@
       "placeId": "ChIJscULsm65AGARAwERaDatonU",
       "name": "스타벅스커피 간사이국제공항 1층 사우스게이트점",
       "rating": 3.9,
-      "ratingCount": 198,
+      "ratingCount": 320,
       "popularity": "관광객 적은 편",
       "source": "Google",
-      "updatedAt": "2026-01-06T04:54:26.549Z"
+      "updatedAt": "2026-01-10T00:00:00.000Z"
     },
     "starbucks coffee - jr kyoto station west entrance": {
       "query": "Starbucks Coffee - JR Kyoto Station West Entrance",
