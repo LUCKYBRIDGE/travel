@@ -731,20 +731,6 @@
     };
   }
 
-  function getShareTextarea() {
-    return document.getElementById("sharePayload");
-  }
-
-  function writeSharePayload(payload) {
-    const textarea = getShareTextarea();
-    if (!textarea) {
-      return "";
-    }
-    const text = JSON.stringify(payload, null, 2);
-    textarea.value = text;
-    return text;
-  }
-
   function normalizeShareState(rawState) {
     const base = isPlainObject(rawState) ? rawState : {};
     return {
@@ -782,19 +768,6 @@
     saveStorage(STORAGE.coords, state.coords);
     saveStorage(STORAGE.ratings, state.ratings);
     render();
-  }
-
-  function downloadSharePayload(payload) {
-    const text = JSON.stringify(payload, null, 2);
-    const blob = new Blob([text], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `kyoto-trip-share-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
   }
 
   function getRatingApiBase() {
@@ -1379,25 +1352,8 @@
       <div class="card share-card" style="margin-top: 20px; --delay: 0.32s">
         <h3>내 코스 공유</h3>
         <p class="muted">
-          기기마다 저장된 선택 내용이 다를 수 있어요. 아래 JSON을 공유하면 같은 코스로 동기화됩니다.
+          공유 코드를 사용하면 여러 기기에서 같은 코스를 불러올 수 있어요.
         </p>
-        <div class="share-actions">
-          <button type="button" data-share-export>내보내기</button>
-          <button type="button" data-share-copy>복사</button>
-          <label class="share-upload">
-            파일 가져오기
-            <input type="file" data-share-file accept="application/json" />
-          </label>
-        </div>
-        <textarea
-          id="sharePayload"
-          rows="6"
-          placeholder="내보내기 또는 공유받은 JSON을 붙여넣어 주세요."
-        ></textarea>
-        <div class="share-actions">
-          <button type="button" data-share-import>붙여넣기 가져오기</button>
-          <button type="button" data-share-clear>지우기</button>
-        </div>
         <div class="sync-card">
           <h4>공유 코드 동기화</h4>
           <p class="muted">
@@ -2498,27 +2454,6 @@
       render();
       showToast("경로 모드가 변경됐어요");
     }
-
-    if (target.matches("[data-share-file]")) {
-      const file = target.files && target.files[0];
-      if (!file) {
-        return;
-      }
-      file
-        .text()
-        .then((text) => {
-          const payload = JSON.parse(text);
-          applySharePayload(payload);
-          writeSharePayload(payload);
-          showToast("공유 데이터 적용 완료");
-        })
-        .catch(() => {
-          showToast("파일 가져오기 실패");
-        })
-        .finally(() => {
-          target.value = "";
-        });
-    }
   });
 
   document.addEventListener("click", (event) => {
@@ -2731,59 +2666,6 @@
           ratingButton.disabled = false;
           ratingButton.textContent = "평점 업데이트";
         });
-      return;
-    }
-
-    const shareExport = event.target.closest("[data-share-export]");
-    if (shareExport) {
-      const payload = buildSharePayload();
-      writeSharePayload(payload);
-      downloadSharePayload(payload);
-      showToast("공유 파일 저장 완료");
-      return;
-    }
-
-    const shareCopy = event.target.closest("[data-share-copy]");
-    if (shareCopy) {
-      const payload = buildSharePayload();
-      const text = writeSharePayload(payload);
-      if (!text) {
-        showToast("복사할 데이터 없음");
-        return;
-      }
-      navigator.clipboard
-        .writeText(text)
-        .then(() => showToast("공유 데이터 복사 완료"))
-        .catch(() => showToast("복사 실패"));
-      return;
-    }
-
-    const shareImport = event.target.closest("[data-share-import]");
-    if (shareImport) {
-      const textarea = getShareTextarea();
-      const raw = textarea ? textarea.value.trim() : "";
-      if (!raw) {
-        showToast("붙여넣기 내용이 비어 있음");
-        return;
-      }
-      try {
-        const payload = JSON.parse(raw);
-        applySharePayload(payload);
-        writeSharePayload(payload);
-        showToast("공유 데이터 적용 완료");
-      } catch (error) {
-        showToast("JSON 파싱 실패");
-      }
-      return;
-    }
-
-    const shareClear = event.target.closest("[data-share-clear]");
-    if (shareClear) {
-      const textarea = getShareTextarea();
-      if (textarea) {
-        textarea.value = "";
-        showToast("내용이 지워졌어요");
-      }
       return;
     }
 
