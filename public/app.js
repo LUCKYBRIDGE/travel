@@ -2221,7 +2221,7 @@
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
     const orderEditor = `
       <div class="block-row">
-        <span class="label">순서</span>
+        <span class="label">순서 변경</span>
         <span class="order-edit">
           <span class="drag-handle" title="드래그로 순서 변경" aria-hidden="true">≡</span>
           <input
@@ -2232,6 +2232,11 @@
             data-day-id="${dayId}"
             data-item-key="${itemKey}"
           />
+        </span>
+      </div>
+      <div class="block-row">
+        <span class="label">일정 추가</span>
+        <span class="order-edit">
           <button type="button" data-open-place-modal data-day-id="${dayId}" data-block-id="${block.id}" data-after-key="${itemKey}">
             장소 추가
           </button>
@@ -2240,6 +2245,7 @@
     `;
     return `
       <div class="block confirmed-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
+        <div class="order-badge">${position}</div>
         <button
           type="button"
           class="block-time time-button"
@@ -2277,6 +2283,7 @@
       : "";
     return `
       <div class="block confirmed-item custom-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
+        <div class="order-badge">${position}</div>
         <div class="block-time">시간 유동</div>
         <div class="block-body">
           <div class="block-title">
