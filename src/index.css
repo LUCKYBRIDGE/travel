@@ -460,6 +460,12 @@ body.compact-view .map-actions button {
   font-size: 0.85rem;
   display: grid;
   place-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.order-badge:hover {
+  background: rgba(0, 113, 227, 0.2);
 }
 
 .confirmed-item .block-time {

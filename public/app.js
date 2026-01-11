@@ -2221,20 +2221,6 @@
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
     const orderEditor = `
       <div class="block-row">
-        <span class="label">순서 변경</span>
-        <span class="order-edit">
-          <span class="drag-handle" title="드래그로 순서 변경" aria-hidden="true">≡</span>
-          <input
-            type="number"
-            min="1"
-            value="${position}"
-            data-order-input
-            data-day-id="${dayId}"
-            data-item-key="${itemKey}"
-          />
-        </span>
-      </div>
-      <div class="block-row">
         <span class="label">일정 추가</span>
         <span class="order-edit">
           <button type="button" data-open-place-modal data-day-id="${dayId}" data-block-id="${block.id}" data-after-key="${itemKey}">
@@ -2245,7 +2231,16 @@
     `;
     return `
       <div class="block confirmed-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
-        <div class="order-badge">${position}</div>
+        <button
+          type="button"
+          class="order-badge"
+          data-open-order-modal
+          data-day-id="${dayId}"
+          data-item-key="${itemKey}"
+          aria-label="순서 변경"
+        >
+          ${position}
+        </button>
         <button
           type="button"
           class="block-time time-button"
@@ -2283,7 +2278,16 @@
       : "";
     return `
       <div class="block confirmed-item custom-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
-        <div class="order-badge">${position}</div>
+        <button
+          type="button"
+          class="order-badge"
+          data-open-order-modal
+          data-day-id="${dayId}"
+          data-item-key="${itemKey}"
+          aria-label="순서 변경"
+        >
+          ${position}
+        </button>
         <div class="block-time">시간 유동</div>
         <div class="block-body">
           <div class="block-title">
@@ -2291,17 +2295,8 @@
             ${stop.source ? `<span>${stop.source}</span>` : ""}
           </div>
           <div class="block-row">
-            <span class="label">순서</span>
+            <span class="label">일정 관리</span>
             <span class="order-edit">
-              <span class="drag-handle" title="드래그로 순서 변경" aria-hidden="true">≡</span>
-              <input
-                type="number"
-                min="1"
-                value="${position}"
-                data-order-input
-                data-day-id="${dayId}"
-                data-item-key="${itemKey}"
-              />
               <button type="button" data-custom-remove data-day-id="${dayId}" data-stop-id="${stop.id}">삭제</button>
             </span>
           </div>
@@ -2401,6 +2396,55 @@
             <button type="button" data-time-reset data-day-id="${dayId}" data-block-id="${block.id}">초기화</button>
           </div>
           <div class="muted">현재 시간: ${timeLabel}</div>
+        </div>
+      </div>
+    `;
+    document.body.classList.add("modal-open");
+  }
+
+  function showOrderModal(dayId, itemKey) {
+    const root = document.getElementById("modal-root");
+    if (!root) {
+      return;
+    }
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return;
+    }
+    const items = buildConfirmedItems(day);
+    const currentIndex = items.findIndex((item) => item.key === itemKey);
+    if (currentIndex === -1) {
+      return;
+    }
+    const currentPosition = currentIndex + 1;
+    root.innerHTML = `
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-sheet" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <div>
+            <h3>순서 변경</h3>
+            <p class="muted">현재 ${currentPosition}번째 · 전체 ${items.length}개</p>
+          </div>
+          <button type="button" class="modal-close" data-modal-close>닫기</button>
+        </div>
+        <div class="time-modal-body">
+          <div class="time-edit">
+            <input
+              type="number"
+              min="1"
+              max="${items.length}"
+              value="${currentPosition}"
+              data-order-input
+              data-day-id="${dayId}"
+              data-item-key="${itemKey}"
+            />
+          </div>
+          <div class="time-modal-actions">
+            <button type="button" class="primary" data-order-save data-day-id="${dayId}" data-item-key="${itemKey}">
+              저장
+            </button>
+          </div>
+          <div class="muted">번호 입력 후 저장하면 순서가 바뀝니다.</div>
         </div>
       </div>
     `;
@@ -3265,16 +3309,6 @@
       showToast("경로 모드가 변경됐어요");
     }
 
-    if (target.matches("[data-order-input]")) {
-      const dayId = target.dataset.dayId;
-      const itemKey = target.dataset.itemKey;
-      const desired = Number(target.value);
-      const index = Number.isFinite(desired) ? desired - 1 : 0;
-      moveItemToIndex(dayId, itemKey, index);
-      render();
-      showToast("순서가 변경됐어요");
-    }
-
   });
 
   document.addEventListener("input", (event) => {
@@ -3419,11 +3453,35 @@
       return;
     }
 
+    const orderSave = event.target.closest("[data-order-save]");
+    if (orderSave) {
+      const dayId = orderSave.dataset.dayId;
+      const itemKey = orderSave.dataset.itemKey;
+      const orderInput = document.querySelector(
+        `[data-order-input][data-day-id="${dayId}"][data-item-key="${itemKey}"]`
+      );
+      const desired = orderInput ? Number(orderInput.value) : NaN;
+      const index = Number.isFinite(desired) ? desired - 1 : 0;
+      moveItemToIndex(dayId, itemKey, index);
+      render();
+      closeModal();
+      showToast("순서가 변경됐어요");
+      return;
+    }
+
     const openTimeModal = event.target.closest("[data-open-time-modal]");
     if (openTimeModal) {
       const dayId = openTimeModal.dataset.dayId;
       const blockId = openTimeModal.dataset.blockId;
       showTimeModal(dayId, blockId);
+      return;
+    }
+
+    const openOrderModal = event.target.closest("[data-open-order-modal]");
+    if (openOrderModal) {
+      const dayId = openOrderModal.dataset.dayId;
+      const itemKey = openOrderModal.dataset.itemKey;
+      showOrderModal(dayId, itemKey);
       return;
     }
 
