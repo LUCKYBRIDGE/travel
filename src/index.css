@@ -462,6 +462,10 @@ body.compact-view .map-actions button {
   place-items: center;
 }
 
+.confirmed-item .block-time {
+  padding-left: 38px;
+}
+
 .block-time {
   font-weight: 700;
   color: var(--accent);
