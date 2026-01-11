@@ -1693,11 +1693,17 @@
     const weatherUpdatedAt = weather.updatedAt ? formatDate(weather.updatedAt) : "";
     const weatherLocation = weather.location ? `기준: ${weather.location}` : "";
     const weatherSource = weather.source ? `근거: ${weather.source}` : "";
+    const weatherTimestamp = weather.forecastTimestamp
+      ? `예보 데이터 기준 시점: ${weather.forecastTimestamp}`
+      : "";
+    const weatherArea = weather.forecastArea ? `예보 대상 지역: ${weather.forecastArea}` : "";
     const weatherCard = weatherDays.length
       ? `
         <div class="card weather-card" style="margin-top: 20px; --delay: 0.28s">
           <h3>날씨 · 1/20~1/22</h3>
           ${weather.note ? `<p class="muted">${weather.note}</p>` : ""}
+          ${weatherTimestamp ? `<div class="muted">${weatherTimestamp}</div>` : ""}
+          ${weatherArea ? `<div class="muted">${weatherArea}</div>` : ""}
           ${weatherLocation ? `<div class="muted">${weatherLocation}</div>` : ""}
           ${weatherSource ? `<div class="muted">${weatherSource}</div>` : ""}
           ${weatherUpdatedAt ? `<div class="muted">업데이트: ${weatherUpdatedAt}</div>` : ""}

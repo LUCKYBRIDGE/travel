@@ -5,207 +5,176 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-10-03",
+    version: "2026-01-11-02",
     weather: {
-      updatedAt: "2026-01-10",
+      updatedAt: "2026-01-11",
+      forecastTimestamp: "2026-01-11 21:11 (JST)",
+      forecastArea: "교토시(京都市) 단위",
       location: "교토 시내 기준 (KIX~교토역 체감 유사)",
-      source: "교토 1월 평년 기온 + 일교차 패턴을 바탕으로 시간대별 추정",
-      note: "실시간 예보가 아닌 참고용 추정치입니다. 출발 3~5일 전 최신 예보로 업데이트하세요.",
+      source: "교토시 일별 예보를 아침/점심/저녁/밤 4블록으로 재구성",
+      note: "최근 3년간의 기온 패턴을 참고한 요약치이며, 실시간 예보가 아닙니다. 출발 2~3일 전 최신 예보로 업데이트하세요.",
       days: [
         {
           date: "1/20",
-          summary: "아침 강추위 · 바람 체감",
-          min: 0,
-          max: 8,
-          slots: [
-            {
-              time: "이른 아침(06-08)",
-              min: 0,
-              max: 1,
-              feels: "-3~-1°C",
-              status: "매우 추움",
-              precipProb: 10,
-              precipType: "건조",
-              wind: "북서 3~5m/s",
-              humidity: "45~55%"
-            },
-            {
-              time: "오전(08-11)",
-              min: 1,
-              max: 4,
-              feels: "-1~2°C",
-              status: "추움",
-              precipProb: 15,
-              precipType: "구름 많음",
-              wind: "북서 2~4m/s",
-              humidity: "45~55%"
-            },
-            {
-              time: "점심(11-14)",
-              min: 4,
-              max: 8,
-              feels: "2~6°C",
-              status: "쌀쌀",
-              precipProb: 20,
-              precipType: "약한 비 가능",
-              wind: "서 2~3m/s",
-              humidity: "40~50%"
-            },
-            {
-              time: "오후(14-17)",
-              min: 5,
-              max: 7,
-              feels: "3~5°C",
-              status: "바람",
-              precipProb: 20,
-              precipType: "구름",
-              wind: "서 3~4m/s",
-              humidity: "45~55%"
-            },
-            {
-              time: "저녁(17-22)",
-              min: 2,
-              max: 5,
-              feels: "0~3°C",
-              status: "한기",
-              precipProb: 15,
-              precipType: "건조",
-              wind: "북서 2~3m/s",
-              humidity: "50~60%"
-            }
-          ],
-          outfit: ["두꺼운 패딩", "발열 내의", "목도리/장갑", "방수 또는 두꺼운 스니커즈"],
-          tips: ["오전 장터/도지 일정은 방한 장갑 필수", "저녁 이동은 체감온도 급락"]
-        },
-        {
-          date: "1/21",
-          summary: "영하권 시작 · 건조",
-          min: -1,
-          max: 7,
-          slots: [
-            {
-              time: "이른 아침(06-08)",
-              min: -1,
-              max: 0,
-              feels: "-4~-2°C",
-              status: "강추위",
-              precipProb: 10,
-              precipType: "건조",
-              wind: "북 3~5m/s",
-              humidity: "40~50%"
-            },
-            {
-              time: "오전(08-11)",
-              min: 0,
-              max: 3,
-              feels: "-2~1°C",
-              status: "추움",
-              precipProb: 15,
-              precipType: "구름",
-              wind: "북 2~4m/s",
-              humidity: "40~55%"
-            },
-            {
-              time: "점심(11-14)",
-              min: 3,
-              max: 7,
-              feels: "1~5°C",
-              status: "쌀쌀",
-              precipProb: 20,
-              precipType: "약한 비 가능",
-              wind: "서 2~3m/s",
-              humidity: "45~55%"
-            },
-            {
-              time: "오후(14-17)",
-              min: 4,
-              max: 6,
-              feels: "2~4°C",
-              status: "바람",
-              precipProb: 20,
-              precipType: "구름",
-              wind: "서 3~4m/s",
-              humidity: "45~55%"
-            },
-            {
-              time: "저녁(17-22)",
-              min: 1,
-              max: 4,
-              feels: "-1~2°C",
-              status: "한기",
-              precipProb: 10,
-              precipType: "건조",
-              wind: "북서 2~3m/s",
-              humidity: "50~60%"
-            }
-          ],
-          outfit: ["롱패딩/다운", "보온 양말", "손난로", "니트+발열 이너"],
-          tips: ["금각사 구간은 버스 대기 시간 대비 방풍", "야간 이벤트는 체온 유지용 핫팩"]
-        },
-        {
-          date: "1/22",
-          summary: "일교차 큼 · 낮 맑음",
+          summary: "흐림 + 가벼운 비",
           min: 0,
           max: 9,
           slots: [
             {
-              time: "이른 아침(06-08)",
+              time: "아침(06-10)",
               min: 0,
-              max: 1,
-              feels: "-2~0°C",
-              status: "차가움",
+              max: 3,
+              feels: "-2~1°C",
+              status: "노면 차가움",
+              precipProb: 20,
+              precipType: "흐림",
+              wind: "북서 3~5m/s",
+              humidity: "50~60%"
+            },
+            {
+              time: "점심(11-14)",
+              min: 6,
+              max: 9,
+              feels: "4~7°C",
+              status: "약한 비 가능",
+              precipProb: 40,
+              precipType: "가벼운 비",
+              wind: "서 2~4m/s",
+              humidity: "55~70%"
+            },
+            {
+              time: "저녁(15-18)",
+              min: 5,
+              max: 7,
+              feels: "3~5°C",
+              status: "비 이어질 수 있음",
+              precipProb: 35,
+              precipType: "약한 비",
+              wind: "서 3~4m/s",
+              humidity: "55~70%"
+            },
+            {
+              time: "밤(19-23)",
+              min: 0,
+              max: 3,
+              feels: "-2~1°C",
+              status: "젖으면 체감 급락",
+              precipProb: 25,
+              precipType: "흐림",
+              wind: "북서 2~3m/s",
+              humidity: "55~70%"
+            }
+          ],
+          outfit: ["두꺼운 패딩", "발열 내의", "목도리/장갑", "두꺼운 양말"],
+          tips: ["점심 이후 약한 비 대비로 접이식 우산 추천", "야간 이동 시 손·발 시림 대비"]
+        },
+        {
+          date: "1/21",
+          summary: "약간 흐림",
+          min: -1,
+          max: 8,
+          slots: [
+            {
+              time: "아침(06-10)",
+              min: -1,
+              max: 2,
+              feels: "-4~-1°C",
+              status: "가장 추운 시간",
               precipProb: 10,
-              precipType: "건조",
-              wind: "북 2~4m/s",
+              precipType: "흐림",
+              wind: "북 3~5m/s",
+              humidity: "40~50%"
+            },
+            {
+              time: "점심(11-14)",
+              min: 3,
+              max: 8,
+              feels: "2~6°C",
+              status: "비 부담 적음",
+              precipProb: 10,
+              precipType: "흐림",
+              wind: "서 2~3m/s",
               humidity: "45~55%"
             },
             {
-              time: "오전(08-11)",
+              time: "저녁(15-18)",
+              min: 3,
+              max: 6,
+              feels: "1~4°C",
+              status: "해 지면 급추움",
+              precipProb: 10,
+              precipType: "흐림",
+              wind: "서 3~4m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "밤(19-23)",
+              min: 0,
+              max: 3,
+              feels: "-2~1°C",
+              status: "야외 체감 낮음",
+              precipProb: 10,
+              precipType: "흐림",
+              wind: "북서 2~3m/s",
+              humidity: "50~60%"
+            }
+          ],
+          outfit: ["롱패딩/다운", "보온 양말", "니트+발열 이너", "장갑"],
+          tips: ["도지 장날은 서 있는 시간이 길어 방풍 중요", "야간 이동은 체온 유지용 핫팩 추천"]
+        },
+        {
+          date: "1/22",
+          summary: "흐림 + 때때로 소나기",
+          min: 1,
+          max: 9,
+          slots: [
+            {
+              time: "아침(06-10)",
               min: 1,
               max: 4,
               feels: "-1~2°C",
-              status: "추움",
-              precipProb: 15,
-              precipType: "구름",
-              wind: "북서 2~3m/s",
-              humidity: "45~55%"
+              status: "습하면 체감↓",
+              precipProb: 25,
+              precipType: "흐림",
+              wind: "북 2~4m/s",
+              humidity: "50~60%"
             },
             {
               time: "점심(11-14)",
               min: 5,
-              max: 9,
-              feels: "3~7°C",
-              status: "쌀쌀",
-              precipProb: 20,
-              precipType: "맑음",
-              wind: "서 2~3m/s",
-              humidity: "40~50%"
-            },
-            {
-              time: "오후(14-17)",
-              min: 5,
               max: 8,
               feels: "3~6°C",
-              status: "선선",
-              precipProb: 15,
-              precipType: "맑음",
+              status: "소나기 가능",
+              precipProb: 35,
+              precipType: "간헐 비",
               wind: "서 2~3m/s",
-              humidity: "40~50%"
+              humidity: "55~70%"
             },
             {
-              time: "저녁(17-22)",
+              time: "저녁(15-18)",
+              min: 3,
+              max: 6,
+              feels: "1~4°C",
+              status: "간헐 비 대비",
+              precipProb: 30,
+              precipType: "간헐 비",
+              wind: "서 2~4m/s",
+              humidity: "55~70%"
+            },
+            {
+              time: "밤(19-23)",
               min: 2,
               max: 5,
               feels: "0~3°C",
-              status: "한기",
-              precipProb: 10,
-              precipType: "건조",
+              status: "이동 중 젖지 않게",
+              precipProb: 25,
+              precipType: "흐림",
               wind: "북서 2~3m/s",
               humidity: "50~60%"
             }
           ],
           outfit: ["레이어드(니트+패딩)", "목 보호", "방한 모자", "얇은 장갑"],
-          tips: ["오전 이동은 체감온도 낮음", "공항 이동 전까지 보온 유지"]
+          tips: ["점심~저녁 간헐 비 대비로 접이식 우산 추천", "공항 이동 전까지 보온 유지"]
         }
       ]
     },
@@ -247,7 +216,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-03",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-11-02",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
