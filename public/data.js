@@ -5,11 +5,12 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-10-02",
+    version: "2026-01-10-03",
     weather: {
       updatedAt: "2026-01-10",
       location: "교토 시내 기준 (KIX~교토역 체감 유사)",
-      note: "2026-01-10 기준 참고용입니다. 시간대별 정보는 계절 패턴을 반영한 추정치이므로 출발 3~5일 전에 최신 예보로 업데이트하세요.",
+      source: "교토 1월 평년 기온 + 일교차 패턴을 바탕으로 시간대별 추정",
+      note: "실시간 예보가 아닌 참고용 추정치입니다. 출발 3~5일 전 최신 예보로 업데이트하세요.",
       days: [
         {
           date: "1/20",
@@ -246,7 +247,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-02",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-03",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },

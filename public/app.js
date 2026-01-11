@@ -1692,12 +1692,14 @@
     const weatherDays = Array.isArray(weather.days) ? weather.days : [];
     const weatherUpdatedAt = weather.updatedAt ? formatDate(weather.updatedAt) : "";
     const weatherLocation = weather.location ? `기준: ${weather.location}` : "";
+    const weatherSource = weather.source ? `근거: ${weather.source}` : "";
     const weatherCard = weatherDays.length
       ? `
         <div class="card weather-card" style="margin-top: 20px; --delay: 0.28s">
           <h3>날씨 · 1/20~1/22</h3>
           ${weather.note ? `<p class="muted">${weather.note}</p>` : ""}
           ${weatherLocation ? `<div class="muted">${weatherLocation}</div>` : ""}
+          ${weatherSource ? `<div class="muted">${weatherSource}</div>` : ""}
           ${weatherUpdatedAt ? `<div class="muted">업데이트: ${weatherUpdatedAt}</div>` : ""}
           <div class="weather-list">
             ${weatherDays
