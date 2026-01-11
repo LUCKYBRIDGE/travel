@@ -2127,7 +2127,7 @@
   }
 
   function renderConfirmedBlock(dayId, block, index, position, itemKey) {
-    const timeLabel = block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "-";
+    const timeLabel = block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "시간 유동";
     const baseLabel =
       block._baseStart && block._baseEnd ? `${block._baseStart}~${block._baseEnd}` : block._baseStart || block._baseEnd || "";
     const locationDetail = block.location?.mapQuery ? getPlaceDetails(block.location.mapQuery) : null;
@@ -2219,33 +2219,6 @@
       ? `<div class="block-row"><span class="label">장소</span><span>${fallbackWhere}</span></div>`
       : "";
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
-    const timeEditor = `
-      <div class="block-row">
-        <span class="label">시간 조정</span>
-        <span class="time-edit">
-          <input
-            type="time"
-            step="300"
-            value="${block.start || ""}"
-            data-time-start
-            data-day-id="${dayId}"
-            data-block-id="${block.id}"
-          />
-          <span>~</span>
-          <input
-            type="time"
-            step="300"
-            value="${block.end || ""}"
-            data-time-end
-            data-day-id="${dayId}"
-            data-block-id="${block.id}"
-          />
-          <button type="button" class="primary" data-time-save data-day-id="${dayId}" data-block-id="${block.id}">저장</button>
-          <button type="button" data-time-reset data-day-id="${dayId}" data-block-id="${block.id}">초기화</button>
-        </span>
-      </div>
-      ${baseLabel ? `<div class="muted">기본 시간: ${baseLabel}</div>` : ""}
-    `;
     const orderEditor = `
       <div class="block-row">
         <span class="label">순서</span>
@@ -2267,7 +2240,15 @@
     `;
     return `
       <div class="block confirmed-item" style="--delay: ${index * 0.05}s" draggable="true" data-day-id="${dayId}" data-item-key="${itemKey}">
-        <div class="block-time">${timeLabel}</div>
+        <button
+          type="button"
+          class="block-time time-button"
+          data-open-time-modal
+          data-day-id="${dayId}"
+          data-block-id="${block.id}"
+        >
+          ${timeLabel}
+        </button>
         <div class="block-body">
           <div class="block-title">
             <h4>${block.title}</h4>
@@ -2277,7 +2258,6 @@
           ${locationLine}
           ${locationLinks}
           ${orderEditor}
-          ${timeEditor}
           ${selectionLineHtml}
           ${selectionDetailHtml}
           ${extraHtml}
@@ -2350,13 +2330,78 @@
     `;
   }
 
-  function closePlaceModal() {
+  function closeModal() {
     const root = document.getElementById("modal-root");
     if (!root) {
       return;
     }
     root.innerHTML = "";
     document.body.classList.remove("modal-open");
+  }
+
+  function showTimeModal(dayId, blockId) {
+    const root = document.getElementById("modal-root");
+    if (!root) {
+      return;
+    }
+    const day = data.days.find((entry) => entry.id === dayId);
+    if (!day) {
+      return;
+    }
+    const block = buildDayBlocks(day).find((entry) => entry.id === blockId);
+    if (!block) {
+      return;
+    }
+    const timeLabel =
+      block.start && block.end ? `${block.start}~${block.end}` : block.start || block.end || "시간 유동";
+    const baseLabel =
+      block._baseStart && block._baseEnd
+        ? `${block._baseStart}~${block._baseEnd}`
+        : block._baseStart || block._baseEnd || "";
+    root.innerHTML = `
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-sheet" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <div>
+            <h3>시간 조정</h3>
+            <p class="muted">${block.title}</p>
+          </div>
+          <button type="button" class="modal-close" data-modal-close>닫기</button>
+        </div>
+        <div class="time-modal-body">
+          <div class="time-edit">
+            <input
+              type="time"
+              step="300"
+              value="${block.start || ""}"
+              data-time-start
+              data-day-id="${dayId}"
+              data-block-id="${block.id}"
+            />
+            <span>~</span>
+            <input
+              type="time"
+              step="300"
+              value="${block.end || ""}"
+              data-time-end
+              data-day-id="${dayId}"
+              data-block-id="${block.id}"
+            />
+          </div>
+          ${baseLabel ? `<div class="muted">기본 시간: ${baseLabel}</div>` : ""}
+          <div class="time-modal-actions">
+            <button type="button" class="primary" data-time-save data-day-id="${dayId}" data-block-id="${block.id}">저장</button>
+            <button type="button" data-time-reset data-day-id="${dayId}" data-block-id="${block.id}">초기화</button>
+          </div>
+          <div class="muted">현재 시간: ${timeLabel}</div>
+        </div>
+      </div>
+    `;
+    document.body.classList.add("modal-open");
+  }
+
+  function closePlaceModal() {
+    closeModal();
   }
 
   function showPlaceModal(dayId, blockId, afterKey) {
@@ -3343,6 +3388,7 @@
       const blockId = timeReset.dataset.blockId;
       setTimeOverride(dayId, blockId, "", "");
       render();
+      closeModal();
       showToast("시간 조정을 초기화했어요");
       return;
     }
@@ -3361,7 +3407,16 @@
       const end = endInput ? endInput.value : "";
       setTimeOverride(dayId, blockId, start, end);
       render();
+      closeModal();
       showToast("시간이 저장됐어요");
+      return;
+    }
+
+    const openTimeModal = event.target.closest("[data-open-time-modal]");
+    if (openTimeModal) {
+      const dayId = openTimeModal.dataset.dayId;
+      const blockId = openTimeModal.dataset.blockId;
+      showTimeModal(dayId, blockId);
       return;
     }
 
@@ -3376,7 +3431,7 @@
 
     const modalClose = event.target.closest("[data-modal-close]");
     if (modalClose) {
-      closePlaceModal();
+      closeModal();
       return;
     }
 

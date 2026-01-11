@@ -449,6 +449,18 @@ body.compact-view .map-actions button {
   font-size: 1rem;
 }
 
+.time-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.time-button:hover {
+  text-decoration: underline;
+}
+
 .block-title {
   display: flex;
   flex-wrap: wrap;
@@ -531,6 +543,33 @@ body.compact-view .map-actions button {
 }
 
 .time-edit button.primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+.time-modal-body {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.time-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.time-modal-actions button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 42, 42, 0.12);
+  background: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.time-modal-actions button.primary {
   background: var(--accent);
   border-color: transparent;
   color: #fff;
