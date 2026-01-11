@@ -32,7 +32,6 @@
     mapFilters: "travel:map-filters",
     navCollapsed: "travel:nav-collapsed",
     showAllSections: "travel:show-all-sections",
-    compactView: "travel:compact-view",
     syncCode: "travel:sync-code",
     syncMeta: "travel:sync-meta"
   };
@@ -54,7 +53,6 @@
     mapFilters: loadStorage(STORAGE.mapFilters, {}),
     navCollapsed: loadStorage(STORAGE.navCollapsed, false),
     showAllSections: loadStorage(STORAGE.showAllSections, false),
-    compactView: loadStorage(STORAGE.compactView, false),
     syncCode: loadStorage(STORAGE.syncCode, ""),
     syncMeta: loadStorage(STORAGE.syncMeta, {})
   };
@@ -251,6 +249,7 @@
     showNearby: false,
     categories: []
   };
+  let nearbyFilterCounter = 0;
 
   function getPlaceDetails(mapQuery) {
     if (!mapQuery) {
@@ -433,6 +432,52 @@
     `;
   }
 
+  function renderQuestions(detail) {
+    const questions = Array.isArray(detail?.questions) ? detail.questions : [];
+    if (!questions.length) {
+      return "";
+    }
+    return `
+      <details class="place-questions">
+        <summary>매장 질문 보기</summary>
+        <ul>
+          ${questions.map((question) => `<li>${question}</li>`).join("")}
+        </ul>
+      </details>
+    `;
+  }
+
+  function collectNearbyTags(entry) {
+    if (!entry) {
+      return [];
+    }
+    const category = entry.category;
+    const raw = entry.rawDetail || entry.detail || {};
+    const item = entry.item || {};
+    const tags = [];
+    if (category?.label) {
+      const categoryTag = sanitizeTag(category.label);
+      if (categoryTag) {
+        tags.push(categoryTag);
+      }
+    }
+    const explicitTags = Array.isArray(raw.tags) ? raw.tags : [];
+    const featureTags = Array.isArray(raw.features)
+      ? raw.features
+      : Array.isArray(item.features)
+      ? item.features
+      : [];
+    [...explicitTags, ...featureTags]
+      .map((tag) => sanitizeTag(tag))
+      .filter(Boolean)
+      .forEach((tag) => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    return tags;
+  }
+
   function buildLocationText(info) {
     const parts = [];
     if (info.building) {
@@ -478,7 +523,7 @@
       const rawDetail = getPlaceDetails(item.mapQuery) || item;
       const category = resolveCategory(rawDetail, item.name, item.type);
       const detail = enhanceDetail(rawDetail, category);
-      return { item, detail, category };
+      return { item, detail, category, rawDetail };
     });
   }
 
@@ -507,6 +552,8 @@
   function renderNearbyCard(entry, context) {
     const { item, detail, category } = entry;
     const tags = buildHashtags(detail, category);
+    const tagTokens = collectNearbyTags(entry);
+    const tagValue = tagTokens.map((tag) => tag.toLowerCase()).join("|");
     const locationLines = [
       detail.building || item.building ? renderDetailLine("건물", detail.building || item.building) : "",
       detail.floor || item.floor ? renderDetailLine("층", detail.floor || item.floor) : "",
@@ -516,7 +563,7 @@
       .join("");
     const extraToggle = renderExtraToggle(context, item.mapQuery, item.name, "nearby");
     return `
-      <div class="nearby-card">
+      <div class="nearby-card" data-nearby-scope="${context?.nearbyScopeId || ""}" data-nearby-tags="${tagValue}">
         <div class="nearby-header">
           <strong>${item.name}</strong>
           ${item.type ? `<span class="tag neutral">${item.type}</span>` : ""}
@@ -526,6 +573,7 @@
         ${renderTagRow(category, tags)}
         ${locationLines}
         ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
+        ${renderQuestions(detail)}
         ${renderDetailLine("특징", detail.features, "정보 준비중")}
         ${renderDetailLine("장점", detail.pros, "정보 준비중")}
         ${renderDetailLine("단점", detail.cons, "정보 준비중")}
@@ -545,8 +593,42 @@
       return "";
     }
     return `
-      <div class="nearby-list">
+      <div class="nearby-list" data-nearby-scope="${context?.nearbyScopeId || ""}">
         ${entries.map((entry) => renderNearbyCard(entry, context)).join("")}
+      </div>
+    `;
+  }
+
+  function renderNearbyFilters(entries, scopeId) {
+    if (!entries || entries.length === 0) {
+      return "";
+    }
+    const tags = [];
+    entries.forEach((entry) => {
+      collectNearbyTags(entry).forEach((tag) => {
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      });
+    });
+    if (tags.length === 0) {
+      return "";
+    }
+    return `
+      <div class="nearby-filters filter-group" data-nearby-scope="${scopeId}">
+        <span class="filter-label">해시태그</span>
+        <button type="button" class="filter-chip active" data-nearby-filter="all" data-nearby-scope="${scopeId}">
+          전체보기
+        </button>
+        ${tags
+          .map(
+            (tag) => `
+              <button type="button" class="filter-chip" data-nearby-filter="${tag.toLowerCase()}" data-nearby-scope="${scopeId}">
+                #${tag}
+              </button>
+            `
+          )
+          .join("")}
       </div>
     `;
   }
@@ -561,32 +643,60 @@
       : [];
     const extraContext = options.extraContext || null;
     if (primaryCategories.length === 0) {
+      const scopeId = `nearby-${nearbyFilterCounter++}`;
       return `
-        <details class="nearby-toggle">
-          <summary>주변 장소 보기</summary>
-          ${renderNearbyList(entries, extraContext)}
-        </details>
+        <div class="nearby-toggle">
+          <button
+            type="button"
+            class="nearby-toggle-btn"
+            data-nearby-toggle="${scopeId}"
+            aria-expanded="false"
+          >
+            주변 장소 더보기
+          </button>
+          <div class="nearby-panel" data-nearby-panel="${scopeId}" hidden style="display:none">
+            ${renderNearbyFilters(entries, scopeId)}
+            ${renderNearbyList(entries, { ...extraContext, nearbyScopeId: scopeId })}
+          </div>
+        </div>
       `;
     }
     const primary = entries.filter((entry) => primaryCategories.includes(entry.category?.id));
     const extra = entries.filter((entry) => !primaryCategories.includes(entry.category?.id));
+    const scopeId = `nearby-${nearbyFilterCounter++}`;
     const primaryBlock = primary.length
       ? `
           <div class="nearby-section">
             <div class="nearby-title">현재 일정에 맞는 주변 장소</div>
-            ${renderNearbyList(primary, extraContext)}
+            ${renderNearbyList(primary, { ...extraContext, nearbyScopeId: scopeId })}
           </div>
         `
       : "";
     const extraBlock = extra.length
       ? `
-          <details class="nearby-toggle">
-            <summary>주변 장소 더보기</summary>
-            ${renderNearbyList(extra, extraContext)}
-          </details>
+          <div class="nearby-section">
+            <div class="nearby-title">그 외 주변 장소</div>
+            ${renderNearbyList(extra, { ...extraContext, nearbyScopeId: scopeId })}
+          </div>
         `
       : "";
-    return `${primaryBlock}${extraBlock}`;
+    return `
+      <div class="nearby-toggle">
+        <button
+          type="button"
+          class="nearby-toggle-btn"
+          data-nearby-toggle="${scopeId}"
+          aria-expanded="false"
+        >
+          주변 장소 더보기
+        </button>
+        <div class="nearby-panel" data-nearby-panel="${scopeId}" hidden style="display:none">
+          ${renderNearbyFilters(entries, scopeId)}
+          ${primaryBlock}
+          ${extraBlock || (!primaryBlock ? renderNearbyList(entries, { ...extraContext, nearbyScopeId: scopeId }) : "")}
+        </div>
+      </div>
+    `;
   }
 
   function renderPlaceCard(mapQuery, title, options = {}) {
@@ -621,6 +731,7 @@
       ${summary ? `<div class="place-summary">${summary}</div>` : ""}
       ${locationLines}
       ${renderDetailLine("즐기는 방법", detail.tips, "정보 준비중")}
+      ${renderQuestions(detail)}
       ${renderDetailLine("특징", detail.features, "정보 준비중")}
       ${renderDetailLine("장점", detail.pros, "정보 준비중")}
       ${renderDetailLine("단점", detail.cons, "정보 준비중")}
@@ -1577,6 +1688,88 @@
     const syncEnabled = Boolean(getSyncApiBase());
     const syncMeta = state.syncMeta || {};
     const syncDate = syncMeta.updatedAt ? formatDate(syncMeta.updatedAt) : "";
+    const weather = meta.weather || {};
+    const weatherDays = Array.isArray(weather.days) ? weather.days : [];
+    const weatherUpdatedAt = weather.updatedAt ? formatDate(weather.updatedAt) : "";
+    const weatherLocation = weather.location ? `기준: ${weather.location}` : "";
+    const weatherCard = weatherDays.length
+      ? `
+        <div class="card weather-card" style="margin-top: 20px; --delay: 0.28s">
+          <h3>날씨 · 1/20~1/22</h3>
+          ${weather.note ? `<p class="muted">${weather.note}</p>` : ""}
+          ${weatherLocation ? `<div class="muted">${weatherLocation}</div>` : ""}
+          ${weatherUpdatedAt ? `<div class="muted">업데이트: ${weatherUpdatedAt}</div>` : ""}
+          <div class="weather-list">
+            ${weatherDays
+              .map(
+                (day) => {
+                  const slots = Array.isArray(day.slots) ? day.slots : [];
+                  const slotsBlock = slots.length
+                    ? `
+                      <div class="weather-slots">
+                        ${slots
+                          .map((slot) => {
+                            const metaParts = [];
+                            if (slot.feels) {
+                              metaParts.push(`체감 ${slot.feels}`);
+                            }
+                            if (slot.precipProb !== undefined && slot.precipProb !== null) {
+                              metaParts.push(`강수확률 ${slot.precipProb}%`);
+                            }
+                            if (slot.precipType) {
+                              metaParts.push(slot.precipType);
+                            }
+                            if (slot.wind) {
+                              metaParts.push(`풍속 ${slot.wind}`);
+                            }
+                            if (slot.humidity) {
+                              metaParts.push(`습도 ${slot.humidity}`);
+                            }
+                            const metaLine = metaParts.length
+                              ? `<div class="slot-meta">${metaParts.join(" · ")}</div>`
+                              : "";
+                            return `
+                              <div class="weather-slot">
+                                <div class="slot-time">${slot.time}</div>
+                                <div class="slot-temp">${slot.min}~${slot.max}°C</div>
+                                ${metaLine}
+                                ${slot.status ? `<div class="slot-status">${slot.status}</div>` : ""}
+                              </div>
+                            `;
+                          })
+                          .join("")}
+                      </div>
+                    `
+                    : "";
+                  return `
+                    <div class="weather-row">
+                      <div>
+                        <strong>${day.date}</strong>
+                        ${day.summary ? `<span class="muted"> · ${day.summary}</span>` : ""}
+                      </div>
+                      <div class="muted">최저 ${day.min}°C · 최고 ${day.max}°C</div>
+                      ${slotsBlock}
+                      ${
+                        Array.isArray(day.outfit) && day.outfit.length
+                          ? `<div class="weather-outfit">옷차림: ${day.outfit.join(" · ")}</div>`
+                          : ""
+                      }
+                      ${
+                        Array.isArray(day.tips) && day.tips.length
+                          ? `<ul class="weather-tips">${day.tips
+                              .map((tip) => `<li>${tip}</li>`)
+                              .join("")}</ul>`
+                          : ""
+                      }
+                    </div>
+                  `;
+                }
+              )
+              .join("")}
+          </div>
+        </div>
+      `
+      : "";
 
     sections.overview.innerHTML = `
       <div class="section-head">
@@ -1614,6 +1807,7 @@
           )
           .join("")}
       </div>
+      ${weatherCard}
       <div class="card share-card" style="margin-top: 20px; --delay: 0.32s">
         <h3>내 코스 공유</h3>
         <p class="muted">
@@ -2918,7 +3112,11 @@
                   ${items
                     .map((item) => {
                       const notes = Array.isArray(item.notes) ? item.notes : [];
+                      const tips = Array.isArray(item.tips) ? item.tips : [];
                       const compare = item.compare ? `<div class="shopping-compare">비교: ${item.compare}</div>` : "";
+                      const tipsLine = tips.length
+                        ? `<span class="shopping-tips">구매 팁: ${tips.join(" · ")}</span>`
+                        : "";
                       return `
                         <label class="checklist-item shopping-item">
                           <input
@@ -2929,6 +3127,7 @@
                           <span class="checklist-text">
                             <span class="checklist-label">${item.label}</span>
                             ${notes.length ? `<span class="shopping-notes">${notes.join(" · ")}</span>` : ""}
+                            ${tipsLine}
                             ${compare}
                           </span>
                         </label>
@@ -2945,6 +3144,7 @@
   }
 
   function render() {
+    nearbyFilterCounter = 0;
     renderOverview();
     renderDay(data.days[0], sections.day1);
     renderDay(data.days[1], sections.day2);
@@ -3030,6 +3230,60 @@
   });
 
   document.addEventListener("click", (event) => {
+    const nearbyToggleButton = event.target.closest("[data-nearby-toggle]");
+    if (nearbyToggleButton) {
+      event.preventDefault();
+      const scope = nearbyToggleButton.dataset.nearbyToggle;
+      const panel = document.querySelector(`[data-nearby-panel="${scope}"]`);
+      if (!panel) {
+        return;
+      }
+      const willOpen = panel.hasAttribute("hidden");
+      if (willOpen) {
+        panel.removeAttribute("hidden");
+        panel.classList.add("is-open");
+        panel.style.display = "block";
+      } else {
+        panel.setAttribute("hidden", "true");
+        panel.classList.remove("is-open");
+        panel.style.display = "none";
+      }
+      nearbyToggleButton.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      nearbyToggleButton.textContent = willOpen ? "주변 장소 닫기" : "주변 장소 더보기";
+      return;
+    }
+
+    const nearbyFilterButton = event.target.closest("[data-nearby-filter]");
+    if (nearbyFilterButton) {
+      event.preventDefault();
+      const scope = nearbyFilterButton.dataset.nearbyScope;
+      const filter = (nearbyFilterButton.dataset.nearbyFilter || "all").toLowerCase();
+      const container = scope
+        ? document.querySelector(`.nearby-filters[data-nearby-scope="${scope}"]`)
+        : nearbyFilterButton.closest(".nearby-filters");
+      if (container) {
+        container.querySelectorAll("[data-nearby-filter]").forEach((button) => {
+          button.classList.toggle("active", button === nearbyFilterButton);
+        });
+      }
+      let cards = scope
+        ? Array.from(document.querySelectorAll(`.nearby-card[data-nearby-scope="${scope}"]`))
+        : [];
+      if (!cards.length) {
+        const wrapper = nearbyFilterButton.closest(".nearby-section, .nearby-toggle, .place-info");
+        cards = wrapper ? Array.from(wrapper.querySelectorAll(".nearby-card")) : [];
+      }
+      cards.forEach((card) => {
+        const tags = (card.dataset.nearbyTags || "")
+          .split("|")
+          .map((tag) => tag.trim().toLowerCase())
+          .filter(Boolean);
+        const matches = filter === "all" || tags.includes(filter);
+        card.style.display = matches ? "" : "none";
+      });
+      return;
+    }
+
     const mapFilterButton = event.target.closest("[data-map-filter]");
     if (mapFilterButton) {
       const filterId = mapFilterButton.dataset.mapFilter;
@@ -3543,12 +3797,16 @@
 
   function setupSectionViewToggle() {
     const toggleButton = document.querySelector("[data-view-toggle]");
+    const badge = document.getElementById("viewModeBadge");
     if (!toggleButton) {
       return;
     }
     const apply = (showAll) => {
-      toggleButton.textContent = showAll ? "현재 탭만 보기" : "페이지 전부 펼치기";
+      toggleButton.textContent = showAll ? "현재 탭 보기" : "페이지 전부 펼치기";
       toggleButton.setAttribute("aria-pressed", showAll ? "true" : "false");
+      if (badge) {
+        badge.textContent = showAll ? "보기: 전체 펼침" : "보기: 현재 탭";
+      }
       if (navUpdateActive) {
         navUpdateActive(true);
       }
@@ -3558,28 +3816,6 @@
       state.showAllSections = !state.showAllSections;
       saveStorage(STORAGE.showAllSections, state.showAllSections);
       apply(state.showAllSections);
-    });
-  }
-
-  function setupCompactToggle() {
-    const toggleButton = document.querySelector("[data-compact-toggle]");
-    const badge = document.getElementById("viewModeBadge");
-    if (!toggleButton) {
-      return;
-    }
-    const apply = (compact) => {
-      document.body.classList.toggle("compact-view", compact);
-      toggleButton.textContent = compact ? "자세히 보기" : "간략 보기";
-      toggleButton.setAttribute("aria-pressed", compact ? "true" : "false");
-      if (badge) {
-        badge.textContent = compact ? "모드: 간략" : "모드: 자세히";
-      }
-    };
-    apply(Boolean(state.compactView));
-    toggleButton.addEventListener("click", () => {
-      state.compactView = !state.compactView;
-      saveStorage(STORAGE.compactView, state.compactView);
-      apply(state.compactView);
     });
   }
 
@@ -3605,7 +3841,6 @@
 
   setupNavToggle();
   setupSectionViewToggle();
-  setupCompactToggle();
   setupNavHighlight();
   render();
   loadRatingsData();

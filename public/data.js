@@ -5,7 +5,209 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-10-01",
+    version: "2026-01-10-02",
+    weather: {
+      updatedAt: "2026-01-10",
+      location: "교토 시내 기준 (KIX~교토역 체감 유사)",
+      note: "2026-01-10 기준 참고용입니다. 시간대별 정보는 계절 패턴을 반영한 추정치이므로 출발 3~5일 전에 최신 예보로 업데이트하세요.",
+      days: [
+        {
+          date: "1/20",
+          summary: "아침 강추위 · 바람 체감",
+          min: 0,
+          max: 8,
+          slots: [
+            {
+              time: "이른 아침(06-08)",
+              min: 0,
+              max: 1,
+              feels: "-3~-1°C",
+              status: "매우 추움",
+              precipProb: 10,
+              precipType: "건조",
+              wind: "북서 3~5m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "오전(08-11)",
+              min: 1,
+              max: 4,
+              feels: "-1~2°C",
+              status: "추움",
+              precipProb: 15,
+              precipType: "구름 많음",
+              wind: "북서 2~4m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "점심(11-14)",
+              min: 4,
+              max: 8,
+              feels: "2~6°C",
+              status: "쌀쌀",
+              precipProb: 20,
+              precipType: "약한 비 가능",
+              wind: "서 2~3m/s",
+              humidity: "40~50%"
+            },
+            {
+              time: "오후(14-17)",
+              min: 5,
+              max: 7,
+              feels: "3~5°C",
+              status: "바람",
+              precipProb: 20,
+              precipType: "구름",
+              wind: "서 3~4m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "저녁(17-22)",
+              min: 2,
+              max: 5,
+              feels: "0~3°C",
+              status: "한기",
+              precipProb: 15,
+              precipType: "건조",
+              wind: "북서 2~3m/s",
+              humidity: "50~60%"
+            }
+          ],
+          outfit: ["두꺼운 패딩", "발열 내의", "목도리/장갑", "방수 또는 두꺼운 스니커즈"],
+          tips: ["오전 장터/도지 일정은 방한 장갑 필수", "저녁 이동은 체감온도 급락"]
+        },
+        {
+          date: "1/21",
+          summary: "영하권 시작 · 건조",
+          min: -1,
+          max: 7,
+          slots: [
+            {
+              time: "이른 아침(06-08)",
+              min: -1,
+              max: 0,
+              feels: "-4~-2°C",
+              status: "강추위",
+              precipProb: 10,
+              precipType: "건조",
+              wind: "북 3~5m/s",
+              humidity: "40~50%"
+            },
+            {
+              time: "오전(08-11)",
+              min: 0,
+              max: 3,
+              feels: "-2~1°C",
+              status: "추움",
+              precipProb: 15,
+              precipType: "구름",
+              wind: "북 2~4m/s",
+              humidity: "40~55%"
+            },
+            {
+              time: "점심(11-14)",
+              min: 3,
+              max: 7,
+              feels: "1~5°C",
+              status: "쌀쌀",
+              precipProb: 20,
+              precipType: "약한 비 가능",
+              wind: "서 2~3m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "오후(14-17)",
+              min: 4,
+              max: 6,
+              feels: "2~4°C",
+              status: "바람",
+              precipProb: 20,
+              precipType: "구름",
+              wind: "서 3~4m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "저녁(17-22)",
+              min: 1,
+              max: 4,
+              feels: "-1~2°C",
+              status: "한기",
+              precipProb: 10,
+              precipType: "건조",
+              wind: "북서 2~3m/s",
+              humidity: "50~60%"
+            }
+          ],
+          outfit: ["롱패딩/다운", "보온 양말", "손난로", "니트+발열 이너"],
+          tips: ["금각사 구간은 버스 대기 시간 대비 방풍", "야간 이벤트는 체온 유지용 핫팩"]
+        },
+        {
+          date: "1/22",
+          summary: "일교차 큼 · 낮 맑음",
+          min: 0,
+          max: 9,
+          slots: [
+            {
+              time: "이른 아침(06-08)",
+              min: 0,
+              max: 1,
+              feels: "-2~0°C",
+              status: "차가움",
+              precipProb: 10,
+              precipType: "건조",
+              wind: "북 2~4m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "오전(08-11)",
+              min: 1,
+              max: 4,
+              feels: "-1~2°C",
+              status: "추움",
+              precipProb: 15,
+              precipType: "구름",
+              wind: "북서 2~3m/s",
+              humidity: "45~55%"
+            },
+            {
+              time: "점심(11-14)",
+              min: 5,
+              max: 9,
+              feels: "3~7°C",
+              status: "쌀쌀",
+              precipProb: 20,
+              precipType: "맑음",
+              wind: "서 2~3m/s",
+              humidity: "40~50%"
+            },
+            {
+              time: "오후(14-17)",
+              min: 5,
+              max: 8,
+              feels: "3~6°C",
+              status: "선선",
+              precipProb: 15,
+              precipType: "맑음",
+              wind: "서 2~3m/s",
+              humidity: "40~50%"
+            },
+            {
+              time: "저녁(17-22)",
+              min: 2,
+              max: 5,
+              feels: "0~3°C",
+              status: "한기",
+              precipProb: 10,
+              precipType: "건조",
+              wind: "북서 2~3m/s",
+              humidity: "50~60%"
+            }
+          ],
+          outfit: ["레이어드(니트+패딩)", "목 보호", "방한 모자", "얇은 장갑"],
+          tips: ["오전 이동은 체감온도 낮음", "공항 이동 전까지 보온 유지"]
+        }
+      ]
+    },
     notes: [
       "시간은 이동 및 대기 포함 권장 범위",
       "현금 필수 구간은 태그로 표기",
@@ -44,7 +246,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-01",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-10-02",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -60,14 +262,48 @@ window.TRIP_DATA = {
       from: "Kansai International Airport Terminal 1",
       to: "Rinku Premium Outlets",
       options: [
-        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" }
+        {
+          mode: "전철",
+          timeMin: 6,
+          timeMax: 8,
+          costMin: 370,
+          costMax: 370,
+          unit: "per_person",
+          note: "JR/난카이 이용"
+        },
+        {
+          mode: "셔틀버스",
+          timeMin: 18,
+          timeMax: 22,
+          costMin: 300,
+          costMax: 300,
+          unit: "per_person",
+          note: "T1 1층 12번 승강장 · T2 1층 1번 승강장"
+        }
       ]
     },
     {
       from: "Rinku Premium Outlets",
       to: "JR Haruka Kansai Airport Station",
       options: [
-        { mode: "전철", timeMin: 5, timeMax: 8, costMin: 260, costMax: 260, unit: "per_person" }
+        {
+          mode: "전철",
+          timeMin: 6,
+          timeMax: 8,
+          costMin: 370,
+          costMax: 370,
+          unit: "per_person",
+          note: "린쿠타운역 ↔ 공항역"
+        },
+        {
+          mode: "셔틀버스",
+          timeMin: 18,
+          timeMax: 22,
+          costMin: 300,
+          costMax: 300,
+          unit: "per_person",
+          note: "아울렛 앞 셔틀버스 정류장"
+        }
       ]
     },
     {
@@ -328,7 +564,8 @@ window.TRIP_DATA = {
                   title: "린쿠 타운 이동 & 쇼핑",
                   summary: "아울렛 쇼핑과 카페를 짧게 즐긴 뒤 공항으로 복귀합니다.",
                   details: [
-                    "공항역 → 린쿠타운역 5분",
+                    "셔틀버스(추천): T1 1층 12번 / T2 1층 1번 승강장",
+                    "전철: 공항역 → 린쿠타운역 6분",
                     "아식스 팩토리 아울렛 30~50% 할인",
                     "브룩클린 로스팅 컴퍼니 라떼 650엔"
                   ],
@@ -634,7 +871,11 @@ window.TRIP_DATA = {
                   end: "17:40",
                   title: "아식스 쇼핑",
                   summary: "아울렛 내 아식스 매장을 집중 방문합니다.",
-                  details: ["린쿠 아울렛 아식스 팩토리"],
+                  details: [
+                    "린쿠 아울렛 시사이드 2층(7000번대)",
+                    "발볼 넓음: 4E/슈퍼와이드(Super Wide) 표기 확인",
+                    "직원 질문: \"4E 모델 있나요?\"(욘-이)"
+                  ],
                   location: {
                     name: "아식스 팩토리 아울렛 (린쿠)",
                     mapQuery: "アシックスファクトリーアウトレット りんくう"
@@ -1243,10 +1484,38 @@ window.TRIP_DATA = {
               options: [
                 {
                   id: "ippodo",
-                  label: "이치호도 (Ippodo Tea)",
-                  note: "말차/다구 전문점",
-                  desc: "입문자부터 전문가까지 선택지가 넓어 선물용 구매에 적합합니다.",
+                  label: "잇포도 차호 교토 본점 (Ippodo Tea Co.)",
+                  note: "다도구/말차 전문",
+                  desc: "입문 세트(다완·차선·차샤쿠 포함) 약 8,000엔, 차선 5,000엔대. 사용법 상담도 가능해요.",
                   mapQuery: "Ippodo Tea Store Kyoto"
+                },
+                {
+                  id: "horaido",
+                  label: "호라이도 차포 (Horaido Tea Stall)",
+                  note: "다도구 입문",
+                  desc: "차완 3,000엔대부터, 나오시 800~1,500엔. 예산 맞춰 고르기 좋아요.",
+                  mapQuery: "Horaido Tea Stall Kyoto"
+                },
+                {
+                  id: "ninshu",
+                  label: "닌슈 (Ninshu)",
+                  note: "도자기/말차 카페",
+                  desc: "오무로 야키 차완 6,000~10,000엔, 말차 도구 세트 약 15,000엔.",
+                  mapQuery: "Ninshu vessel shop & matcha cafe"
+                },
+                {
+                  id: "ryuoen",
+                  label: "류오엔 차점 (Ryuoen Tea Store)",
+                  note: "전통 다도구",
+                  desc: "현지인 단골이 많은 전통 다구점. 조용한 분위기에서 고를 수 있어요.",
+                  mapQuery: "Ryuoen Tea Store Kyoto"
+                },
+                {
+                  id: "yugen",
+                  label: "유겐 (YUGEN)",
+                  note: "현대적 다도구",
+                  desc: "나오시 약 1,100엔, 다카야마 차선 5,000~6,000엔, 차샤쿠 900~1,400엔.",
+                  mapQuery: "YUGEN Kyoto"
                 },
                 {
                   id: "marukyu",
@@ -1707,13 +1976,15 @@ window.TRIP_DATA = {
       "id": "s1",
       "label": "오차즈케(茶漬け)",
       "category": "식품",
-      "notes": ["스틱/소포장 위주", "해산물/매실 맛 비교 구매"]
+      "notes": ["스틱/소포장 위주", "해산물/매실 맛 비교 구매"],
+      "tips": ["염도 표기 확인", "뜨거운 물만 있으면 되는 제품 우선"]
     },
     {
       "id": "s2",
       "label": "유자 페이스트 / 유자 소금",
       "category": "조미료",
-      "notes": ["요리/차용 겸용 제품 확인", "신맛 강도 체크"]
+      "notes": ["요리/차용 겸용 제품 확인", "신맛 강도 체크"],
+      "tips": ["원재료(유자 함량) 표기 확인", "냉장/상온 보관 조건 체크"]
     },
     {
       "id": "s3",
@@ -1724,13 +1995,19 @@ window.TRIP_DATA = {
         "차선: 80본 또는 100본",
         "차샤쿠: 계량 스푼 타입"
       ],
-      "compare": "강릉 말차로 가격과 비교 필요"
+      "compare": "강릉 말차로 가격과 비교 필요",
+      "tips": ["차선은 80본이 관리 쉬움", "나오시(차선 꽂이) 함께 구매"]
     },
     {
       "id": "s4",
       "label": "아식스 신발",
       "category": "패션",
-      "notes": ["사이즈/컬러 재고 확인", "면세/쿠폰 여부 확인"]
+      "notes": ["사이즈/컬러 재고 확인", "면세/쿠폰 여부 확인"],
+      "tips": [
+        "발볼 타입(2E/4E) 먼저 확인",
+        "255~265mm = 25.5/26.0/26.5cm",
+        "발볼러 인기: 젤 카야노/님버스/노바블라스트"
+      ]
     }
   ],
   globalTips: [
@@ -1900,15 +2177,90 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary: "공항에서 전철로 5분 거리에 있는 대형 아울렛으로, 쇼핑과 식사를 한 번에 해결하기 좋은 곳입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      area: "메인 사이드 · 시사이드",
       tags: ["아울렛", "쇼핑", "공항근처"],
-      features: ["대형 아울렛", "야외 쇼핑 동선", "식사/카페 선택지"],
+      features: ["메인/시사이드 구역", "야외 쇼핑 동선", "식사/카페 선택지"],
       pros: ["브랜드 다양", "할인율 높음"],
       cons: ["바람/추위 영향", "식사 대기 발생"],
-      tips: ["우선순위 매장 먼저 방문", "바람 대비 외투 준비", "(공식 사이트) 매장 찾기/안내도 참고"],
+      tips: [
+        "셔틀버스 이용 시 아울렛 바로 앞 하차",
+        "여권 지참 시 5,000엔 이상 구매 면세",
+        "인포메이션 센터에서 외국인 쿠폰 확인",
+        "코인락커 위치 먼저 확인 후 쇼핑",
+        "시사이드(아식스·몽벨) → 메인(나이키·폴로) 순으로 동선 추천",
+        "신발은 박스 측면 WIDE/4E 표기 먼저 확인",
+        "255~265mm는 일본 표기 25.5/26.0/26.5",
+        "(공식 사이트) 매장 찾기/안내도 참고"
+      ],
       links: [
         { label: "린쿠 아울렛 공식 사이트", url: "https://www.premiumoutlets.co.jp/rinku/" }
       ],
       nearby: [
+        {
+          name: "아식스 팩토리 아울렛",
+          mapQuery: "アシックスファクトリーアウトレット りんくう",
+          type: "쇼핑",
+          features: ["시사이드 2층", "러닝/워킹화"],
+          pros: ["일본 브랜드 할인"],
+          cons: ["사이즈 품절 가능"]
+        },
+        {
+          name: "오니츠카 타이거",
+          mapQuery: "Onitsuka Tiger Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["시사이드 1층", "스니커즈"],
+          pros: ["인기 모델 득템"],
+          cons: ["매장 혼잡"]
+        },
+        {
+          name: "나이키 유나이트 (Nike Unite)",
+          mapQuery: "Nike Unite Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["메인 사이드 2층", "대형 매장"],
+          pros: ["재고 다양"],
+          cons: ["피크 시간 대기"]
+        },
+        {
+          name: "아디다스 (Adidas)",
+          mapQuery: "Adidas Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["메인 사이드 1층", "스포츠웨어"],
+          pros: ["행사 할인"],
+          cons: ["혼잡 가능"]
+        },
+        {
+          name: "뉴발란스 (New Balance)",
+          mapQuery: "New Balance Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["시사이드 1층", "스니커즈"],
+          pros: ["실용 라인업"],
+          cons: ["주말 대기"]
+        },
+        {
+          name: "몽벨 (Mont-bell)",
+          mapQuery: "Mont-bell Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["시사이드 2층", "아웃도어"],
+          pros: ["가격 메리트 큼"],
+          cons: ["인기 품목 빠짐"]
+        },
+        {
+          name: "스노우피크 (Snow Peak)",
+          mapQuery: "Snow Peak Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["시사이드 1층", "캠핑/의류"],
+          pros: ["감성 아이템"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "폴로 랄프로렌",
+          mapQuery: "Polo Ralph Lauren Rinku Premium Outlets",
+          type: "쇼핑",
+          features: ["메인 사이드 1층", "패션/키즈"],
+          pros: ["선물용 인기"],
+          cons: ["대기 가능"]
+        },
         {
           name: "린쿠 마블 비치 (Rinku Marble Beach)",
           mapQuery: "Rinku Marble Beach",
@@ -2450,17 +2802,155 @@ window.TRIP_DATA = {
       summary:
         "린쿠 아울렛 내 아식스 팩토리 아울렛으로 이월 모델을 할인된 가격에 구매하기 좋습니다. (공식 표기: アシックスファクトリーアウトレット りんくう)",
       building: "린쿠 프리미엄 아울렛",
-      area: "3-28 Rinkuoraiminami, Izumisano",
-      tags: ["아울렛", "러닝화", "세일"],
-      features: ["아울렛 이월 모델", "러닝화/트레이닝 중심", "사이즈 비교 가능"],
-      pros: ["할인 폭 큼", "인기 모델 득템"],
+      floor: "시사이드 2층",
+      area: "7000번대 구역",
+      tags: ["아울렛", "러닝화", "세일", "시사이드"],
+      features: ["아울렛 이월 모델", "러닝화/워킹화 중심", "4E/슈퍼와이드"],
+      pros: ["할인 폭 큼", "일본 전용 모델 득템"],
       cons: ["사이즈 품절 가능", "재고 편차"],
       tips: [
         "필요 사이즈/모델 메모",
+        "B-grade(미세 흠집) 표기 제품은 추가 할인",
+        "일본 표기(cm) 기준으로 사이즈 확인",
+        "발볼러 인기: 젤 카야노(안정), 젤 님버스(쿠션), 노바블라스트(탄성)",
+        "가성비: JOLT/컨텐드 4,000~6,000엔대(매장/시즌 변동)",
+        "직원 질문: \"슈퍼와이드(4E) 있나요?\"",
         "(공식 사이트) 매장 찾기에서 ASICS 검색 후 안내도 확인"
+      ],
+      questions: [
+        "발볼 넓은 4E(슈퍼와이드) 재고 있나요? / 4E（エクストラワイド）の在庫はありますか？ / Do you have 4E (extra-wide) sizes?",
+        "이 모델 26.0cm 있나요? / このモデルの26.0cmはありますか？ / Do you have size 26.0 for this model?",
+        "B급(스크래치) 할인 상품 있나요? / B級品はありますか？ / Do you have B-grade discounted items?"
       ],
       links: [
         { label: "린쿠 아울렛 공식 사이트", url: "https://www.premiumoutlets.co.jp/rinku/" }
+      ]
+    },
+    "onitsuka tiger rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "오니츠카 타이거 아울렛 매장으로 멕시코 66 등 인기 모델을 보기 좋습니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["스니커즈", "아울렛", "시사이드"],
+      features: ["스니커즈 중심", "아울렛 전용 상품"],
+      pros: ["인기 모델 득템 가능"],
+      cons: ["피크 시간 혼잡"],
+      tips: ["재고 회전이 빠르니 색상 우선 확인"],
+      questions: [
+        "멕시코 66 인기 색상 있나요? / メキシコ66の人気カラーはありますか？ / Do you have popular Mexico 66 colors?",
+        "아울렛 전용 모델이 있나요? / アウトレット専用モデルはありますか？ / Are there outlet-exclusive models?",
+        "재입고 일정이 있나요? / 再入荷の予定はありますか？ / Is there a restock schedule?"
+      ]
+    },
+    "nike unite rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "아울렛 내 대형 나이키 매장으로 러닝/트레이닝 제품이 다양합니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "메인 사이드 2층",
+      tags: ["스포츠웨어", "아울렛", "메인사이드"],
+      features: ["대형 매장", "러닝/트레이닝"],
+      pros: ["재고 다양"],
+      cons: ["피크 시간 대기"],
+      tips: [
+        "라스트 사이즈 코너 먼저 확인",
+        "와이드(Extra Wide) 표기 박스 우선 탐색",
+        "에어 페가수스 와이드 재고 문의"
+      ],
+      questions: [
+        "Extra Wide 사이즈 있나요? / エクストラワイドのサイズはありますか？ / Do you have Extra Wide sizes?",
+        "페가수스 와이드 재고 있나요? / ペガサスのワイドはありますか？ / Do you have Pegasus wide in stock?",
+        "추가 할인/프로모션 있나요? / 追加割引やプロモーションはありますか？ / Any extra discounts or promotions?"
+      ]
+    },
+    "adidas rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "아디다스 아울렛 매장으로 의류와 신발 선택 폭이 넓습니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "메인 사이드 1층",
+      tags: ["스포츠웨어", "아울렛", "메인사이드"],
+      features: ["의류 라인 다양", "행사 할인"],
+      pros: ["할인 행사 기대"],
+      cons: ["혼잡 가능"],
+      tips: ["프로모션 표기 확인"],
+      questions: [
+        "오늘 추가 할인 적용되나요? / 今日は追加割引がありますか？ / Is there any extra discount today?",
+        "와이드 핏 러닝화 있나요? / ワイドフィットのランニングはありますか？ / Do you have wide-fit running shoes?",
+        "이 모델 재고 색상 좀 보여주세요. / このモデルの在庫カラーを見せてください。 / Can you show available colors for this model?"
+      ]
+    },
+    "new balance rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "뉴발란스 아울렛 매장으로 실용적인 모델 라인업이 주입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["스니커즈", "아울렛", "시사이드", "와이드"],
+      features: ["실용 라인업", "와이드 사이즈"],
+      pros: ["무난한 모델 선택"],
+      cons: ["주말 대기 가능"],
+      tips: [
+        "너비(Width) 코너 먼저 확인",
+        "Fresh Foam 1080/880 와이드 재고 문의",
+        "574 와이드 버전 섞여 있음"
+      ],
+      questions: [
+        "4E(와이드) 사이즈 있나요? / 4E（ワイド）のサイズはありますか？ / Do you have 4E wide sizes?",
+        "1080/880 와이드 재고 있나요? / 1080/880のワイドはありますか？ / Do you have wide 1080/880 in stock?",
+        "255~265mm 재고 있나요? / 25.5〜26.5cmはありますか？ / Do you have sizes 25.5–26.5?"
+      ]
+    },
+    "mont-bell rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "일본 로컬 아웃도어 브랜드로 가격 메리트가 큰 편입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 2층",
+      tags: ["아웃도어", "아울렛", "시사이드"],
+      features: ["경량 패딩/의류", "소품 다양"],
+      pros: ["가격 메리트 큼"],
+      cons: ["인기 품목 빠짐"],
+      tips: ["경량 패딩/소품 먼저 확인"],
+      questions: [
+        "경량 패딩 인기 사이즈 있나요? / 軽量ダウンの人気サイズはありますか？ / Do you have popular sizes for lightweight down jackets?",
+        "레인 재킷 방수 등급이 어떻게 되나요? / レインジャケットの防水性能は？ / What is the waterproof rating?",
+        "면세 적용되나요? / 免税はできますか？ / Is tax-free available?"
+      ]
+    },
+    "snow peak rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "캠핑 감성 의류와 용품을 볼 수 있는 매장입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "시사이드 1층",
+      tags: ["캠핑", "아울렛", "시사이드"],
+      features: ["의류 라인 중심", "감성 아이템"],
+      pros: ["디자인 만족도"],
+      cons: ["가격대 있음"],
+      tips: ["의류 라인 할인 폭 확인"],
+      questions: [
+        "의류 할인 폭이 큰 제품이 있나요? / 衣類の割引が大きい商品はありますか？ / Which apparel items have the biggest discounts?",
+        "사이즈 가이드가 있나요? / サイズガイドはありますか？ / Do you have a size guide?",
+        "이 제품은 아울렛 전용인가요? / これはアウトレット専用ですか？ / Is this an outlet-exclusive item?"
+      ]
+    },
+    "polo ralph lauren rinku premium outlets": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "기본 니트/셔츠가 인기인 폴로 아울렛 매장입니다.",
+      building: "린쿠 프리미엄 아울렛",
+      floor: "메인 사이드 1층",
+      tags: ["패션", "아울렛", "메인사이드"],
+      features: ["기본 아이템", "선물용"],
+      pros: ["선물용 인기"],
+      cons: ["대기 가능"],
+      tips: ["키즈 라인 재고 확인"],
+      questions: [
+        "키즈 사이즈 재고 있나요? / キッズサイズはありますか？ / Do you have kids sizes in stock?",
+        "이 제품 추가 할인되나요? / この商品は追加割引になりますか？ / Is there an extra discount on this item?",
+        "기본 셔츠/니트는 어디에 있나요? / 定番シャツ・ニットはどこですか？ / Where are the basic shirts/knits?"
       ]
     },
     "rinku coffee": {
@@ -2659,13 +3149,114 @@ window.TRIP_DATA = {
     "teramachi street kyoto": {
       rating: null,
       ratingSource: "Google",
-      summary: "가와라마치 인근의 쇼핑 골목으로 기념품과 잡화를 편하게 둘러보기 좋습니다.",
+      summary: "가와라마치 인근의 쇼핑 골목으로 다도구/기념품을 함께 둘러보기 좋습니다.",
       area: "가와라마치 도보권",
-      tags: ["기념품", "쇼핑", "아케이드"],
-      features: ["잡화/기념품 밀집", "아케이드 산책", "가와라마치 접근"],
+      tags: ["다도구", "기념품", "쇼핑", "아케이드"],
+      features: ["다도구 전문점 밀집", "아케이드 산책", "가와라마치 접근"],
       pros: ["짧은 동선", "날씨 영향 적음"],
       cons: ["인파 많음", "주말 혼잡"],
-      tips: ["가벼운 기념품 위주로 쇼핑", "중간중간 카페로 휴식"]
+      tips: [
+        "차선은 80본/100본 중 입문용 80본 추천",
+        "나오시는 차선 모양 유지에 필수",
+        "차완은 입구 넓이·무게감을 직접 확인",
+        "테라마치 니조 → 니시키 방향으로 내려오며 쇼핑"
+      ],
+      nearby: [
+        {
+          name: "잇포도 차호 교토 본점",
+          mapQuery: "Ippodo Tea Store Kyoto",
+          type: "다도구",
+          features: ["입문 세트", "다카야마 차선"],
+          pros: ["초보자 안내"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "호라이도 차포",
+          mapQuery: "Horaido Tea Stall Kyoto",
+          type: "다도구",
+          features: ["합리적 가격대", "입문 도구"],
+          pros: ["예산 맞춤 선택"],
+          cons: ["재고 변동"]
+        },
+        {
+          name: "닌슈 (Ninshu)",
+          mapQuery: "Ninshu vessel shop & matcha cafe",
+          type: "다도구",
+          features: ["오무로 야키", "카페 겸"],
+          pros: ["디자인 다양"],
+          cons: ["가격대 있음"]
+        },
+        {
+          name: "류오엔 차점",
+          mapQuery: "Ryuoen Tea Store Kyoto",
+          type: "다도구",
+          features: ["전통 다구", "조용한 분위기"],
+          pros: ["전통 라인업"],
+          cons: ["영업일 확인 필요"]
+        },
+        {
+          name: "유겐 (YUGEN)",
+          mapQuery: "YUGEN Kyoto",
+          type: "다도구",
+          features: ["모던 디자인", "선물용"],
+          pros: ["선물용 좋음"],
+          cons: ["테라마치에서 약간 벗어남"]
+        }
+      ]
+    },
+    "horaido tea stall kyoto": {
+      rating: 4.7,
+      ratingSource: "Google",
+      summary: "합리적인 가격대의 다도구를 찾기 좋은 테라마치 남쪽의 차도구 매장입니다.",
+      category: "shopping",
+      area: "테라마치 남쪽(니시키 시장 근처)",
+      tags: ["다도구", "차완", "차선", "합리"],
+      features: ["차완/차선/나오시", "입문용 가격대"],
+      pros: ["예산 맞춰 선택 가능", "입문용 다양"],
+      cons: ["재고 변동"],
+      tips: ["차완 3,000엔대부터", "나오시 800~1,500엔", "중국산/일본산 구분 확인"]
+    },
+    "ninshu vessel shop & matcha cafe": {
+      rating: 4.9,
+      ratingSource: "Google",
+      summary: "오무로 야키 도자기와 말차를 함께 즐길 수 있는 매장 겸 카페입니다.",
+      category: "shopping",
+      area: "테라마치 니조 인근",
+      tags: ["도자기", "차완", "말차", "카페"],
+      features: ["오무로 야키 차완", "현대적 색감", "카페 겸"],
+      pros: ["디자인 선택 폭", "직접 체험 가능"],
+      cons: ["가격대 있음"],
+      tips: ["차완 6,000~10,000엔", "말차 도구 세트 약 15,000엔", "무게감 직접 확인"],
+      links: [
+        { "label": "공식 사이트", "url": "https://ninshu.com/" }
+      ]
+    },
+    "ryuoen tea store kyoto": {
+      rating: 4.4,
+      ratingSource: "Google",
+      summary: "전통 다도구를 취급하는 조용한 노포로 현지인들의 신뢰가 높은 편입니다.",
+      category: "shopping",
+      area: "테라마치 니조 인근",
+      tags: ["다도구", "전통", "노포"],
+      features: ["전통 다구", "차분한 분위기"],
+      pros: ["전통 라인업", "차분한 상담"],
+      cons: ["영업일 제한 가능"],
+      tips: ["영업시간/휴무 확인", "초보자임을 먼저 말하기"]
+    },
+    "yugen kyoto": {
+      rating: 4.6,
+      ratingSource: "Google",
+      summary: "현대적 감성으로 말차·다도구를 큐레이션하는 매장입니다.",
+      category: "shopping",
+      area: "테라마치 남쪽(니시키 인근)",
+      tags: ["다도구", "모던", "선물"],
+      features: ["심플한 디자인", "가격표 명확"],
+      pros: ["선물용 좋음", "가격 확인 쉬움"],
+      cons: ["테라마치에서 약간 벗어남"],
+      tips: ["나오시 약 1,100엔", "다카야마 차선 5,000~6,000엔", "차샤쿠 900~1,400엔"],
+      links: [
+        { "label": "공식 사이트", "url": "https://yugen-kyoto.com/" }
+      ]
     },
     "nishiki market": {
       rating: null,
@@ -3407,14 +3998,22 @@ window.TRIP_DATA = {
       tips: ["대기표 먼저 발급", "대기 중 근처 카페 활용"]
     },
     "ippodo tea store kyoto": {
-      rating: null,
+      rating: 4.5,
       ratingSource: "Google",
-      summary: "말차와 다구를 폭넓게 갖춘 교토 대표 차 전문점입니다.",
-      tags: ["말차", "다구", "선물"],
-      features: ["말차/다구 전문", "선물용 구성", "영문 안내"],
-      pros: ["선물용 최적", "브랜드 신뢰도"],
-      cons: ["가격대 있음"],
-      tips: ["입문자 세트 먼저 확인", "보관 방법 안내서 요청"]
+      summary: "1717년 창업한 교토 대표 차 전문점으로 입문 세트부터 전문가용 다구까지 갖추고 있습니다.",
+      category: "shopping",
+      tags: ["말차", "다도구", "차완", "차선"],
+      features: ["입문 세트 구성", "다카야마산 차선", "카보쿠 카페 체험"],
+      pros: ["도구 사용법 안내", "라인업 폭 넓음"],
+      cons: ["가격대 있음", "피크 시간 혼잡"],
+      tips: [
+        "입문 세트(다완·차선·차샤쿠 포함) 약 8,000엔",
+        "차선 5,000엔대 · 차샤쿠 1,200~2,500엔",
+        "카보쿠 카페에서 사용법 시연 문의"
+      ],
+      links: [
+        { "label": "공식 사이트", "url": "https://www.ippodo-tea.co.jp/pages/store-kyoto" }
+      ]
     },
     "marukyu koyamaen kyoto": {
       rating: null,

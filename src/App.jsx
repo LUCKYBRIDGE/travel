@@ -145,11 +145,8 @@ export default function App() {
             현재 위치: -
           </span>
           <span id="viewModeBadge" className="view-badge">
-            모드: 자세히
+            보기: 현재 탭
           </span>
-          <button type="button" className="tab-toggle" data-compact-toggle>
-            간략 보기
-          </button>
           <button type="button" className="tab-toggle" data-view-toggle>
             페이지 전부 펼치기
           </button>
