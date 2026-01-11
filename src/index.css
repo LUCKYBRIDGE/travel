@@ -1401,6 +1401,24 @@ body.compact-view .map-actions button {
   color: var(--muted);
 }
 
+.shopping-item {
+  align-items: flex-start;
+}
+
+.shopping-notes {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.shopping-compare {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--accent-2);
+  margin-top: 4px;
+}
+
 .toast {
   position: fixed;
   bottom: 22px;

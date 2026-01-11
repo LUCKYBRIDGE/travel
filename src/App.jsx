@@ -138,6 +138,7 @@ export default function App() {
         <a href="#map">지도</a>
         <a href="#budget">예산</a>
         <a href="#checklist">체크리스트</a>
+        <a href="#shopping">쇼핑리스트</a>
 
         <div className="tab-controls">
           <span id="tabCurrent" className="tab-current">
@@ -169,6 +170,7 @@ export default function App() {
         <section id="map" className="section" />
         <section id="budget" className="section" />
         <section id="checklist" className="section" />
+        <section id="shopping" className="section" />
       </main>
 
       <div id="modal-root" />

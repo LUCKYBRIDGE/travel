@@ -10,7 +10,8 @@
     confirmedDay3: document.getElementById("confirmed-day3"),
     map: document.getElementById("map"),
     budget: document.getElementById("budget"),
-    checklist: document.getElementById("checklist")
+    checklist: document.getElementById("checklist"),
+    shopping: document.getElementById("shopping")
   };
   const toast = document.getElementById("toast");
 
@@ -21,6 +22,7 @@
     timeOverrides: "travel:time-overrides",
     customStops: "travel:custom-stops",
     orderOverrides: "travel:order-overrides",
+    shoppingList: "travel:shopping-list",
     checklist: "travel:checklist",
     routeMode: "travel:route-mode",
     coords: "travel:coords",
@@ -42,6 +44,7 @@
     timeOverrides: loadStorage(STORAGE.timeOverrides, {}),
     customStops: loadStorage(STORAGE.customStops, {}),
     orderOverrides: loadStorage(STORAGE.orderOverrides, {}),
+    shoppingList: loadStorage(STORAGE.shoppingList, {}),
     checklist: loadStorage(STORAGE.checklist, {}),
     routeMode: loadStorage(STORAGE.routeMode, data.routeSettings?.mode || "hybrid"),
     coords: loadStorage(STORAGE.coords, {}),
@@ -971,6 +974,7 @@
         timeOverrides: state.timeOverrides,
         customStops: state.customStops,
         orderOverrides: state.orderOverrides,
+        shoppingList: state.shoppingList,
         checklist: state.checklist,
         routeMode: state.routeMode,
         routes: state.routes,
@@ -989,6 +993,7 @@
       timeOverrides: isPlainObject(base.timeOverrides) ? base.timeOverrides : {},
       customStops: isPlainObject(base.customStops) ? base.customStops : {},
       orderOverrides: isPlainObject(base.orderOverrides) ? base.orderOverrides : {},
+      shoppingList: isPlainObject(base.shoppingList) ? base.shoppingList : {},
       checklist: isPlainObject(base.checklist) ? base.checklist : {},
       routeMode: typeof base.routeMode === "string" ? base.routeMode : state.routeMode,
       routes: isPlainObject(base.routes) ? base.routes : {},
@@ -1009,6 +1014,7 @@
     state.timeOverrides = next.timeOverrides;
     state.customStops = next.customStops;
     state.orderOverrides = next.orderOverrides;
+    state.shoppingList = next.shoppingList;
     state.checklist = next.checklist;
     state.routeMode = next.routeMode;
     state.routes = next.routes;
@@ -1020,6 +1026,7 @@
     saveStorage(STORAGE.timeOverrides, state.timeOverrides);
     saveStorage(STORAGE.customStops, state.customStops);
     saveStorage(STORAGE.orderOverrides, state.orderOverrides);
+    saveStorage(STORAGE.shoppingList, state.shoppingList);
     saveStorage(STORAGE.checklist, state.checklist);
     saveStorage(STORAGE.routeMode, state.routeMode);
     saveStorage(STORAGE.routes, state.routes);
@@ -2883,6 +2890,60 @@
     `;
   }
 
+  function renderShoppingList() {
+    const list = Array.isArray(data.shoppingList) ? data.shoppingList : [];
+    const grouped = list.reduce((acc, item) => {
+      const key = item.category || "기타";
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(item);
+      return acc;
+    }, {});
+
+    sections.shopping.innerHTML = `
+      <div class="section-head">
+        <div>
+          <h2>쇼핑리스트</h2>
+          <p class="section-sub">사고 싶은 품목을 체크해 두면 공유 코드에 함께 저장됩니다.</p>
+        </div>
+      </div>
+      <div class="grid two">
+        ${Object.entries(grouped)
+          .map(([category, items], index) => {
+            return `
+              <div class="card" style="--delay: ${index * 0.05}s">
+                <h3>${category}</h3>
+                <div class="checklist-group">
+                  ${items
+                    .map((item) => {
+                      const notes = Array.isArray(item.notes) ? item.notes : [];
+                      const compare = item.compare ? `<div class="shopping-compare">비교: ${item.compare}</div>` : "";
+                      return `
+                        <label class="checklist-item shopping-item">
+                          <input
+                            type="checkbox"
+                            data-shopping="${item.id}"
+                            ${state.shoppingList[item.id] ? "checked" : ""}
+                          />
+                          <span class="checklist-text">
+                            <span class="checklist-label">${item.label}</span>
+                            ${notes.length ? `<span class="shopping-notes">${notes.join(" · ")}</span>` : ""}
+                            ${compare}
+                          </span>
+                        </label>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              </div>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
   function render() {
     renderOverview();
     renderDay(data.days[0], sections.day1);
@@ -2900,6 +2961,7 @@
     renderMap();
     renderBudget();
     renderChecklist();
+    renderShoppingList();
   }
 
   document.addEventListener("change", (event) => {
@@ -2928,6 +2990,12 @@
       state.checklist[target.dataset.checklist] = target.checked;
       saveStorage(STORAGE.checklist, state.checklist);
       renderChecklist();
+    }
+
+    if (target.matches("[data-shopping]")) {
+      state.shoppingList[target.dataset.shopping] = target.checked;
+      saveStorage(STORAGE.shoppingList, state.shoppingList);
+      renderShoppingList();
     }
 
     if (target.matches("[data-route-mode]")) {
