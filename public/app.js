@@ -929,6 +929,28 @@
     };
   }
 
+  function renderScheduleTable(schedule) {
+    if (!schedule || !Array.isArray(schedule.rows) || schedule.rows.length === 0) {
+      return "";
+    }
+    const headers = Array.isArray(schedule.headers) ? schedule.headers : [];
+    const headerRow = headers.length
+      ? `<tr>${headers.map((header) => `<th>${header}</th>`).join("")}</tr>`
+      : "";
+    const bodyRows = schedule.rows
+      .map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`)
+      .join("");
+    return `
+      <div class="schedule-table">
+        ${schedule.title ? `<div class="schedule-title">${schedule.title}</div>` : ""}
+        <table>
+          ${headerRow ? `<thead>${headerRow}</thead>` : ""}
+          <tbody>${bodyRows}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
   function getCustomStops(dayId) {
     return Array.isArray(state.customStops?.[dayId]) ? state.customStops[dayId] : [];
   }
@@ -1083,7 +1105,10 @@
         entries.push({
           label: option.label,
           mapQuery: option.mapQuery,
-          source: "선택지"
+          source: "선택지",
+          menu: option.menu || "",
+          note: option.note || "",
+          desc: option.desc || ""
         });
       });
     });
@@ -2259,6 +2284,7 @@
       ? `<div class="block-row"><span class="label">장소</span><span>${fallbackWhere}</span></div>`
       : "";
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
+    const scheduleHtml = block.scheduleTable ? renderScheduleTable(block.scheduleTable) : "";
     const orderEditor = `
       <div class="block-row">
         <span class="label">일정 추가</span>
@@ -2303,6 +2329,7 @@
           ${selectionDetailHtml}
           ${extraHtml}
           ${details}
+          ${scheduleHtml}
         </div>
       </div>
     `;
@@ -2507,6 +2534,19 @@
           isExtraSelected(dayId, blockId, entry.mapQuery) || isPlaceInConfirmed(dayId, entry.mapQuery);
         const detail = getPlaceDetails(entry.mapQuery) || {};
         const rating = formatRating(detail);
+        const menu = entry.menu || detail.menu || "";
+        const summary = entry.desc || entry.note || detail.summary || "";
+        const features = Array.isArray(detail.features) ? detail.features.slice(0, 3).join(" · ") : "";
+        const infoLines = [];
+        if (menu) {
+          infoLines.push(`<div class="modal-item-info">메뉴/가격: ${menu}</div>`);
+        }
+        if (summary) {
+          infoLines.push(`<div class="modal-item-info">${summary}</div>`);
+        } else if (features) {
+          infoLines.push(`<div class="modal-item-info">특징: ${features}</div>`);
+        }
+        const infoBlock = infoLines.length ? infoLines.join("") : "";
         return `
           <button
             type="button"
@@ -2521,6 +2561,7 @@
           >
             <div class="modal-item-title">${entry.label}</div>
             <div class="modal-item-meta">${entry.source} · 평점 ${rating}</div>
+            ${infoBlock}
           </button>
         `;
       })

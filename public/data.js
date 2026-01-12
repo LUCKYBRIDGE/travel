@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-11-02",
+    version: "2026-01-11-05",
     weather: {
       updatedAt: "2026-01-11",
       forecastTimestamp: "2026-01-11 21:11 (JST)",
@@ -216,7 +216,7 @@ window.TRIP_DATA = {
     baseUrl: "https://travel.lucky20220528.workers.dev",
     cacheDays: 7
   },
-  ratingsSnapshotUrl: "./ratings.json?v=2026-01-11-02",
+  ratingsSnapshotUrl: "./ratings.json?v=2026-01-11-05",
   syncApi: {
     baseUrl: "https://travel.lucky20220528.workers.dev"
   },
@@ -387,6 +387,7 @@ window.TRIP_DATA = {
           details: [
             "T2 도착 → T1 무료 셔틀 이동",
             "세븐은행/이온은행/우체국 ATM",
+            "이온은행 ATM은 T1 수하물 찾는 곳 4번 벨트 근처 이용 팁(후기)",
             "ICOCA 발급(보증금 500엔) + 현금 충전",
             "하루카 QR 발권 및 실물 티켓 수령"
           ],
@@ -535,10 +536,26 @@ window.TRIP_DATA = {
                   summary: "아울렛 쇼핑과 카페를 짧게 즐긴 뒤 공항으로 복귀합니다.",
                   details: [
                     "셔틀버스(추천): T1 1층 12번 / T2 1층 1번 승강장",
+                    "셔틀버스 시간표: https://www.kate.co.jp/kr/timetable/detail/SKYB",
                     "전철: 공항역 → 린쿠타운역 6분",
                     "아식스 팩토리 아울렛 30~50% 할인",
                     "브룩클린 로스팅 컴퍼니 라떼 650엔"
                   ],
+                  scheduleTable: {
+                    title: "KIX → 린쿠 셔틀버스 시간표(발췌)",
+                    headers: ["출발(KIX T1)", "도착(린쿠 아울렛)"],
+                    rows: [
+                      ["09:45", "10:00"],
+                      ["10:45", "11:00"],
+                      ["11:45", "12:00"],
+                      ["13:40", "13:55"],
+                      ["14:40", "14:55"],
+                      ["15:40", "15:55"],
+                      ["17:00", "17:15"],
+                      ["18:00", "18:15"],
+                      ["19:00", "19:15"]
+                    ]
+                  },
                   location: {
                     name: "린쿠 프리미엄 아울렛 (Rinku Premium Outlets)",
                     mapQuery: "Rinku Premium Outlets"
@@ -753,7 +770,26 @@ window.TRIP_DATA = {
                   end: "16:30",
                   title: "린쿠 타운 점심",
                   summary: "린쿠 아울렛에서 본격적인 점심을 즐깁니다.",
-                  details: ["예상 대기 20~30분", "린쿠 프리미엄 아울렛 내"],
+                  details: [
+                    "셔틀버스 시간표: https://www.kate.co.jp/kr/timetable/detail/SKYB",
+                    "예상 대기 20~30분",
+                    "린쿠 프리미엄 아울렛 내"
+                  ],
+                  scheduleTable: {
+                    title: "KIX → 린쿠 셔틀버스 시간표(발췌)",
+                    headers: ["출발(KIX T1)", "도착(린쿠 아울렛)"],
+                    rows: [
+                      ["09:45", "10:00"],
+                      ["10:45", "11:00"],
+                      ["11:45", "12:00"],
+                      ["13:40", "13:55"],
+                      ["14:40", "14:55"],
+                      ["15:40", "15:55"],
+                      ["17:00", "17:15"],
+                      ["18:00", "18:15"],
+                      ["19:00", "19:15"]
+                    ]
+                  },
                   location: {
                     name: "린쿠 프리미엄 아울렛 (Rinku Premium Outlets)",
                     mapQuery: "Rinku Premium Outlets"
@@ -2712,7 +2748,7 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary:
-        "트래블월렛 등 선불카드 출금에 유용한 ATM입니다. (공식 지도: T1 1F 북쪽 도착층/보안 전, 2F 중앙 출발층/보안 전)",
+        "트래블월렛 등 선불카드 출금에 유용한 ATM입니다. (공식 지도: T1 1F 북쪽 도착층/보안 전, 2F 중앙 출발층/보안 전) 수하물 대기 중 4번 벨트 근처 ATM을 이용하면 동선이 효율적입니다.",
       building: "간사이 공항 T1",
       floor: "1층 북측 · 2층 중앙",
       area: "보안 전 구역",
@@ -2725,12 +2761,15 @@ window.TRIP_DATA = {
         "소액 현금 먼저 확보",
         "(공식 지도 표식) 1F 서비스 No.32, 2F 서비스 No.23",
         "(후기) 1F 도착홀 ATM 존에 세븐/우체국 ATM과 함께 표기",
+        "(후기) 수하물 찾는 곳 4번 벨트 근처 ATM 이용 팁 다수",
         "(로케이터) 2F 국내선 남 출발구 ATM 코너 표기"
       ],
       links: [
         { label: "KIX ATM 안내", url: "https://www.kansai-airport.or.jp/en/service/money/04.html" },
-        { label: "KIX T1 1F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/1f.html" },
-        { label: "KIX T1 2F 지도", url: "https://www.kansai-airport.or.jp/en/map/t1/2f.html" },
+        { label: "KIX T1 1F 지도(영문)", url: "https://www.kansai-airport.or.jp/en/map/t1/1f.html" },
+        { label: "KIX T1 2F 지도(영문)", url: "https://www.kansai-airport.or.jp/en/map/t1/2f.html" },
+        { label: "KIX T1 지도(한국어)", url: "https://www.kansai-airport.or.jp/kr/map/t1_new/" },
+        { label: "KIX T2 지도(한국어)", url: "https://www.kansai-airport.or.jp/kr/map/t2/" },
         { label: "AEON Bank 로케이터", url: "https://map.aeonbank.co.jp/aeonbank/spot/detail?code=0000003487" }
       ]
     },
