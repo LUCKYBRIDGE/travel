@@ -791,6 +791,56 @@
     return String(value || "").trim().toLowerCase();
   }
 
+  function migrateCustomStopsToExtras() {
+    if (!state.customStops || typeof state.customStops !== "object") {
+      return;
+    }
+    let changed = false;
+    Object.entries(state.customStops).forEach(([dayId, stops]) => {
+      if (!Array.isArray(stops) || stops.length === 0) {
+        return;
+      }
+      const remaining = [];
+      stops.forEach((stop) => {
+        const afterKey = typeof stop.afterKey === "string" ? stop.afterKey : "";
+        const blockId = afterKey.startsWith("block:") ? afterKey.slice("block:".length) : "";
+        if (!blockId) {
+          remaining.push(stop);
+          return;
+        }
+        if (!state.extras || typeof state.extras !== "object") {
+          state.extras = {};
+        }
+        if (!state.extras[dayId] || typeof state.extras[dayId] !== "object") {
+          state.extras[dayId] = {};
+        }
+        if (!state.extras[dayId][blockId] || typeof state.extras[dayId][blockId] !== "object") {
+          state.extras[dayId][blockId] = {};
+        }
+        const key = normalizeKey(stop.mapQuery);
+        if (key && !state.extras[dayId][blockId][key]) {
+          state.extras[dayId][blockId][key] = {
+            mapQuery: stop.mapQuery,
+            label: stop.label || stop.mapQuery,
+            source: stop.source || "주변 장소"
+          };
+        }
+        changed = true;
+      });
+      if (remaining.length !== stops.length) {
+        state.customStops[dayId] = remaining;
+        changed = true;
+      }
+      if (remaining.length === 0) {
+        state.customStops[dayId] = [];
+      }
+    });
+    if (changed) {
+      saveStorage(STORAGE.extras, state.extras);
+      saveStorage(STORAGE.customStops, state.customStops);
+    }
+  }
+
   function getExtrasForBlock(dayId, blockId) {
     const dayExtras = state.extras && state.extras[dayId] ? state.extras[dayId] : {};
     const blockExtras = dayExtras && dayExtras[blockId] ? dayExtras[blockId] : {};
@@ -910,26 +960,12 @@
     blocks.forEach((block, index) => {
       baseOrder.set(`block:${block.id}`, index + 1);
     });
-    const customStops = getCustomStops(day.id);
-    const insertCount = new Map();
     const items = blocks.map((block) => ({
       key: `block:${block.id}`,
       type: "block",
       block,
       order: baseOrder.get(`block:${block.id}`)
     }));
-    customStops.forEach((stop) => {
-      const afterKey = stop.afterKey && baseOrder.has(stop.afterKey) ? stop.afterKey : null;
-      const base = afterKey ? baseOrder.get(afterKey) : blocks.length + 1;
-      const count = insertCount.get(base) || 0;
-      insertCount.set(base, count + 1);
-      items.push({
-        key: `custom:${stop.id}`,
-        type: "custom",
-        stop,
-        order: base + 0.1 + count * 0.1
-      });
-    });
     items.forEach((item) => {
       const override = orderOverrides[item.key];
       if (typeof override === "number") {
@@ -1020,6 +1056,9 @@
             return true;
           }
         }
+      }
+      if (isExtraSelected(dayId, block.id, mapQuery)) {
+        return true;
       }
     }
     const stops = getCustomStops(dayId);
@@ -1143,6 +1182,7 @@
     saveStorage(STORAGE.routes, state.routes);
     saveStorage(STORAGE.coords, state.coords);
     saveStorage(STORAGE.ratings, state.ratings);
+    migrateCustomStopsToExtras();
     render();
   }
 
@@ -2210,7 +2250,7 @@
       })
       .join("");
     const extraHtml = extraDetails
-      ? `<div class="confirmed-options"><div class="muted">추가 선택 장소</div>${extraDetails}</div>`
+      ? `<div class="confirmed-options"><div class="muted">같은 시간대 추가 장소</div>${extraDetails}</div>`
       : "";
     const fallbackWhere = locationParts.length ? "" : selectedWheres.filter(Boolean).join(" · ");
     const locationLine = locationParts.length
@@ -2223,7 +2263,7 @@
       <div class="block-row">
         <span class="label">일정 추가</span>
         <span class="order-edit">
-          <button type="button" data-open-place-modal data-day-id="${dayId}" data-block-id="${block.id}" data-after-key="${itemKey}">
+          <button type="button" data-open-place-modal data-day-id="${dayId}" data-block-id="${block.id}">
             장소 추가
           </button>
         </span>
@@ -2455,7 +2495,7 @@
     closeModal();
   }
 
-  function showPlaceModal(dayId, blockId, afterKey) {
+  function showPlaceModal(dayId, blockId) {
     const root = document.getElementById("modal-root");
     if (!root) {
       return;
@@ -2463,7 +2503,8 @@
     const entries = buildAddablePlaces(dayId, blockId);
     const list = entries
       .map((entry) => {
-        const disabled = isPlaceInConfirmed(dayId, entry.mapQuery);
+        const disabled =
+          isExtraSelected(dayId, blockId, entry.mapQuery) || isPlaceInConfirmed(dayId, entry.mapQuery);
         const detail = getPlaceDetails(entry.mapQuery) || {};
         const rating = formatRating(detail);
         return `
@@ -2472,7 +2513,7 @@
             class="modal-item ${disabled ? "disabled" : ""}"
             data-place-add
             data-day-id="${dayId}"
-            data-after-key="${afterKey || ""}"
+            data-block-id="${blockId}"
             data-map-query="${entry.mapQuery}"
             data-label="${entry.label}"
             data-source="${entry.source}"
@@ -3489,8 +3530,7 @@
     if (openPlaceModal) {
       const dayId = openPlaceModal.dataset.dayId;
       const blockId = openPlaceModal.dataset.blockId;
-      const afterKey = openPlaceModal.dataset.afterKey;
-      showPlaceModal(dayId, blockId, afterKey);
+      showPlaceModal(dayId, blockId);
       return;
     }
 
@@ -3503,14 +3543,14 @@
     const placeAdd = event.target.closest("[data-place-add]");
     if (placeAdd) {
       const dayId = placeAdd.dataset.dayId;
-      const afterKey = placeAdd.dataset.afterKey;
+      const blockId = placeAdd.dataset.blockId;
       const mapQuery = placeAdd.dataset.mapQuery;
       const label = placeAdd.dataset.label;
       const source = placeAdd.dataset.source;
-      addCustomStop(dayId, afterKey, { mapQuery, label, source });
+      const selected = toggleExtraSelection(dayId, blockId, { mapQuery, label, source });
       render();
       closePlaceModal();
-      showToast("일정에 추가됐어요");
+      showToast(selected ? "코스확정에 추가됨" : "코스확정에서 제거됨");
       return;
     }
 
@@ -3970,6 +4010,7 @@
   setupNavToggle();
   setupSectionViewToggle();
   setupNavHighlight();
+  migrateCustomStopsToExtras();
   render();
   loadRatingsData();
 })();
