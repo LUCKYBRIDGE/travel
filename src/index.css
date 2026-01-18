@@ -394,6 +394,7 @@ body.compact-view .map-actions button {
   color: var(--muted);
   max-width: 640px;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .section-actions {
@@ -560,11 +561,13 @@ body.compact-view .map-actions button {
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .block-title span {
   color: var(--muted);
   font-size: 0.85rem;
+  overflow-wrap: anywhere;
 }
 
 .block-step {
@@ -591,6 +594,7 @@ body.compact-view .map-actions button {
   padding-left: 18px;
   color: var(--muted);
   overflow-wrap: anywhere;
+  line-height: 1.5;
 }
 
 .block-row {
@@ -1166,6 +1170,7 @@ body.compact-view .map-actions button {
   font-weight: 700;
   color: var(--accent-2);
   margin-bottom: 6px;
+  overflow-wrap: anywhere;
 }
 
 .place-summary {
@@ -1175,6 +1180,7 @@ body.compact-view .map-actions button {
   background: rgba(31, 111, 120, 0.08);
   color: var(--ink);
   font-size: 0.88rem;
+  overflow-wrap: anywhere;
 }
 
 .place-top {
@@ -1443,6 +1449,7 @@ body.compact-view .map-actions button {
   border-radius: var(--radius-sm);
   border: 1px solid rgba(31, 42, 42, 0.08);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 
 .route-settings {
@@ -1845,6 +1852,44 @@ body.compact-view .map-actions button {
 
   .tab-current {
     white-space: normal;
+  }
+
+  .section-head {
+    align-items: flex-start;
+  }
+
+  .summary-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .block {
+    padding: 14px 16px;
+  }
+
+  .block-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .place-line {
+    grid-template-columns: 1fr;
+  }
+
+  .place-actions button,
+  .place-links a,
+  .route-actions a,
+  .route-actions button,
+  .section-actions button {
+    width: 100%;
+  }
+
+  .weather-slots {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-table table {
+    min-width: 220px;
   }
 }
 }
