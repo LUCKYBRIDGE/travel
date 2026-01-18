@@ -396,6 +396,25 @@ body.compact-view .map-actions button {
   line-height: 1.6;
 }
 
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.section-actions button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 113, 227, 0.25);
+  background: rgba(0, 113, 227, 0.08);
+  color: var(--accent-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: normal;
+  max-width: 100%;
+}
+
 .card {
   background: rgba(255, 255, 255, 0.92);
   border-radius: var(--radius);

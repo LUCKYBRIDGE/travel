@@ -81,6 +81,107 @@
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   }
 
+  let captureCssCache = null;
+
+  function getCaptureCssText() {
+    if (captureCssCache) {
+      return captureCssCache;
+    }
+    let cssText = "";
+    Array.from(document.styleSheets).forEach((sheet) => {
+      try {
+        const rules = sheet.cssRules || [];
+        cssText += Array.from(rules)
+          .map((rule) => rule.cssText)
+          .join("\n");
+      } catch (error) {
+        // Cross-origin stylesheets are skipped.
+      }
+    });
+    captureCssCache = cssText;
+    return cssText;
+  }
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+
+  function captureSectionAsImage(sectionId, label) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+      showToast("캡처할 섹션을 찾지 못했어요");
+      return;
+    }
+    const rect = section.getBoundingClientRect();
+    const width = Math.ceil(rect.width);
+    const height = Math.ceil(section.scrollHeight);
+    if (!width || !height) {
+      showToast("캡처할 내용이 없습니다");
+      return;
+    }
+
+    const clone = section.cloneNode(true);
+    clone.removeAttribute("hidden");
+    clone.style.margin = "0";
+    clone.style.maxWidth = "none";
+    clone.style.width = `${width}px`;
+
+    const wrapper = document.createElement("div");
+    wrapper.style.width = `${width}px`;
+    wrapper.style.height = `${height}px`;
+    wrapper.style.background = getComputedStyle(document.body).backgroundColor || "#f5f5f7";
+    wrapper.style.boxSizing = "border-box";
+    wrapper.appendChild(clone);
+
+    const cssText = getCaptureCssText();
+    const html = `
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;">
+        <style>${cssText}</style>
+        ${wrapper.outerHTML}
+      </div>
+    `;
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+        <foreignObject width="100%" height="100%">${html}</foreignObject>
+      </svg>
+    `;
+    const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+    const img = new Image();
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = getComputedStyle(document.body).backgroundColor || "#f5f5f7";
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          showToast("이미지 생성 실패");
+          return;
+        }
+        const safeLabel = (label || sectionId).replace(/\s+/g, "-");
+        downloadBlob(blob, `코스확정-${safeLabel}.png`);
+        showToast("이미지 저장 완료");
+      }, "image/png");
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      showToast("이미지 생성 실패");
+    };
+    img.src = url;
+  }
+
   const CATEGORY_DEFS = [
     {
       id: "meal",
@@ -2392,6 +2493,11 @@
           <h2>${day.label} · 확정 코스</h2>
           <p class="section-sub">${day.title} · 선택된 옵션 반영</p>
         </div>
+        <div class="section-actions">
+          <button type="button" data-capture-section data-section-id="${section.id}" data-section-label="${day.label}">
+            이미지로 저장
+          </button>
+        </div>
       </div>
       <div class="timeline">
         ${timeline}
@@ -3564,6 +3670,14 @@
       const dayId = openOrderModal.dataset.dayId;
       const itemKey = openOrderModal.dataset.itemKey;
       showOrderModal(dayId, itemKey);
+      return;
+    }
+
+    const captureButton = event.target.closest("[data-capture-section]");
+    if (captureButton) {
+      const sectionId = captureButton.dataset.sectionId;
+      const label = captureButton.dataset.sectionLabel;
+      captureSectionAsImage(sectionId, label);
       return;
     }
 
