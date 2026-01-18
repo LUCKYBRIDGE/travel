@@ -58,6 +58,25 @@
   };
   const placeDetails = data.placeDetails || {};
 
+  function applyOptionDefaultMigration() {
+    const migrations = [
+      { groupId: "d1-route", from: "airport-meal", to: "skip-rinku" }
+    ];
+    let changed = false;
+    migrations.forEach((entry) => {
+      const current = state.options[entry.groupId];
+      if (!current || current === entry.from) {
+        state.options[entry.groupId] = entry.to;
+        changed = true;
+      }
+    });
+    if (changed) {
+      saveStorage(STORAGE.options, state.options);
+    }
+  }
+
+  applyOptionDefaultMigration();
+
   function loadStorage(key, fallback) {
     try {
       const raw = localStorage.getItem(key);

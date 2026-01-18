@@ -417,7 +417,7 @@ window.TRIP_DATA = {
           help: "옵션을 바꾸면 시간표가 자동 변경됩니다.",
           collapsed: true,
           mode: "single",
-          default: "airport-meal",
+          default: "skip-rinku",
           options: [
             {
               id: "airport-meal",
