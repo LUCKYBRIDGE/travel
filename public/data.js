@@ -1000,8 +1000,8 @@ window.TRIP_DATA = {
             },
             {
               id: "skip-rinku",
-              label: "린쿠 생략 · 교토역 주변",
-              summary: "교토 첫인상 집중",
+              label: "공항 식사 · 교토역 직행",
+              summary: "린쿠 생략 후 바로 이동",
               blocks: [
                 {
                   id: "d1-airport-lunch-c",
