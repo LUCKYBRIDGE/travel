@@ -73,6 +73,14 @@ a {
   text-decoration: none;
 }
 
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
 .hero {
   position: relative;
   z-index: 1;
@@ -399,6 +407,7 @@ body.compact-view .map-actions button {
     box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  max-width: 100%;
 }
 
 .grid {
@@ -426,6 +435,12 @@ body.compact-view .map-actions button {
   gap: 12px;
   font-size: 0.9rem;
   color: var(--muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.summary-row > * {
+  min-width: 0;
 }
 
 .summary-row .label {
@@ -464,6 +479,7 @@ body.compact-view .map-actions button {
   margin-left: 10px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  max-width: 100%;
 }
 
 .confirmed-item {
@@ -548,12 +564,14 @@ body.compact-view .map-actions button {
   background: rgba(217, 108, 77, 0.08);
   font-size: 0.9rem;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .block-body ul {
   margin: 10px 0 0;
   padding-left: 18px;
   color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 .block-row {
@@ -563,6 +581,7 @@ body.compact-view .map-actions button {
   margin-top: 10px;
   color: var(--muted);
   font-size: 0.9rem;
+  overflow-wrap: anywhere;
 }
 
 .block-row .label {
@@ -576,6 +595,7 @@ body.compact-view .map-actions button {
   background: rgba(31, 42, 42, 0.04);
   padding: 10px;
   overflow-x: auto;
+  max-width: 100%;
 }
 
 .schedule-title {
@@ -590,6 +610,7 @@ body.compact-view .map-actions button {
   border-collapse: collapse;
   font-size: 0.85rem;
   min-width: 260px;
+  max-width: 100%;
 }
 
 .schedule-table th,
@@ -778,6 +799,8 @@ body.compact-view .map-actions button {
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
   cursor: pointer;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .modal-item-title {
@@ -968,6 +991,8 @@ body.compact-view .map-actions button {
   border-radius: var(--radius-sm);
   border: 1px solid rgba(31, 42, 42, 0.08);
   background: var(--paper-2);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .option-item.selected,
@@ -1065,6 +1090,9 @@ body.compact-view .map-actions button {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .place-actions {
@@ -1081,6 +1109,8 @@ body.compact-view .map-actions button {
   background: transparent;
   font-size: 0.8rem;
   cursor: pointer;
+  white-space: normal;
+  max-width: 100%;
 }
 
 .place-info summary {
@@ -1154,6 +1184,8 @@ body.compact-view .map-actions button {
   margin-top: 6px;
   font-size: 0.85rem;
   color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .place-line .label {
@@ -1166,6 +1198,7 @@ body.compact-view .map-actions button {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  max-width: 100%;
 }
 
 .place-links a {
@@ -1174,6 +1207,8 @@ body.compact-view .map-actions button {
   border: 1px solid rgba(31, 42, 42, 0.12);
   font-size: 0.8rem;
   color: var(--accent-2);
+  white-space: normal;
+  max-width: 100%;
 }
 
 .weather-list {
@@ -1314,6 +1349,8 @@ body.compact-view .map-actions button {
   font-size: 0.85rem;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .nearby-header {
@@ -1333,6 +1370,7 @@ body.compact-view .map-actions button {
   gap: 10px;
   animation: rise 0.6s ease var(--delay, 0s) both;
   margin-left: 10px;
+  max-width: 100%;
 }
 
 .route-head {
@@ -1360,6 +1398,8 @@ body.compact-view .map-actions button {
   background: transparent;
   font-size: 0.8rem;
   cursor: pointer;
+  white-space: normal;
+  max-width: 100%;
 }
 
 .route-online {
@@ -1488,6 +1528,8 @@ body.compact-view .map-actions button {
   border: 1px solid rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .map-actions {
@@ -1603,6 +1645,8 @@ body.compact-view .map-actions button {
   background: transparent;
   cursor: pointer;
   font-size: 0.85rem;
+  white-space: normal;
+  max-width: 100%;
 }
 
 .budget-grid {
