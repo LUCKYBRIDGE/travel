@@ -3890,6 +3890,12 @@
     const sectionsList = navLinks
       .map((link) => document.querySelector(link.getAttribute("href")))
       .filter(Boolean);
+    const DEFAULT_SECTION_ID = "confirmed-day1";
+    let shouldScrollToDefault = false;
+    if (!window.location.hash && sectionsList.some((section) => section.id === DEFAULT_SECTION_ID)) {
+      history.replaceState(null, "", `#${DEFAULT_SECTION_ID}`);
+      shouldScrollToDefault = true;
+    }
 
     const setSectionVisibility = (activeId) => {
       if (state.showAllSections) {
@@ -3981,7 +3987,7 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", updateActive);
     window.addEventListener("hashchange", () => updateActive(true));
-    updateActive();
+    updateActive(shouldScrollToDefault);
     navUpdateActive = updateActive;
   }
 
