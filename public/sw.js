@@ -1,4 +1,4 @@
-const CACHE_NAME = "travel-cache-v73";
+const CACHE_NAME = "travel-cache-v74";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,7 +9,8 @@ const ASSETS = [
   "./ratings.json",
   "./manifest.json",
   "./assets/icon.svg",
-  "./assets/maskable.svg"
+  "./assets/maskable.svg",
+  "./assets/kix-t2-bus.png"
 ];
 
 self.addEventListener("install", (event) => {

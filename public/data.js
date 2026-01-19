@@ -395,6 +395,16 @@ window.TRIP_DATA = {
             name: "간사이 공항 T1 (KIX T1)",
             mapQuery: "Kansai International Airport Terminal 1"
           },
+          media: [
+            {
+              src: "/assets/kix-t2-bus.png",
+              alt: "간사이 공항 T2 버스 탑승 위치 안내",
+              title: "T2 버스 탑승 위치",
+              caption: "빨간 박스로 표시된 구역이 T2 버스 승차 위치입니다.",
+              sourceLabel: "간사이공항 T2 지도",
+              sourceUrl: "https://www.kansai-airport.or.jp/kr/map/t2?utm_source=chatgpt.com"
+            }
+          ],
           nearbyCategories: ["transport"],
           tags: ["공항", "현금필수", "교통"],
           costs: [

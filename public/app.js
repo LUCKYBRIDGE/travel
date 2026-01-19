@@ -1071,6 +1071,33 @@
     `;
   }
 
+  function renderMedia(media) {
+    if (!Array.isArray(media) || media.length === 0) {
+      return "";
+    }
+    return `
+      <div class="media-block">
+        ${media
+          .map((item) => {
+            const title = item.title ? `<div class="media-title">${item.title}</div>` : "";
+            const caption = item.caption ? `<div class="media-caption">${item.caption}</div>` : "";
+            const source = item.sourceUrl
+              ? `<div class="media-source">출처: <a href="${item.sourceUrl}" target="_blank" rel="noreferrer">${item.sourceLabel || item.sourceUrl}</a></div>`
+              : "";
+            return `
+              <figure class="media-card">
+                <img src="${item.src}" alt="${item.alt || item.title || "여행 안내 이미지"}" loading="lazy" />
+                ${title}
+                ${caption}
+                ${source}
+              </figure>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
   function getCustomStops(dayId) {
     return Array.isArray(state.customStops?.[dayId]) ? state.customStops[dayId] : [];
   }
@@ -2404,6 +2431,7 @@
       ? `<div class="block-row"><span class="label">장소</span><span>${fallbackWhere}</span></div>`
       : "";
     const details = block.details?.length ? `<ul>${block.details.map((item) => `<li>${item}</li>`).join("")}</ul>` : "";
+    const mediaHtml = block.media ? renderMedia(block.media) : "";
     const scheduleHtml = block.scheduleTable ? renderScheduleTable(block.scheduleTable) : "";
     const orderEditor = `
       <div class="block-row">
@@ -2449,6 +2477,7 @@
           ${selectionDetailHtml}
           ${extraHtml}
           ${details}
+          ${mediaHtml}
           ${scheduleHtml}
         </div>
       </div>

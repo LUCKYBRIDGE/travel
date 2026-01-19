@@ -649,6 +649,51 @@ body.compact-view .map-actions button {
   font-weight: 700;
 }
 
+.media-block {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.media-card {
+  margin: 0;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(31, 42, 42, 0.08);
+  display: grid;
+  gap: 6px;
+}
+
+.media-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(31, 42, 42, 0.08);
+}
+
+.media-title {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.media-caption {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.media-source {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.media-source a {
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
 .time-edit {
   display: inline-flex;
   flex-wrap: wrap;
