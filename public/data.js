@@ -5,7 +5,7 @@ window.TRIP_DATA = {
     dateRange: "2026-01-20 ~ 2026-01-22",
     travelers: "성인 5인 가족",
     baseCity: "KIX / Kyoto",
-    version: "2026-01-11-05",
+    version: "2026-01-11-06",
     weather: {
       updatedAt: "2026-01-11",
       forecastTimestamp: "2026-01-11 21:11 (JST)",
@@ -381,19 +381,17 @@ window.TRIP_DATA = {
         {
           id: "d1-admin",
           start: "13:05",
-          end: "14:40",
-          title: "입국 수속 + 금융/교통 행정",
-          summary: "공항에서 현금 인출, 교통카드 발급, 하루카 티켓까지 한 번에 끝냅니다.",
+          end: "13:30",
+          title: "입국 수속 + 현금 인출",
+          summary: "T2 도착 직후 현금 인출을 먼저 처리하고 T1으로 이동합니다.",
           details: [
-            "T2 도착 → T1 무료 셔틀 이동",
-            "세븐은행/이온은행/우체국 ATM",
-            "이온은행 ATM은 T1 수하물 찾는 곳 4번 벨트 근처 이용 팁(후기)",
-            "ICOCA 발급(보증금 500엔) + 현금 충전",
-            "하루카 QR 발권 및 실물 티켓 수령"
+            "T2 수하물 찾는 곳 C벨트 건너편 분홍색 이온 ATM 이용",
+            "13:10~13:30 T2 → T1 무료 셔틀 이동",
+            "세븐은행/우체국 ATM은 T1 도착층에도 있음(대기 분산)"
           ],
           location: {
-            name: "간사이 공항 T1 (KIX T1)",
-            mapQuery: "Kansai International Airport Terminal 1"
+            name: "간사이 공항 T2 (KIX T2)",
+            mapQuery: "Kansai International Airport Terminal 2"
           },
           media: [
             {
@@ -436,8 +434,8 @@ window.TRIP_DATA = {
               blocks: [
                 {
                   id: "d1-airport-lunch-a",
-                  start: "14:40",
-                  end: "15:40",
+                  start: "13:30",
+                  end: "14:30",
                   title: "점심 식사 · 공항 T1",
                   summary: "공항 내 식당에서 여유 있게 식사 후 린쿠로 이동합니다.",
                   details: ["예상 대기 10~20분", "줄 길면 포장 선택"],
@@ -539,6 +537,34 @@ window.TRIP_DATA = {
                   ]
                 },
                 {
+                  id: "d1-ticket-a",
+                  start: "14:30",
+                  end: "15:00",
+                  title: "하루카 발권 + ICOCA 발급",
+                  summary: "공항역 JR 자동 발매기에서 QR 티켓을 수령합니다.",
+                  details: [
+                    "QR 스캔 가능한 초록색 발매기 이용",
+                    "여권 인식 후 승차권/특급권 모두 수령",
+                    "ICOCA 발급(보증금 500엔) + 현금 충전"
+                  ],
+                  location: {
+                    name: "JR 공항역 발권기/매표소",
+                    mapQuery: "JR Ticket Office Kansai Airport Station"
+                  },
+                  tags: ["교통", "티켓"],
+                  costs: [
+                    {
+                      label: "ICOCA 발급",
+                      min: 2000,
+                      max: 2000,
+                      unit: "per_person",
+                      currency: "JPY",
+                      category: "transport",
+                      payment: "cash"
+                    }
+                  ]
+                },
+                {
                   id: "d1-rinku-shopping-a",
                   start: "15:10",
                   end: "17:00",
@@ -586,7 +612,7 @@ window.TRIP_DATA = {
                 {
                   id: "d1-haruka-a",
                   start: "17:15",
-                  end: "18:45",
+                  end: "18:35",
                   title: "하루카 특급 이동",
                   summary: "하루카 특급으로 교토역까지 이동합니다.",
                   details: ["공항 복귀 후 하루카 탑승", "지정석 추천"],
@@ -599,8 +625,8 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "d1-kyoto-night-a",
-                  start: "19:30",
-                  end: "21:30",
+                  start: "19:00",
+                  end: "21:00",
                   title: "교토역 도착 + 저녁/야경",
                   summary: "호텔 체크인 후 저녁과 야경을 선택합니다.",
                   details: ["비스키오 교토 바이 그란비아 체크인", "남측 출구 도보 2분"],
@@ -751,8 +777,8 @@ window.TRIP_DATA = {
               blocks: [
                 {
                   id: "d1-snack-b",
-                  start: "14:15",
-                  end: "14:30",
+                  start: "13:30",
+                  end: "13:45",
                   title: "공항 간단 요기",
                   summary: "공항에서 간단히 먹고 린쿠로 바로 이동합니다.",
                   details: ["T1 1층/2층 로손 (보안 전)", "타마고 산도 250엔 + 가라아게군 240엔"],
@@ -775,9 +801,37 @@ window.TRIP_DATA = {
                   ]
                 },
                 {
+                  id: "d1-ticket-b",
+                  start: "13:45",
+                  end: "14:15",
+                  title: "하루카 발권 + ICOCA 발급",
+                  summary: "공항역 JR 자동 발매기에서 QR 티켓을 수령합니다.",
+                  details: [
+                    "QR 스캔 가능한 초록색 발매기 이용",
+                    "여권 인식 후 승차권/특급권 모두 수령",
+                    "ICOCA 발급(보증금 500엔) + 현금 충전"
+                  ],
+                  location: {
+                    name: "JR 공항역 발권기/매표소",
+                    mapQuery: "JR Ticket Office Kansai Airport Station"
+                  },
+                  tags: ["교통", "티켓"],
+                  costs: [
+                    {
+                      label: "ICOCA 발급",
+                      min: 2000,
+                      max: 2000,
+                      unit: "per_person",
+                      currency: "JPY",
+                      category: "transport",
+                      payment: "cash"
+                    }
+                  ]
+                },
+                {
                   id: "d1-rinku-lunch-b",
                   start: "14:50",
-                  end: "16:30",
+                  end: "16:20",
                   title: "린쿠 타운 점심",
                   summary: "린쿠 아울렛에서 본격적인 점심을 즐깁니다.",
                   details: [
@@ -900,7 +954,7 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "d1-haruka-b",
-                  start: "17:45",
+                  start: "18:14",
                   end: "19:34",
                   title: "공항 복귀 + 하루카",
                   summary: "공항으로 돌아와 하루카 특급을 탑승합니다.",
@@ -913,8 +967,8 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "d1-kyoto-night-b",
-                  start: "19:30",
-                  end: "21:30",
+                  start: "19:45",
+                  end: "21:15",
                   title: "교토역 도착 + 저녁/야경",
                   summary: "교토 도착 후 저녁과 야경을 선택합니다.",
                   details: ["비스키오 교토 바이 그란비아 체크인", "남측 출구 도보 2분"],
@@ -1015,8 +1069,8 @@ window.TRIP_DATA = {
               blocks: [
                 {
                   id: "d1-airport-lunch-c",
-                  start: "14:40",
-                  end: "15:40",
+                  start: "13:30",
+                  end: "14:30",
                   title: "공항 풍성한 점심",
                   summary: "린쿠를 생략하고 공항에서 넉넉히 식사합니다.",
                   details: ["린쿠를 생략하고 공항에서 여유 있게 식사"],
@@ -1062,20 +1116,46 @@ window.TRIP_DATA = {
                           desc: "속을 편하게 채울 수 있는 면요리 위주 선택지입니다.",
                           mapQuery: "Kineya Mugimaru Kansai Airport",
                           cost: { "min": 600, "max": 900, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "both" }
-                        },
-                        {
                         }
                       ]
                     }
                   ]
                 },
                 {
+                  id: "d1-ticket-c",
+                  start: "14:30",
+                  end: "15:00",
+                  title: "하루카 발권 + ICOCA 발급",
+                  summary: "공항역 JR 자동 발매기에서 QR 티켓을 수령합니다.",
+                  details: [
+                    "QR 스캔 가능한 초록색 발매기 이용",
+                    "여권 인식 후 승차권/특급권 모두 수령",
+                    "ICOCA 발급(보증금 500엔) + 현금 충전"
+                  ],
+                  location: {
+                    name: "JR 공항역 발권기/매표소",
+                    mapQuery: "JR Ticket Office Kansai Airport Station"
+                  },
+                  tags: ["교통", "티켓"],
+                  costs: [
+                    {
+                      label: "ICOCA 발급",
+                      min: 2000,
+                      max: 2000,
+                      unit: "per_person",
+                      currency: "JPY",
+                      category: "transport",
+                      payment: "cash"
+                    }
+                  ]
+                },
+                {
                   id: "d1-haruka-c",
-                  start: "15:44",
-                  end: "17:04",
+                  start: "15:14",
+                  end: "16:34",
                   title: "하루카 특급 이동",
-                  summary: "공항에서 곧바로 교토로 이동합니다.",
-                  details: ["지정석 추천", "교토역 도착"],
+                  summary: "하루카 34호로 교토역까지 이동합니다.",
+                  details: ["15:14 하루카 34호", "지정석 추천"],
                   location: {
                     name: "하루카 특급 (Haruka Express)",
                     mapQuery: "JR Haruka Kansai Airport Station"
@@ -1084,8 +1164,8 @@ window.TRIP_DATA = {
                 },
                 {
                   id: "d1-checkin-c",
-                  start: "17:04",
-                  end: "17:20",
+                  start: "16:34",
+                  end: "16:50",
                   title: "호텔 체크인",
                   summary: "숙소 체크인 후 짐 정리 시간을 확보합니다.",
                   details: ["교토역 하치조 출구 도보 2분"],
@@ -1096,195 +1176,43 @@ window.TRIP_DATA = {
                   tags: ["체크인"]
                 },
                 {
-                  id: "d1-kyoto-walk-c",
-                  start: "17:30",
-                  end: "19:00",
-                  title: "교토역 주변 산책",
-                  summary: "체력 소모를 줄이며 교토의 첫인상을 즐깁니다.",
-                  details: ["도보권 문화/쇼핑 스팟"],
+                  id: "d1-kyoto-transfer-c",
+                  start: "16:50",
+                  end: "17:00",
+                  title: "교토역 → 가라스마오이케 이동",
+                  summary: "지하철로 짧게 이동해 저녁 식사로 바로 연결합니다.",
+                  details: ["가라스마선 3정거장 이동", "ICOCA 사용"],
                   location: {
-                    name: "교토역 (Kyoto Station)",
-                    mapQuery: "Kyoto Station"
+                    name: "가라스마오이케역 (Karasuma Oike Station)",
+                    mapQuery: "Karasuma Oike Station"
                   },
-                  tags: ["산책", "관광"],
-                  choices: [
-                    {
-                      id: "d1-sight-c",
-                      title: "산책 코스 선택",
-                      mode: "multi",
-                      options: [
-                        {
-                          id: "toji",
-                          label: "도지 사찰",
-                          note: "오층탑 야간 조명 (입장 500엔)",
-                          desc: "교토를 대표하는 오층탑을 가까이 볼 수 있어 첫날 산책 코스로 좋아요.",
-                          mapQuery: "To-ji Temple",
-                          cost: { "min": 500, "max": 500, "unit": "per_person", "currency": "JPY", "category": "ticket", "payment": "cash" }
-                        },
-                        {
-                          id: "higashi",
-                          label: "히가시 혼간지",
-                          note: "세계 최대 목조 건축물 (무료)",
-                          desc: "넓은 마당과 평지 동선 덕분에 부모님과 함께 걷기 편합니다.",
-                          mapQuery: "Higashi Honganji Temple"
-                        },
-                        {
-                          id: "tower-sando",
-                          label: "교토 타워 산도",
-                          note: "기념품/로컬 맥주",
-                          desc: "간단한 쇼핑과 휴식을 동시에 해결할 수 있는 복합 공간입니다.",
-                          mapQuery: "Kyoto Tower Sando"
-                        }
-                      ]
-                    }
-                  ]
+                  tags: ["이동"]
                 },
                 {
                   id: "d1-dinner-c",
-                  start: "19:00",
-                  end: "20:30",
-                  title: "교토역 저녁 정찬",
-                  summary: "린쿠 생략으로 생긴 여유를 저녁 식사에 투자합니다.",
-                  details: ["린쿠 생략 여유분을 미식에 투자"],
+                  start: "17:00",
+                  end: "18:00",
+                  title: "저녁 식사 · 스시젠",
+                  summary: "지라시 스시로 이른 저녁을 즐깁니다.",
+                  details: ["18:00 전후 조기 마감 가능", "17:00 도착 권장"],
                   location: {
-                    name: "교토역 식당가 (Kyoto Station Dining)",
-                    mapQuery: "Kyoto Station"
+                    name: "스시젠 (鮨善)",
+                    mapQuery: "Sushizen Kyoto"
                   },
-                  tags: ["저녁"],
-                  choices: [
-                    {
-                      id: "d1-dinner-c-group",
-                      title: "저녁 식사 선택",
-                      mode: "multi",
-                      note: "복수 선택 가능",
-                      options: [
-                        {
-                          id: "moritaya-c",
-                          label: "모리타야 (Moritaya)",
-                          note: "전통 스키야키",
-                          menu: "스키야키 정식 8,800~13,000엔",
-                          where: "JR 교토 이세탄 11층",
-                          desc: "교토 도착 첫날, 분위기 있게 정찬을 즐길 때 좋습니다.",
-                          mapQuery: "Moritaya JR Kyoto Isetan",
-                          cost: { "min": 8800, "max": 13000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "hiro-c",
-                          label: "야키니쿠 히로 (Yakiniku Hiro)",
-                          note: "와규 구이",
-                          menu: "와규 7종 6,000엔",
-                          desc: "고기 종류가 다양해서 취향 맞추기 쉽습니다.",
-                          mapQuery: "Yakiniku Hiro Kyoto Station",
-                          cost: { "min": 6000, "max": 6000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "unagi-sora",
-                          label: "우나기 소라 (Unagi Sora)",
-                          note: "장어덮밥 전문",
-                          menu: "히츠마부시 4,500엔",
-                          desc: "장어를 제대로 먹고 싶은 날 선택하기 좋은 곳입니다.",
-                          mapQuery: "Unagi Sora Kyoto",
-                          cost: { "min": 4500, "max": 4500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "katsukura-c",
-                          label: "카츠쿠라 포르타 (Katsukura Porta)",
-                          note: "프리미엄 돈카츠",
-                          menu: "히레카츠 세트 2,500엔",
-                          where: "교토 포르타 B1층",
-                          desc: "부담 없이 모두가 만족하기 쉬운 메뉴입니다.",
-                          mapQuery: "Katsukura Kyoto Porta",
-                          cost: { "min": 2500, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "sushi-musashi-c",
-                          label: "스시노무사시 교토역 (Sushi no Musashi)",
-                          note: "회전초밥",
-                          menu: "회전초밥 150엔~",
-                          where: "교토역 앞",
-                          desc: "회전초밥 스타일이라 취향대로 여러 접시를 고르기 쉽습니다.",
-                          mapQuery: "Sushi no Musashi Kyoto Station",
-                          cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "nakau-c",
-                          label: "나카우 교토역 (Nakau Kyoto Station)",
-                          note: "24시간 간편식",
-                          menu: "오야코동 490엔",
-                          desc: "늦게 도착했을 때 가볍게 해결하기 좋습니다.",
-                          mapQuery: "Nakau Kyoto Station",
-                          cost: { "min": 490, "max": 490, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                      ]
-                    }
-                  ]
+                  tags: ["저녁", "식사"]
                 },
                 {
                   id: "d1-night-c",
-                  start: "20:30",
-                  end: "21:30",
-                  title: "야식 & 야경",
-                  summary: "교토역 내부에서 가볍게 야경과 야식을 즐깁니다.",
-                  details: ["교토역 실내 야경 코스"],
+                  start: "18:30",
+                  end: "20:00",
+                  title: "교토역 주변 야경/휴식",
+                  summary: "무리하지 않고 교토역 주변에서 여유롭게 마무리합니다.",
+                  details: ["교토역 야경 또는 휴식 선택"],
                   location: {
                     name: "교토역 (Kyoto Station)",
                     mapQuery: "Kyoto Station"
                   },
-                  tags: ["야경"],
-                  choices: [
-                    {
-                      id: "d1-night-c-group",
-                      title: "야경/야식 선택",
-                      mode: "multi",
-                      options: [
-                        {
-                          id: "isetan-c",
-                          label: "JR 교토 이세탄 식품관",
-                          note: "19:15 이후 마감 세일",
-                          where: "JR 교토 이세탄 B1~B2층",
-                          desc: "도시락과 초밥을 할인 가격에 구매할 수 있어요.",
-                          mapQuery: "JR Kyoto Isetan",
-                          cost: { "min": 800, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "skyway-c",
-                          label: "스카이웨이",
-                          note: "10층 무료 전망",
-                          where: "교토역 빌딩 10층",
-                          desc: "교토역 내부에서 부담 없이 야경을 감상할 수 있습니다.",
-                          mapQuery: "Kyoto Station Skyway"
-                        },
-                        {
-                          id: "grand-stairway-c",
-                          label: "대계단 LED 쇼",
-                          note: "교토역 4~11층",
-                          where: "교토역 빌딩 4~11층",
-                          desc: "빛 연출이 멋진 야간 포토 스팟입니다.",
-                          mapQuery: "Kyoto Station Grand Stairway"
-                        },
-                        {
-                          id: "tokichi",
-                          label: "나카무라 토키치 (Nakamura Tokichi)",
-                          note: "말차 디저트",
-                          menu: "말차 젤리 990엔",
-                          where: "JR 교토 이세탄 3층",
-                          desc: "진한 말차 디저트를 좋아하면 꼭 들를 만한 곳입니다.",
-                          mapQuery: "Nakamura Tokichi Kyoto Station",
-                          cost: { "min": 990, "max": 990, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                        },
-                        {
-                          id: "sizuya",
-                          label: "시즈야 팥빵 (Sizuya)",
-                          note: "교토 인기 빵",
-                          menu: "오구라 안팡 250엔",
-                          where: "교토역 하치조 출구 1층",
-                          desc: "간단한 간식이나 아침용으로 좋아요.",
-                          mapQuery: "Sizuya Kyoto Station",
-                          cost: { "min": 250, "max": 250, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
-                        }
-                      ]
-                    }
-                  ]
+                  tags: ["야경", "휴식"]
                 }
               ]
             }
@@ -1297,13 +1225,13 @@ window.TRIP_DATA = {
       id: "day2",
       label: "2일차 (DAY 2)",
       date: "2026-01-21",
-      title: "전통 마켓 · 유적 · 쇼핑",
-      description: "코보산 장날 + 핵심 스팟 집중",
+      title: "니조성 · 테라마치 · 금각사",
+      description: "버스로 핵심 유적과 쇼핑 동선을 연결",
       baseBlocks: [
         {
           id: "d2-breakfast",
-          start: "07:30",
-          end: "08:20",
+          start: "08:00",
+          end: "08:45",
           title: "호텔 조식",
           summary: "출발 전 호텔에서 든든하게 식사합니다.",
           details: ["조식 확정", "출발 전 여유롭게 식사"],
@@ -1314,57 +1242,33 @@ window.TRIP_DATA = {
           tags: ["조식", "숙소"]
         },
         {
-          id: "d2-pass",
-          start: "08:30",
-          end: "09:20",
-          title: "패스/현금 준비",
-          summary: "오늘 이동이 많으므로 교통 패스와 현금을 먼저 준비합니다.",
-          details: ["교토 버스·지하철 1일권 구매", "현금 5,000엔 이상 준비"],
+          id: "d2-transfer-nijo",
+          start: "08:45",
+          end: "09:10",
+          title: "호텔 → 니조성 이동",
+          summary: "버스로 니조성까지 이동합니다.",
+          details: ["교토역 북쪽 버스 터미널 B1/B2 승강장", "9번 또는 50/101번 버스 이용", "요금 230엔 (ICOCA 가능)"],
           location: {
-            name: "교토역 (Kyoto Station)",
-            mapQuery: "Kyoto Station"
+            name: "교토역 버스 터미널",
+            mapQuery: "Kyoto Station Bus Terminal"
           },
-          tags: ["교통", "현금필수"],
+          tags: ["이동", "버스"],
           costs: [
             {
-              label: "1일권",
-              min: 1100,
-              max: 1100,
+              label: "버스 이동",
+              min: 230,
+              max: 230,
               unit: "per_person",
               currency: "JPY",
               category: "transport",
-              payment: "cash"
-            }
-          ]
-        },
-        {
-          id: "d2-toji",
-          start: "09:30",
-          end: "11:00",
-          title: "도지 코보산 장날",
-          summary: "21일에만 열리는 벼룩시장을 여유롭게 둘러봅니다.",
-          details: ["매달 21일 벼룩시장", "말차 다완/다구 득템"],
-          location: {
-            name: "도지 사찰 (To-ji)",
-            mapQuery: "To-ji Temple"
-          },
-          tags: ["시장", "산책"],
-          costs: [
-            {
-              label: "도지 입장",
-              min: 0,
-              max: 500,
-              unit: "per_person",
-              currency: "JPY",
-              category: "ticket",
-              payment: "cash"
+              payment: "both"
             }
           ]
         },
         {
           id: "d2-nijo",
-          start: "11:30",
-          end: "13:00",
+          start: "09:10",
+          end: "11:00",
           title: "니조성",
           summary: "교토 대표 유적에서 궁전과 정원을 관람합니다.",
           details: ["나이팅게일 복도", "니노마루 궁전 관람"],
@@ -1386,12 +1290,36 @@ window.TRIP_DATA = {
           ]
         },
         {
+          id: "d2-transfer-teramachi",
+          start: "11:00",
+          end: "11:20",
+          title: "니조성 → 테라마치 이동",
+          summary: "버스로 가와라마치/테라마치로 이동합니다.",
+          details: ["12번 또는 15번 버스 이용", "시조 가와라마치/가와라마치 산조 하차"],
+          location: {
+            name: "가와라마치 (Kawaramachi)",
+            mapQuery: "Kawaramachi Kyoto"
+          },
+          tags: ["이동", "버스"],
+          costs: [
+            {
+              label: "버스 이동",
+              min: 230,
+              max: 230,
+              unit: "per_person",
+              currency: "JPY",
+              category: "transport",
+              payment: "both"
+            }
+          ]
+        },
+        {
           id: "d2-lunch",
-          start: "13:30",
-          end: "14:40",
-          title: "가와라마치 점심",
-          summary: "가와라마치에서 넓은 좌석의 점심 식당을 선택합니다.",
-          details: ["넓은 테이블석 위주", "브레이크 타임 없는 곳 우선"],
+          start: "11:30",
+          end: "13:00",
+          title: "테라마치/가와라마치 점심",
+          summary: "테라마치 인근에서 편하게 점심을 선택합니다.",
+          details: ["브레이크 타임 없는 곳 우선", "가족 좌석 확보"],
           location: {
             name: "가와라마치 (Kawaramachi)",
             mapQuery: "Kawaramachi Kyoto"
@@ -1482,8 +1410,8 @@ window.TRIP_DATA = {
         },
         {
           id: "d2-shopping",
-          start: "14:40",
-          end: "16:30",
+          start: "13:00",
+          end: "14:15",
           title: "말차 장비 & 쇼핑",
           summary: "말차 쇼핑과 카페를 도보권에서 해결합니다.",
           details: ["테라마치/가와라마치 도보권"],
@@ -1577,9 +1505,33 @@ window.TRIP_DATA = {
           ]
         },
         {
+          id: "d2-transfer-kinkakuji",
+          start: "14:15",
+          end: "14:50",
+          title: "테라마치 → 금각사 이동",
+          summary: "버스로 금각사까지 이동합니다.",
+          details: ["12번/59번 버스 이용", "정체 고려해 여유 있게 이동"],
+          location: {
+            name: "금각사 (Kinkaku-ji)",
+            mapQuery: "Kinkaku-ji"
+          },
+          tags: ["이동", "버스"],
+          costs: [
+            {
+              label: "버스 이동",
+              min: 230,
+              max: 230,
+              unit: "per_person",
+              currency: "JPY",
+              category: "transport",
+              payment: "both"
+            }
+          ]
+        },
+        {
           id: "d2-kinkakuji",
-          start: "17:00",
-          end: "18:00",
+          start: "15:00",
+          end: "16:30",
           title: "금각사",
           summary: "일몰 시간대에 맞춰 대표 명소를 방문합니다.",
           details: ["일몰 직전 황금빛 촬영"],
@@ -1601,132 +1553,73 @@ window.TRIP_DATA = {
           ]
         },
         {
-          id: "d2-dinner",
-          start: "18:30",
-          end: "20:00",
-          title: "키타야마 저녁",
-          summary: "동양정 함박스테이크로 든든하게 마무리합니다.",
-          details: ["동양정 함박스테이크", "대기 30~40분 가능"],
+          id: "d2-transfer-kyoto",
+          start: "16:30",
+          end: "17:30",
+          title: "금각사 → 교토역 복귀",
+          summary: "버스로 교토역으로 돌아옵니다.",
+          details: ["205번 또는 101번 버스 이용"],
           location: {
-            name: "동양정 키타야마 (Touyoutei)",
-            mapQuery: "Grill Capital Touyoutei"
+            name: "교토역 (Kyoto Station)",
+            mapQuery: "Kyoto Station"
           },
-          tags: ["식사"],
+          tags: ["이동", "버스"],
           costs: [
             {
-              label: "저녁",
-              min: 1800,
-              max: 2500,
+              label: "버스 이동",
+              min: 230,
+              max: 230,
               unit: "per_person",
               currency: "JPY",
-              category: "meal",
-              payment: "card"
-            }
-          ],
-          choices: [
-            {
-              id: "d2-dinner-choice",
-              title: "저녁 식당 선택",
-              mode: "multi",
-              note: "1곳 선택 추천",
-              options: [
-                {
-                  id: "touyoutei",
-                  label: "동양정 키타야마 (Touyoutei)",
-                  note: "함박스테이크",
-                  menu: "함박스테이크 세트 1,800~2,500엔",
-                  where: "키타야마 본점",
-                  desc: "호일에 싸인 뜨거운 함박스테이크가 대표 메뉴입니다.",
-                  mapQuery: "Grill Capital Touyoutei",
-                  cost: { "min": 1800, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "tougou",
-                  label: "토우고 키타야마 (Tougou)",
-                  note: "이탈리안",
-                  menu: "파스타/코스 1,500~3,000엔",
-                  where: "키타야마 거리",
-                  desc: "분위기 있는 이탈리안으로 조용하게 식사하기 좋아요.",
-                  mapQuery: "Tougou Kitayama",
-                  cost: { "min": 1500, "max": 3000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "inthegreen",
-                  label: "인 더 그린 (IN THE GREEN)",
-                  note: "식물원 뷰 레스토랑",
-                  menu: "피자/파스타 1,800~2,800엔",
-                  where: "식물원 옆",
-                  desc: "식물원 뷰를 보며 여유롭게 식사할 수 있는 인기 레스토랑입니다.",
-                  mapQuery: "In the Green",
-                  cost: { "min": 1800, "max": 2800, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "katsukura-kitayama",
-                  label: "카츠쿠라 키타야마 (Katsukura)",
-                  note: "돈카츠",
-                  menu: "돈카츠 세트 1,800~2,500엔",
-                  where: "키타야마 거리",
-                  desc: "모던한 분위기의 돈카츠 전문점으로 가족 식사에 무난합니다.",
-                  mapQuery: "Katsukura Kitayama",
-                  cost: { "min": 1800, "max": 2500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "briant",
-                  label: "브리앙 키타야마 (Briant)",
-                  note: "베이커리 레스토랑",
-                  menu: "샌드/파스타 1,200~2,000엔",
-                  where: "키타야마 거리",
-                  desc: "빵이 맛있는 베이커리 식당으로 가볍게 먹기 좋아요.",
-                  mapQuery: "Briant Kitayama",
-                  cost: { "min": 1200, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                }
-              ]
+              category: "transport",
+              payment: "both"
             }
           ]
         },
         {
-          id: "d2-lightcycle",
-          start: "20:00",
-          end: "21:00",
-          title: "라이트 사이클 교토",
-          summary: "따뜻한 실내에서 밤 전시를 즐기며 하루를 마무리합니다.",
-          details: ["교토부립 식물원 온실 미디어 아트"],
+          id: "d2-dinner",
+          start: "18:00",
+          end: "19:00",
+          title: "저녁 식사 · 교토역 소바",
+          summary: "호텔 근처 소바집에서 간단히 마무리합니다.",
+          details: ["오라가 소바 등", "혼잡 시 역내 식당 대체"],
           location: {
-            name: "교토부립 식물원 (Kyoto Botanical Garden)",
-            mapQuery: "Kyoto Botanical Garden"
+            name: "오라가 소바 (Oraga Soba)",
+            mapQuery: "Oraga Soba Kyoto"
           },
-          tags: ["전시"],
+          tags: ["저녁", "식사"],
           costs: [
             {
-              label: "입장료",
-              min: 2300,
-              max: 2500,
+              label: "저녁",
+              min: 1000,
+              max: 2000,
               unit: "per_person",
               currency: "JPY",
-              category: "ticket",
+              category: "meal",
               payment: "card"
             }
           ]
         }
       ],
       tips: [
-        "시장/사찰은 카드 불가 많음"
+        "버스 이동이 많아 시간 여유 확보 필요",
+        "금각사 입장료는 현금 준비"
       ]
     },
     {
       id: "day3",
       label: "3일차 (DAY 3)",
       date: "2026-01-22",
-      title: "평지 산책 + 공항 복귀",
-      description: "교토역 거점 이동으로 체력 절약",
+      title: "후시미 이나리 · 귀국",
+      description: "신사 산책 후 교토역에서 귀국 동선 정리",
       baseBlocks: [
         {
           id: "d3-breakfast",
-          start: "07:30",
-          end: "08:20",
-          title: "호텔 조식",
-          summary: "체크아웃 전 호텔 조식을 확정으로 진행합니다.",
-          details: ["조식 확정", "체크아웃 전 여유 식사"],
+          start: "08:30",
+          end: "09:15",
+          title: "호텔 조식 + 체크아웃",
+          summary: "조식 후 체크아웃하고 짐을 맡깁니다.",
+          details: ["호텔 로비에 짐 보관", "출발 전 여유롭게 정리"],
           location: {
             name: "비스키오 교토 바이 그란비아 (Hotel Vischio Kyoto by GRANVIA)",
             mapQuery: "Hotel Vischio Kyoto by GRANVIA"
@@ -1734,258 +1627,132 @@ window.TRIP_DATA = {
           tags: ["조식", "숙소"]
         },
         {
-          id: "d3-luggage",
-          start: "09:30",
-          end: "10:00",
-          title: "체크아웃 & 짐 보관",
-          summary: "짐을 맡겨두고 가볍게 마지막 관광을 시작합니다.",
-          details: ["호텔 로비에 짐 보관", "하치조 출구 도보 2분"],
+          id: "d3-transfer-fushimi",
+          start: "09:15",
+          end: "09:30",
+          title: "교토역 → 후시미 이나리 이동",
+          summary: "JR 나라선으로 빠르게 이동합니다.",
+          details: ["교토역 8~10번 승강장", "나라선 2정거장(이나리역)"],
           location: {
-            name: "비스키오 교토 바이 그란비아 (Hotel Vischio Kyoto by GRANVIA)",
-            mapQuery: "Hotel Vischio Kyoto by GRANVIA"
+            name: "교토역 (Kyoto Station)",
+            mapQuery: "Kyoto Station"
           },
-          tags: ["체크아웃"]
-        },
-        {
-          id: "d3-sanjusangendo",
-          start: "10:00",
-          end: "11:30",
-          title: "상십삼간당",
-          summary: "평지 동선으로 부담 없이 대표 사찰을 관람합니다.",
-          details: ["버스 100/206/208 이용", "평지 동선"],
-          location: {
-            name: "상십삼간당 (Sanjusangendo)",
-            mapQuery: "Sanjusangendo"
-          },
-          tags: ["유적", "현금필수"],
+          tags: ["이동", "JR"],
           costs: [
             {
-              label: "입장료",
-              min: 600,
-              max: 600,
+              label: "JR 이동",
+              min: 150,
+              max: 150,
               unit: "per_person",
               currency: "JPY",
-              category: "ticket",
-              payment: "cash"
+              category: "transport",
+              payment: "both"
             }
           ]
         },
         {
-          id: "d3-honganji",
-          start: "11:45",
-          end: "12:45",
-          title: "동본원사 (히가시 혼간지)",
-          summary: "무료 관람으로 잠시 휴식하며 돌아봅니다.",
-          details: ["세계 최대 목조 건축물", "무료 관람"],
+          id: "d3-fushimi",
+          start: "09:30",
+          end: "11:30",
+          title: "후시미 이나리 신사",
+          summary: "천본 도리이를 따라 가볍게 산책합니다.",
+          details: ["초입 혼잡 시 중간 구간까지 올라가면 한적", "계단 구간 있음"],
           location: {
-            name: "히가시 혼간지 (Higashi Honganji)",
-            mapQuery: "Higashi Honganji Temple"
+            name: "후시미 이나리 대사 (Fushimi Inari Taisha)",
+            mapQuery: "Fushimi Inari Taisha"
           },
-          tags: ["산책"]
+          tags: ["신사", "산책"]
         },
         {
           id: "d3-lunch",
-          start: "13:00",
-          end: "14:30",
-          title: "교토역 미식 투어",
-          summary: "교토역에서 편하게 점심을 선택합니다.",
-          details: ["이세탄 11F/포르타 식당가"],
+          start: "11:30",
+          end: "13:00",
+          title: "점심 · 후시미 이나리 주변",
+          summary: "신사 앞 식당에서 점심을 해결합니다.",
+          details: ["네자메야 등", "붐비는 시간대 대기 가능"],
           location: {
-            name: "교토역 (Kyoto Station)",
-            mapQuery: "Kyoto Station"
+            name: "네자메야 (Nezameya)",
+            mapQuery: "Nezameya Kyoto"
           },
           tags: ["식사"],
-          choices: [
+          costs: [
             {
-              id: "d3-lunch-choice",
-              title: "점심 식당 선택",
-              mode: "multi",
-              note: "1~2곳 선택 가능",
-              options: [
-                {
-                  id: "wako",
-                  label: "돈카츠 와코 (Wako)",
-                  note: "리필 제공",
-                  menu: "돈카츠 정식 1,800~2,200엔",
-                  where: "JR 교토 이세탄 11층",
-                  desc: "밥/양배추 리필이 가능해 든든한 점심으로 좋아요.",
-                  mapQuery: "Wako Kyoto Isetan",
-                  cost: { "min": 1800, "max": 2200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "wakuden",
-                  label: "교토 와쿠덴 (Kyoto Wakuden)",
-                  note: "정통 일식",
-                  menu: "정식 3,000~4,000엔",
-                  where: "JR 교토 이세탄 11층",
-                  desc: "조용하고 정갈한 분위기. 여행 마지막 날 차분하게 마무리하기 좋습니다.",
-                  mapQuery: "Kyoto Wakuden Isetan",
-                  cost: { "min": 3000, "max": 4000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "porta",
-                  label: "포르타 식당가 (Porta)",
-                  note: "다양한 메뉴",
-                  menu: "라멘/덮밥/스시 1,000~2,000엔",
-                  where: "교토 포르타 B1~B2층",
-                  desc: "각자 취향에 맞는 식당을 바로 고를 수 있어 선택 스트레스가 적습니다.",
-                  mapQuery: "Kyoto Porta",
-                  cost: { "min": 1000, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "daiichi-asahi-lunch",
-                  label: "혼케 다이이치아사히 (Honke Daiichi-Asahi)",
-                  note: "교토 라멘",
-                  menu: "라멘 900~1,200엔",
-                  where: "교토역 인근",
-                  desc: "줄 서서 먹는 교토 대표 라멘집으로 빠르게 한 끼 해결하기 좋습니다.",
-                  mapQuery: "Honke Daiichi-Asahi",
-                  cost: { "min": 900, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "cash" }
-                },
-                {
-                  id: "kyoto-ramen-koji-lunch",
-                  label: "교토 라멘 코지 (Kyoto Ramen Koji)",
-                  note: "라멘 몰",
-                  menu: "라멘 900~1,400엔",
-                  where: "교토역 10층",
-                  desc: "유명 라멘집이 모여 있는 층으로 선택 폭이 넓습니다.",
-                  mapQuery: "Kyoto Ramen Koji",
-                  cost: { "min": 900, "max": 1400, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "kura-sushi-lunch",
-                  label: "쿠라스시 교토역 (Kura Sushi)",
-                  note: "회전초밥",
-                  menu: "1접시 150엔~",
-                  where: "교토역 주변",
-                  desc: "가성비 좋은 회전초밥 체인으로 부담 없이 즐기기 좋습니다.",
-                  mapQuery: "Kura Sushi - Kyoto Station Area",
-                  cost: { "min": 150, "max": 2000, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                {
-                  id: "donguri-lunch",
-                  label: "교토 동구리 (Donguri)",
-                  note: "오코노미야키",
-                  menu: "오코노미야키 900~1,500엔",
-                  where: "교토역 인근",
-                  desc: "교토풍 오코노미야키를 부담 없이 즐길 수 있는 선택지입니다.",
-                  mapQuery: "Donguri Kyoto Station",
-                  cost: { "min": 900, "max": 1500, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                }
-              ]
+              label: "점심",
+              min: 1000,
+              max: 2000,
+              unit: "per_person",
+              currency: "JPY",
+              category: "meal",
+              payment: "both"
             }
           ]
         },
         {
-          id: "d3-cafe",
-          start: "14:30",
-          end: "15:45",
-          title: "카페 휴식 & 기념품",
-          summary: "여유롭게 카페와 기념품 쇼핑을 마무리합니다.",
-          details: ["말차 디저트/기념품 쇼핑"],
+          id: "d3-kyoto-return",
+          start: "13:30",
+          end: "15:30",
+          title: "교토역 복귀 & 쇼핑/짐 수령",
+          summary: "교토역에서 쇼핑 후 호텔 짐을 찾습니다.",
+          details: ["포르타/이세탄 쇼핑", "호텔 로비에서 짐 수령"],
           location: {
             name: "교토역 (Kyoto Station)",
             mapQuery: "Kyoto Station"
           },
-          tags: ["카페", "쇼핑"],
-          choices: [
-            {
-              id: "d3-cafe-choice",
-              title: "카페/선물 선택",
-              mode: "multi",
-              options: [
-                        {
-                          id: "tokichi-cafe",
-                          label: "나카무라 토키치 (Nakamura Tokichi)",
-                          note: "말차 디저트",
-                          menu: "말차 젤리 990엔",
-                          where: "JR 교토 이세탄 3층",
-                          desc: "진한 말차 디저트를 즐기기 좋은 대표 카페입니다.",
-                  mapQuery: "Nakamura Tokichi Kyoto Station",
-                  cost: { "min": 990, "max": 990, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                        {
-                          id: "inoda",
-                          label: "이노다 커피 포르타점 (Inoda Coffee)",
-                          note: "클래식 카페",
-                          menu: "커피/디저트 800~1,200엔",
-                          where: "교토 포르타 지하",
-                          desc: "레트로한 분위기에서 천천히 쉬기 좋은 포르타 지점입니다.",
-                  mapQuery: "Inoda Coffee Kyoto Station Porta",
-                  cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                        {
-                          id: "tsujiri",
-                          label: "츠지리 교토 타워 산도 (Tsujiri)",
-                          note: "말차 디저트",
-                          menu: "말차 디저트 800~1,200엔",
-                          where: "교토 타워 산도 1층",
-                          desc: "진한 말차 디저트를 즐기기 좋은 유명 디저트 카페입니다.",
-                  mapQuery: "Tsujiri Kyoto Tower Sando",
-                  cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                        {
-                          id: "ogawa",
-                          label: "오가와 커피 (Ogawa Coffee)",
-                          note: "로컬 커피",
-                          menu: "커피/디저트 800~1,200엔",
-                          where: "교토역 B1",
-                          desc: "교토 로컬 커피를 즐기기 좋은 매장으로 이동 동선이 편합니다.",
-                  mapQuery: "Ogawa Coffee Kyoto Station",
-                  cost: { "min": 800, "max": 1200, "unit": "per_person", "currency": "JPY", "category": "meal", "payment": "card" }
-                },
-                        {
-                          id: "isetan-b1",
-                          label: "이세탄 B1 식품관 (Isetan)",
-                          note: "기념품 쇼핑",
-                          where: "JR 교토 이세탄 B1~B2층",
-                          desc: "말차 과자와 지역 과자를 마지막에 빠르게 구매하기 좋은 곳입니다.",
-                  mapQuery: "JR Kyoto Isetan"
-                }
-              ]
-            }
-          ]
+          tags: ["쇼핑", "짐"]
         },
         {
           id: "d3-haruka",
           start: "16:00",
-          end: "16:30",
-          title: "짐 찾기 + 하루카 탑승",
-          summary: "짐을 찾아 하루카 탑승 준비를 완료합니다.",
-          details: ["하루카 43호 16:30 출발", "예비: 16:00 출발 41호"],
+          end: "17:20",
+          title: "하루카 특급 탑승",
+          summary: "교토역에서 공항으로 이동합니다.",
+          details: ["하루카 43호", "교토역 30번 승강장"],
           location: {
-            name: "교토역 (Kyoto Station)",
+            name: "JR 하루카 교토역 (JR Haruka Kyoto Station)",
             mapQuery: "JR Haruka Kyoto Station"
           },
           tags: ["이동"]
         },
         {
           id: "d3-airport",
-          start: "16:30",
-          end: "17:54",
-          title: "간사이 공항 이동",
-          summary: "18시 전후 공항 도착을 목표로 이동합니다.",
-          details: ["19:55 비행기 → 18:00 전후 공항 도착 목표"],
+          start: "17:30",
+          end: "19:20",
+          title: "공항 저녁 & 면세",
+          summary: "출국 전 공항에서 식사와 쇼핑을 마무리합니다.",
+          details: ["T1 식당가 이용", "면세 쇼핑 가능"],
+          location: {
+            name: "간사이 공항 T1 (KIX T1)",
+            mapQuery: "Kansai International Airport Terminal 1"
+          },
+          tags: ["공항", "식사", "쇼핑"]
+        },
+        {
+          id: "d3-departure",
+          start: "19:55",
+          end: "19:55",
+          title: "출국",
+          summary: "간사이 공항 출발",
+          details: ["항공편 시간 재확인"],
           location: {
             name: "간사이 국제공항 (Kansai International Airport)",
             mapQuery: "Kansai International Airport"
           },
-          tags: ["공항"]
+          tags: ["출국"]
         }
       ]
     }
   ],
   checklist: [
-    { "id": "c1", "label": "현금 인출 완료", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "KIX T1 1F/2F ATM 존" },
-    { "id": "c2", "label": "ICOCA 발급 및 충전", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "간사이 공항역 JR 발매기" },
-    { "id": "c3", "label": "하루카 티켓 수령", "day": "day1", "category": "공항", "time": "14:15~14:40", "place": "공항역 무인 발권기" },
-    { "id": "c4", "label": "호텔 체크인", "day": "day1", "category": "숙소", "time": "17:04~17:20", "place": "호텔 비스키오 교토 로비" },
-    { "id": "c5", "label": "2일차 1일권 구매", "day": "day2", "category": "교통", "time": "09:00~09:30", "place": "교토역 지하철 매표기" },
-    { "id": "c6", "label": "현금 5,000엔 이상 확보", "day": "day2", "category": "현금", "time": "09:00~09:30", "place": "교토역 주변 ATM" },
-    { "id": "c7", "label": "동양정 대기번호표 확인", "day": "day2", "category": "식사", "time": "18:30~19:00", "place": "동양정 키타야마 본점" },
-    { "id": "c8", "label": "짐 보관 완료", "day": "day3", "category": "숙소", "time": "09:30", "place": "호텔 비스키오 교토 로비" },
-    { "id": "c9", "label": "16:00 짐 수령", "day": "day3", "category": "숙소", "time": "16:00", "place": "호텔 비스키오 교토 로비" },
-    { "id": "c10", "label": "하루카 43호 탑승", "day": "day3", "category": "교통", "time": "16:30", "place": "교토역 30번 승강장" }
+    { "id": "c1", "label": "현금 인출 완료", "day": "day1", "category": "공항", "time": "13:05~13:30", "place": "KIX T2 수하물 C벨트 맞은편 이온 ATM" },
+    { "id": "c2", "label": "ICOCA 발급 및 충전", "day": "day1", "category": "공항", "time": "14:30~15:00", "place": "간사이공항역 JR 발매기" },
+    { "id": "c3", "label": "하루카 티켓 수령", "day": "day1", "category": "공항", "time": "14:30~15:00", "place": "공항역 무인 발권기" },
+    { "id": "c4", "label": "호텔 체크인", "day": "day1", "category": "숙소", "time": "16:34~16:50", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c5", "label": "니조성 이동 버스 탑승", "day": "day2", "category": "교통", "time": "08:45~09:10", "place": "교토역 버스 터미널" },
+    { "id": "c6", "label": "금각사 입장료 현금 확인", "day": "day2", "category": "현금", "time": "14:50~15:00", "place": "금각사 매표소" },
+    { "id": "c7", "label": "테라마치 쇼핑 리스트 확인", "day": "day2", "category": "쇼핑", "time": "13:00~14:15", "place": "테라마치 거리" },
+    { "id": "c8", "label": "짐 보관 완료", "day": "day3", "category": "숙소", "time": "08:30~09:15", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c9", "label": "짐 수령", "day": "day3", "category": "숙소", "time": "15:30", "place": "호텔 비스키오 교토 로비" },
+    { "id": "c10", "label": "하루카 43호 탑승", "day": "day3", "category": "교통", "time": "16:00", "place": "교토역 30번 승강장" }
   ],
   shoppingList: [
     {
@@ -2703,6 +2470,82 @@ window.TRIP_DATA = {
       cons: ["체크인/조식 시간 혼잡 가능"],
       tips: ["체크인 전 짐 보관 먼저 요청", "조식은 피크 전 시간대 추천"]
     },
+    "kansai international airport terminal 2": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "LCC 중심의 도착 터미널로, 수하물 구역에서 바로 셔틀로 T1 이동이 가능합니다.",
+      building: "간사이 공항 T2",
+      floor: "1층 도착/출발",
+      area: "수하물 수취 구역",
+      tags: ["공항", "셔틀", "도착"],
+      features: ["T1 무료 셔틀 연결", "수하물 구역 접근성"],
+      pros: ["동선 단순", "셔틀 연결 쉬움"],
+      cons: ["편의시설이 T1보다 적음"],
+      tips: ["도착 직후 C벨트 건너편 이온 ATM 확인", "셔틀 승차 위치 표지판 확인"],
+      links: [
+        { label: "KIX T2 지도(한국어)", url: "https://www.kansai-airport.or.jp/kr/map/t2/" }
+      ]
+    },
+    "karasuma oike station": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "가라스마선과 도자이선이 만나는 교토 중심 환승역입니다.",
+      tags: ["지하철", "환승", "교토"],
+      features: ["가라스마선/도자이선 교차", "도심 접근성"],
+      pros: ["이동 동선 간단", "주요 구역 이동 편리"],
+      cons: ["출퇴근 시간 혼잡"],
+      tips: ["출구 번호를 미리 확인해 동선 단축"]
+    },
+    "kyoto station bus terminal": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 북쪽 버스 터미널로 주요 노선 환승이 편리합니다.",
+      tags: ["버스", "교토역", "교통"],
+      features: ["노선 밀집", "가와라마치/니조성 이동"],
+      pros: ["정류장 안내 명확", "교토역과 근접"],
+      cons: ["피크 시간 혼잡"],
+      tips: ["B1/B2 승강장 표지판 확인", "탑승 전 노선 번호 재확인"]
+    },
+    "sushizen kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "가라스마오이케 인근에서 지라시 스시로 가볍게 저녁을 즐길 수 있는 스시집입니다.",
+      tags: ["스시", "저녁", "가라스마오이케"],
+      features: ["지라시 스시", "이른 시간 방문 추천"],
+      pros: ["가벼운 저녁에 적합", "이동 동선 효율적"],
+      cons: ["영업 종료가 빠를 수 있음"],
+      tips: ["17시대 도착 권장", "재료 소진 시 조기 마감 가능"]
+    },
+    "fushimi inari taisha": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "천본 도리이로 유명한 교토 대표 신사로, 가볍게 산책하기 좋습니다.",
+      tags: ["신사", "산책", "교토"],
+      features: ["천본 도리이", "무료 참배"],
+      pros: ["상징적인 사진 스팟", "이른 시간대 한산"],
+      cons: ["초입 구간 혼잡"],
+      tips: ["초입만 보고 내려와도 만족도 높음", "계단 구간 대비"]
+    },
+    "nezameya kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "후시미 이나리 앞에서 간단히 식사할 수 있는 식당입니다.",
+      tags: ["식사", "후시미 이나리"],
+      features: ["신사 앞 접근성", "간단한 정식"],
+      pros: ["동선 효율", "빠른 식사"],
+      cons: ["피크 시간 혼잡"],
+      tips: ["점심 피크 전에 방문하면 대기 감소"]
+    },
+    "oraga soba kyoto": {
+      rating: null,
+      ratingSource: "Google",
+      summary: "교토역 인근에서 간단히 소바를 즐기기 좋은 선택지입니다.",
+      tags: ["소바", "저녁", "교토역"],
+      features: ["간단 식사", "역 인근 동선"],
+      pros: ["이동 동선 짧음"],
+      cons: ["혼잡 시간대 대기"],
+      tips: ["저녁 피크 시간은 대기 여유 확보"]
+    },
     "lawson kansai airport terminal 1": {
       rating: null,
       ratingSource: "Google",
@@ -2758,10 +2601,10 @@ window.TRIP_DATA = {
       rating: null,
       ratingSource: "Google",
       summary:
-        "트래블월렛 등 선불카드 출금에 유용한 ATM입니다. (공식 지도: T1 1F 북쪽 도착층/보안 전, 2F 중앙 출발층/보안 전) 수하물 대기 중 4번 벨트 근처 ATM을 이용하면 동선이 효율적입니다.",
-      building: "간사이 공항 T1",
-      floor: "1층 북측 · 2층 중앙",
-      area: "보안 전 구역",
+        "트래블월렛 등 선불카드 출금에 유용한 ATM입니다. T2 수하물 C벨트 건너편 분홍색 이온 ATM을 이용하면 대기 중 바로 처리 가능하며, T1에도 이온 ATM이 있습니다.",
+      building: "간사이 공항 T2 · T1",
+      floor: "T2 1층 수하물 구역 · T1 1층/2층",
+      area: "도착층 · 보안 전 구역",
       tags: ["ATM", "현금", "트래블월렛"],
       features: ["국내 카드 출금", "대체 출금처", "우체국/이온은행 ATM"],
       pros: ["현금 확보 용이", "대기 분산"],
@@ -2769,9 +2612,9 @@ window.TRIP_DATA = {
       tips: [
         "수수료/환율 조건 확인",
         "소액 현금 먼저 확보",
+        "(현장 팁) T2 수하물 C벨트 건너편 분홍색 이온 ATM",
         "(공식 지도 표식) 1F 서비스 No.32, 2F 서비스 No.23",
         "(후기) 1F 도착홀 ATM 존에 세븐/우체국 ATM과 함께 표기",
-        "(후기) 수하물 찾는 곳 4번 벨트 근처 ATM 이용 팁 다수",
         "(로케이터) 2F 국내선 남 출발구 ATM 코너 표기"
       ],
       links: [
